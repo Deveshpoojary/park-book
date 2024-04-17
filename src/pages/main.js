@@ -30,24 +30,30 @@ const Main = () => {
             
             {isAuthenticated ? (
            <> <p>Hello {user.name} </p>
-            <button  className='bg-blue-500 shadow-lg shadow-blue-500/50 hover:bg-sky-700  rounded-lg p-1' onClick={()=>{navigate('/home')}}> Book</button></>
-          ) : (
-            <button className='bg-gray-950 rounded-lg p-1 m-4 left-64 absolute hover:bg-sky-700' onClick={() => loginWithRedirect()}>Get Started</button>
-          )}
-          </p>
-          <button onClick={()=>{data.slot=19;}}>book</button>         Slots={ data.slot}
-        </div>
-      </div>
-     
-
-      {isAuthenticated && (
+            <button  className='bg-blue-500 shadow-lg shadow-blue-500/50 hover:bg-sky-700  rounded-lg p-1' onClick={()=>{navigate('/home')}}> Book</button>
+            
         <button
           onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
           style={myStyle}
         >
-          Log Out
+          Log Outt
         </button>
-      )}
+      </>
+          ) : (
+            <>
+            <button className='bg-gray-950 rounded-lg p-1 m-4 left-64 absolute hover:bg-sky-700' onClick={() => loginWithRedirect()}>Get Started</button>
+
+
+</>
+            
+          )}
+          </p>
+          <button onClick={()=>{data.slot=19;}}>bohhvok</button>         Slots={ data.slot}
+        </div>
+      </div>
+     
+
+     
     </div>
   );
 };

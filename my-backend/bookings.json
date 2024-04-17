@@ -1,0 +1,29 @@
+[
+  {
+    "userId": "google-oauth2|100076341606854696941",
+    "vehicleType": "",
+    "date": "",
+    "time": "",
+    "bookingId": "booking1"
+  },
+  {
+    "userId": "google-oauth2|100076341606854696941",
+    "vehicleType": "Bike",
+    "date": "2024-04-10",
+    "time": "23:20",
+    "bookingId": "booking2"
+  },
+  {
+    "userId": "google-oauth2|100076341606854696941",
+    "bookedFrom": " ",
+    "bookedTill": "undefined undefined",
+    "bookingId": "booking3"
+  },
+  {
+    "userId": "tharunrai14@gmail.com",
+    "bookedFrom": "2024-04-26 19:40",
+    "bookedTill": "undefined undefined",
+    "slotId": "1",
+    "bookingId": "booking4"
+  }
+]

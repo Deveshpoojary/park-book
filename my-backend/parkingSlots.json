@@ -1,0 +1,84 @@
+{
+  "slots": [
+    {
+      "slotId": "1",
+      "isOccupied": true
+    },
+    {
+      "slotId": "2",
+      "isOccupied": false
+    },
+    {
+      "slotId": "3",
+      "isOccupied": false
+    },
+    {
+      "slotId": "4",
+      "isOccupied": false
+    },
+    {
+      "slotId": "5",
+      "isOccupied": false
+    },
+    {
+      "slotId": "6",
+      "isOccupied": false
+    },
+    {
+      "slotId": "7",
+      "isOccupied": false
+    },
+    {
+      "slotId": "8",
+      "isOccupied": false
+    },
+    {
+      "slotId": "9",
+      "isOccupied": false
+    },
+    {
+      "slotId": "10",
+      "isOccupied": false
+    },
+    {
+      "slotId": "11",
+      "isOccupied": false
+    },
+    {
+      "slotId": "12",
+      "isOccupied": false
+    },
+    {
+      "slotId": "13",
+      "isOccupied": false
+    },
+    {
+      "slotId": "14",
+      "isOccupied": false
+    },
+    {
+      "slotId": "15",
+      "isOccupied": false
+    },
+    {
+      "slotId": "16",
+      "isOccupied": false
+    },
+    {
+      "slotId": "17",
+      "isOccupied": false
+    },
+    {
+      "slotId": "18",
+      "isOccupied": false
+    },
+    {
+      "slotId": "19",
+      "isOccupied": false
+    },
+    {
+      "slotId": "20",
+      "isOccupied": false
+    }
+  ]
+}
