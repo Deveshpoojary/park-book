@@ -12,7 +12,7 @@ useEffect(() => {
 
 const fetchUserBookings = async (userEmail) => {
     try {
-        const url = `http://51.20.72.9:3001/api/userBookings?email=${encodeURIComponent(userEmail)}`;
+        const url = `https://51.20.72.9:3001/api/userBookings?email=${encodeURIComponent(userEmail)}`;
         const response = await fetch(url);
         if (response.ok) {
             const bookings = await response.json();

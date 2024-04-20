@@ -33,7 +33,7 @@ const [error, setError] = useState(null);
 
  const fetchSlots = async (bookedFrom, bookedTill) => {
     try {
-        const url = `http://51.20.72.9:3001/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
+        const url = `https://51.20.72.9:3001/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
         const response = await fetch(url);
         const data = await response.json();
            setLoading(true)
