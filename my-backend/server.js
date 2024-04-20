@@ -1,10 +1,35 @@
 const express = require('express');
 const cors = require('cors');
-const { readDataFromFile, writeDataToFile } = require('./fileHelpers');
+const fs = require('fs');
+const path = require('path');
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+
+
+//helper
+function readDataFromFile(fileName) {
+  try {
+    const filePath = path.join(__dirname, fileName);
+    const fileData = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileData);
+  } catch (err) {
+    console.error('Read error:', err);
+    return [];
+  }
+}
+
+function writeDataToFile(fileName, data) {
+  try {
+    const filePath = path.join(__dirname, fileName);
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+  } catch (err) {
+    console.error('Write error:', err);
+  }
+}
 
 // Check if a booking time overlaps with the requested time range
 function isTimeOverlap(bookingStart, bookingEnd, queryStart, queryEnd) {

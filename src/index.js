@@ -12,7 +12,7 @@ root.render(
     <Auth0Provider
         domain="dev-3xz0udbsxxtdl6r4.us.auth0.com"
         clientId="JaBKZ74yvnMsjr65EorKy6NrL2KXlKCW"
-         redirectUri={`https://park-book.vercel.app`}
+         redirectUri={`${window.location.origin}`}
  
   
         >
