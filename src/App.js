@@ -8,6 +8,7 @@ import Rent from './pages/rent';
 import Main from './pages/main';
 import HomePage from './pages/home';
 import NotFoundPage from './pages/notfound';
+import History from './pages/history';
 function App() {
   return (
 
@@ -21,7 +22,9 @@ function App() {
           <Route path="/book" element={<Book/>}/>
           <Route path="/confirm" element={<Confirmation/>}/>
           <Route path="/rent" element={<Rent/>}/>
+          <Route path="/history" element={<History/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
+          
       </Routes>
     </BrowserRouter>
     </>

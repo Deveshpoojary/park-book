@@ -1,29 +1,51 @@
 [
   {
-    "userId": "google-oauth2|100076341606854696941",
-    "vehicleType": "",
-    "date": "",
-    "time": "",
+    "userId": "tharunrai14@gmail.com",
+    "slotId": "3",
+    "bookedFrom": "2024-04-20 20:59",
+    "bookedTill": "2024-04-20 20:00",
     "bookingId": "booking1"
   },
   {
-    "userId": "google-oauth2|100076341606854696941",
-    "vehicleType": "Bike",
-    "date": "2024-04-10",
-    "time": "23:20",
+    "userId": "tharunrai14@gmail.com",
+    "slotId": "18",
+    "bookedFrom": "2024-04-18 21:04",
+    "bookedTill": "2024-04-18 21:04",
     "bookingId": "booking2"
   },
   {
-    "userId": "google-oauth2|100076341606854696941",
-    "bookedFrom": " ",
-    "bookedTill": "undefined undefined",
+    "userId": "tharunrai14@gmail.com",
+    "slotId": "6",
+    "bookedFrom": "2024-04-26 21:04",
+    "bookedTill": "2024-04-26 21:07",
     "bookingId": "booking3"
   },
   {
     "userId": "tharunrai14@gmail.com",
-    "bookedFrom": "2024-04-26 19:40",
-    "bookedTill": "undefined undefined",
-    "slotId": "1",
+    "slotId": "11",
+    "bookedFrom": "2024-04-27 21:08",
+    "bookedTill": "2024-04-27 21:09",
     "bookingId": "booking4"
+  },
+  {
+    "userId": "tharunrai14@gmail.com",
+    "slotId": "7",
+    "bookedFrom": "2024-04-21 21:21",
+    "bookedTill": "2024-04-21 22:22",
+    "bookingId": "booking5"
+  },
+  {
+    "userId": "tharunrai14@gmail.com",
+    "slotId": "7",
+    "bookedFrom": "2024-04-25 21:00",
+    "bookedTill": "2024-04-25 00:57",
+    "bookingId": "booking6"
+  },
+  {
+    "userId": "tharunrai14@gmail.com",
+    "slotId": "2",
+    "bookedFrom": "2024-04-25 22:03",
+    "bookedTill": "2024-04-25 23:02",
+    "bookingId": "booking7"
   }
 ]

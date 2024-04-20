@@ -39,6 +39,9 @@ const HomePage = () => {
                     </button>
                     <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin }})} className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Log Out </button>
                 </div>
+                <div>
+                     <button onClick={() => { navigate('/history'); }} className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">History</button>
+                </div>
             </div>
             <div className="relative py-3 sm:max-w-xl sm:mx-auto"></div>
 

@@ -2,83 +2,123 @@
   "slots": [
     {
       "slotId": "1",
-      "isOccupied": true
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "2",
-      "isOccupied": false
+      "isOccupied": true,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "3",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "4",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "5",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "6",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "7",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "8",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "9",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "10",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "11",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "12",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "13",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "14",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "15",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "16",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "17",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "18",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "19",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     },
     {
       "slotId": "20",
-      "isOccupied": false
+      "isOccupied": false,
+      "bookedFrom": "",
+      "bookedTo": ""
     }
   ]
 }

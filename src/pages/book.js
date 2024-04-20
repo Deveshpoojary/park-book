@@ -1,64 +1,118 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
+import Alert from '@mui/material/Alert';
 
 const Book = () => {
   const navigate = useNavigate();
   const { user } = useAuth0();
-
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [booking, setBooking] = useState({
     vehicleType: "",
     date: "",
-    time: ""
+    time: "",
+    endTime: "",
+    slotId: null
   });
+  const [slots, setSlots] = useState([]);
+const [bookedFrom, setBookedFrom] = useState("");
+const [bookedTill, setBookedTill] = useState("");
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
+  useEffect(() => {
+    console.log('fetching slots');
+    console.log(bookedFrom, bookedTill);
+    if (bookedFrom && bookedTill){
+   fetchSlots( bookedFrom, bookedTill);
 
-  const confirmpage = () => {
-    navigate('/confirm');
+    }
+    
+  }, [ bookedFrom,bookedTill]);
+
+  
+
+ const fetchSlots = async (bookedFrom, bookedTill) => {
+    try {
+        const url = `http://localhost:3001/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
+        const response = await fetch(url);
+        const data = await response.json();
+           setLoading(true)
+        if (Array.isArray(data)) { // Check if data is an array
+            setSlots(data);
+             
+            setLoading(false)
+
+
+        } else {
+            console.error('Data received is not an array:', data);
+            setError(error);
+            setLoading(false)
+            setSlots([]); // Reset slots or handle as needed
+        }
+    } catch (error) {
+        console.error('Failed to fetch slots:', error);
+        setSlots([]); // Reset slots or provide a default value on error
+    }
+};
+
+
+// When the user selects or updates the booking time, call fetchSlots with the new times
+// Example: fetchSlots('2023-04-12T12:00', '2023-04-12T13:00');
+
+  const handleBooking = () => {
+    if (!booking.vehicleType || !booking.date || !booking.time || !booking.endTime || !booking.slotId) {
+      setError('Please fill all the fields');
+      return;
+    }
+    setIsConfirmModalVisible(true);
   };
-const handleBooking = async () => {
-  try {
+
+  const confirmBooking = async () => {
     const response = await fetch('http://localhost:3001/api/bookings', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        userId: user.email, // Assuming user.sub contains the user ID
-        bookedFrom: booking.date + ' ' + booking.time, // Combine date and time
-        bookedTill: booking.endDate + ' ' + booking.endTime // Assume you have end date/time
+        userId: user.email,
+        bookedFrom: `${booking.date} ${booking.time}`,
+        bookedTill: `${booking.date} ${booking.endTime}`,
+        slotId: booking.slotId
       }),
     });
 
     const data = await response.json();
     if (response.ok) {
-      console.log('Booking successful with slot:', data.slotId);
-      setModalVisible(true);
+      navigate('/confirm', { state: { booking: data } });
     } else {
-      console.log('Failed to book:', data.error);
       alert(data.error);
     }
-  } catch (error) {
-    console.error('Error during booking:', error);
-    alert('Error during booking');
-  }
-};
-
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setBooking(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setBooking(prev => ({ ...prev, [name]: value }));
+    var bookedf =  document.getElementById('time').value;
+    var bookedt =  document.getElementById('endTime').value;
+    if (bookedf && bookedt) {
+      bookedf = `${booking.date} ${bookedf}`;
+      bookedt = `${booking.date} ${bookedt}`;
+
+      setBookedFrom(bookedf);
+      setBookedTill(bookedt);
+    }
+    
+    
+
   };
 
-  const handleclick = (event) => {
-    event.preventDefault();
-    handleBooking();
+  const handleSlotSelect = (slotId) => {
+    const slot = slots.find(s => s.slotId === slotId);
+    if (slot.isOccupied) {
+      setError('Slot is already occupied');
+      
+    } else {
+      setBooking(prev => ({ ...prev, slotId }));
+    }
   };
-
-  const vehicleTypes = ["Car", "Bike"];
 
   return (
     <div className="bg-gradient-to-r from-blue-400 to-indigo-500 min-h-screen">
@@ -67,52 +121,67 @@ const handleBooking = async () => {
           <h1 className="text-3xl font-semibold text-gray-800 mb-6">Parking Booking</h1>
           <form id='bookingform'>
             <div className="mb-6">
-              <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-2">Vehicle Type</label>
-              <select id="vehicleType" name="vehicleType" className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-blue-500" onChange={handleChange} value={booking.vehicleType}>
-                {vehicleTypes.map((type, index) => (
-                  <option key={index} value={type}>{type}</option>
+              <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700">Vehicle Type</label>
+              <div className="mt-2">
+                <input type="radio" id="car" name="vehicleType" value="Car"  checked={booking.vehicleType === "Car"} />
+                <label htmlFor="car" className="mr-6">Car</label>
+                <input type="radio" id="bike" name="vehicleType" value="Bike" onChange={handleChange} checked={booking.vehicleType === "Bike"} />
+                <label htmlFor="bike">Bike</label>
+              </div>
+            </div>
+            <div className="mb-6">
+              <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+              <input type="date" id="date" name="date" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.date} />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="time" className="block text-sm font-medium text-gray-700">Time</label>
+              <input type="time" id="time" name="time" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.time} />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="endTime" className="block text-sm font-medium text-gray-700">End Time</label>
+              <input type="time" id="endTime" name="endTime" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.endTime} />
+            </div>
+            {loading && <p>Loading........................................................................</p>}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700">Select Slot</label>
+              <div className="grid grid-cols-4 gap-4 mt-2">
+                { slots.map(slot => (
+                  <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
+                    className={`cursor-pointer p-3 ${slot.slotId === booking.slotId ? 'bg-blue-500 text-white' : slot.isOccupied ? 'bg-red-500 text-white' : 'bg-green-500 text-white'} rounded-lg`}>
+                    Slot {slot.slotId}
+                  </div>
                 ))}
-              </select>
+                {error && <Alert variant="filled" severity="error" onClose={()=>{setError(null)}}>
+    {error}
+  </Alert>}
+              </div>
             </div>
-            <div className="mb-6">
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">Date</label>
-              <input type="date" id="date" name="date" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" onChange={handleChange} value={booking.date} />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-2">Time</label>
-              <input type="time" id="time" name="time" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" onChange={handleChange} value={booking.time} />
-            </div>
-            <div className="mb-6">
-              <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300" onClick={handleclick}>Book Now</button>
-            </div>
+            <button type="button" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleBooking}>
+              Book Now
+            </button>
+            
           </form>
         </div>
       </div>
 
-      {isModalVisible && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                    Booking Confirmation
-                  </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your booking for a {booking.vehicleType} on {booking.date} at {booking.time} has been confirmed.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button onClick={confirmpage} className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                      Go to Confirm Page
-                    </button>
-                  </div>
-                </div>
-              </div>
+      {isConfirmModalVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm mx-auto">
+            <h2 className="text-lg font-semibold">Confirm Booking</h2>
+            <p className="text-sm">Please confirm your booking details:</p>
+            <ul className="text-sm list-disc pl-5 mt-2">
+              <li>Vehicle Type: {booking.vehicleType}</li>
+              <li>Date: {booking.date}</li>
+              <li>Time: {booking.time} to {booking.endTime}</li>
+              <li>Slot: {booking.slotId}</li>
+            </ul>
+            <div className="flex justify-end gap-4 mt-4">
+              <button onClick={() => setIsConfirmModalVisible(false)} className="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded">
+                Cancel
+              </button>
+              <button onClick={confirmBooking} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                Confirm
+              </button>
             </div>
           </div>
         </div>
