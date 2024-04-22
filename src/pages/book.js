@@ -33,7 +33,7 @@ const [error, setError] = useState(null);
 
  const fetchSlots = async (bookedFrom, bookedTill) => {
     try {
-        const url = `http://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
+        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
         const response = await fetch(url);
         const data = await response.json();
            setLoading(true)

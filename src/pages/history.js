@@ -12,7 +12,7 @@ useEffect(() => {
 
 const fetchUserBookings = async (userEmail) => {
     try {
-        const url = `http://https://park-book-9f9254d7f86a.herokuapp.com/api/userBookings?email=${encodeURIComponent(userEmail)}`;
+        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/userBookings?email=${encodeURIComponent(userEmail)}`;
         const response = await fetch(url);
         if (response.ok) {
             const bookings = await response.json();
