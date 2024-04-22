@@ -36,6 +36,7 @@ return (
                 <tr>
                     <th className="border border-gray-300 px-4 py-2">Booking ID</th>
                     <th className="border border-gray-300 px-4 py-2">Vehicle</th>
+                    <th className="border border-gray-300 px-4 py-2">Amount</th>
                     <th className="border border-gray-300 px-4 py-2">Slot ID</th>
                     <th className="border border-gray-300 px-4 py-2">Booked From</th>
                     <th className="border border-gray-300 px-4 py-2">Booked Till</th>
@@ -46,6 +47,7 @@ return (
                     <tr key={booking.bookingId}>
                         <td className="border border-gray-300 px-4 py-2">{booking.bookingId}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.vehicleType}</td>
+                        <td className="border border-gray-300 px-4 py-2">{booking.amount}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.slotId}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.bookedFrom}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.bookedTill}</td>

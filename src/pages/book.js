@@ -18,6 +18,7 @@ const Book = () => {
 const [bookedFrom, setBookedFrom] = useState("");
 const [bookedTill, setBookedTill] = useState("");
 const [loading, setLoading] = useState(false);
+const [amount, setAmount] = useState(0);
 const [error, setError] = useState(null);
   useEffect(() => {
     console.log('fetching slots');
@@ -27,7 +28,7 @@ const [error, setError] = useState(null);
 
     }
     
-  }, [ bookedFrom,bookedTill]);
+  }, [ bookedFrom,bookedTill,booking.vehicleType]);
 
   
 
@@ -39,8 +40,11 @@ const [error, setError] = useState(null);
            setLoading(true)
         if (Array.isArray(data)) { // Check if data is an array
             setSlots(data);
-             
-            setLoading(false)
+             if(booking.vehicleType){
+              const calculatedAmount = calculateAmount(bookedFrom, bookedTill, booking.vehicleType);
+          setAmount(calculatedAmount);
+             }
+           
 
 
         } else {
@@ -64,6 +68,7 @@ const [error, setError] = useState(null);
       setError('Please fill all the fields');
       return;
     }
+    
     setIsConfirmModalVisible(true);
   };
 
@@ -74,6 +79,7 @@ const [error, setError] = useState(null);
       body: JSON.stringify({
         userId: user.email,
         vehicleType: booking.vehicleType,
+        amount: amount,
 
         bookedFrom: `${booking.date} ${booking.time}`,
         bookedTill: `${booking.date} ${booking.endTime}`,
@@ -88,6 +94,13 @@ const [error, setError] = useState(null);
       alert(data.error);
     }
   };
+  const calculateAmount = (bookedFrom, bookedTill, vehicleType) => {
+    const start = new Date(bookedFrom);
+    const end = new Date(bookedTill);
+    const diff = (end - start) / 60000; // difference in minutes
+    const rate = vehicleType === "Car" ? 1.5 : 1;
+    return diff * rate;
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -97,15 +110,18 @@ const [error, setError] = useState(null);
     if (bookedf && bookedt) {
       bookedf = `${booking.date} ${bookedf}`;
       bookedt = `${booking.date} ${bookedt}`;
-      if (bookedf < bookedt) {
+      if (bookedf < bookedt && booking.vehicleType) {
       setBookedFrom(bookedf);
       setBookedTill(bookedt);
+      
     }
     else{
       setBookedFrom("");
       setBookedTill("");
       setSlots([]);
-      setError('End time should be greater than start time');
+      if(!bookedf || !bookedt){
+      setError('End time should be greater than start time');}
+      setError('Please fill all the fields');
       console.log(bookedf, bookedt);
     }
     
@@ -120,6 +136,7 @@ const [error, setError] = useState(null);
       
     } else {
       setBooking(prev => ({ ...prev, slotId }));
+      
     }
   };
 
@@ -152,7 +169,7 @@ const [error, setError] = useState(null);
               <label htmlFor="endTime" className="block text-sm font-medium text-gray-700">End Time</label>
               <input type="time" id="endTime" name="endTime" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.endTime} />
             </div>
-            {loading && <p>Loading........................................................................</p>}
+            {<p>Total Charges:{amount}</p>}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700">Select Slot</label>
               <div className="grid grid-cols-4 gap-4 mt-2">
@@ -184,13 +201,14 @@ const [error, setError] = useState(null);
               <li>Date: {booking.date}</li>
               <li>Time: {booking.time} to {booking.endTime}</li>
               <li>Slot: {booking.slotId}</li>
+              <li>Amount: {amount}</li>
             </ul>
             <div className="flex justify-end gap-4 mt-4">
-              <button onClick={() => setIsConfirmModalVisible(false)} className="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded">
-                Cancel
+              <button onClick={() => setIsConfirmModalVisible(false)} className="bg-red-300 hover:bg-gray-400 text-black py-2 px-4 rounded">
+                No
               </button>
               <button onClick={confirmBooking} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-                Confirm
+                Pay and Confirm
               </button>
             </div>
           </div>
