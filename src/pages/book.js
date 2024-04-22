@@ -68,11 +68,13 @@ const [error, setError] = useState(null);
   };
 
   const confirmBooking = async () => {
-    const response = await fetch('http://localhost:3001/api/bookings', {
+    const response = await fetch('http://51.20.72.9:3001/api/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         userId: user.email,
+        vehicleType: booking.vehicleType,
+        
         bookedFrom: `${booking.date} ${booking.time}`,
         bookedTill: `${booking.date} ${booking.endTime}`,
         slotId: booking.slotId
@@ -95,14 +97,21 @@ const [error, setError] = useState(null);
     if (bookedf && bookedt) {
       bookedf = `${booking.date} ${bookedf}`;
       bookedt = `${booking.date} ${bookedt}`;
-
+      if (bookedf < bookedt) {
       setBookedFrom(bookedf);
       setBookedTill(bookedt);
+    }
+    else{
+      setBookedFrom("");
+      setBookedTill("");
+      setSlots([]);
+      setError('End time should be greater than start time');
+      console.log(bookedf, bookedt);
     }
     
     
 
-  };
+  };}
 
   const handleSlotSelect = (slotId) => {
     const slot = slots.find(s => s.slotId === slotId);
@@ -122,11 +131,13 @@ const [error, setError] = useState(null);
           <form id='bookingform'>
             <div className="mb-6">
               <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700">Vehicle Type</label>
-              <div className="mt-2">
-                <input type="radio" id="car" name="vehicleType" value="Car"  checked={booking.vehicleType === "Car"} />
-                <label htmlFor="car" className="mr-6">Car</label>
-                <input type="radio" id="bike" name="vehicleType" value="Bike" onChange={handleChange} checked={booking.vehicleType === "Bike"} />
-                <label htmlFor="bike">Bike</label>
+              <div className="mt-2 flex">
+                <button type="button" id="car" name="vehicleType" value="Car" onClick={handleChange} className={`w-1/2 py-2 px-4 rounded-md ${booking.vehicleType === "Car" ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} border border-gray-300`}>
+                  Car
+                </button>
+                <button type="button" id="bike" name="vehicleType" value="Bike" onClick={handleChange} className={`w-1/2 py-2 px-4 rounded-md ${booking.vehicleType === "Bike" ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} border border-gray-300`}>
+                  Bike
+                </button>
               </div>
             </div>
             <div className="mb-6">
@@ -152,14 +163,13 @@ const [error, setError] = useState(null);
                   </div>
                 ))}
                 {error && <Alert variant="filled" severity="error" onClose={()=>{setError(null)}}>
-    {error}
-  </Alert>}
+                  {error}
+                </Alert>}
               </div>
             </div>
             <button type="button" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleBooking}>
               Book Now
             </button>
-            
           </form>
         </div>
       </div>
@@ -189,5 +199,6 @@ const [error, setError] = useState(null);
     </div>
   );
 };
+
 
 export default Book;
