@@ -33,7 +33,7 @@ const [error, setError] = useState(null);
 
  const fetchSlots = async (bookedFrom, bookedTill) => {
     try {
-        const url = `http://51.20.72.9:3001/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
+        const url = `http://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}`;
         const response = await fetch(url);
         const data = await response.json();
            setLoading(true)
@@ -68,13 +68,13 @@ const [error, setError] = useState(null);
   };
 
   const confirmBooking = async () => {
-    const response = await fetch('http://51.20.72.9:3001/api/bookings', {
+    const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         userId: user.email,
         vehicleType: booking.vehicleType,
-        
+
         bookedFrom: `${booking.date} ${booking.time}`,
         bookedTill: `${booking.date} ${booking.endTime}`,
         slotId: booking.slotId
