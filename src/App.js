@@ -9,6 +9,7 @@ import Main from './pages/main';
 import HomePage from './pages/home';
 import NotFoundPage from './pages/notfound';
 import History from './pages/history'; 
+import Adminhist from "./pages/adminhist";
 function App() {
   return (
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/confirm" element={<Confirmation/>}/>
           <Route path="/rent" element={<Rent/>}/>
           <Route path="/history" element={<History/>}/>
+          <Route path="/adminhist" element={<Adminhist/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
           
       </Routes>
