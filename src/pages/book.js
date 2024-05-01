@@ -13,7 +13,8 @@ const Book = () => {
     date2: "",
     time: "",
     endTime: "",
-    slotId: null
+    slotId: null,
+    vehicleNumber: "",
   });
   const [slots, setSlots] = useState([]);
   const [bookedFrom, setBookedFrom] = useState("");
@@ -61,7 +62,7 @@ useEffect(() => {
   }, [bookedFrom, bookedTill, booking.vehicleType]);
 
   const handleBooking = () => {
-    if (!booking.vehicleType || !booking.date || !booking.time || !booking.date2 || !booking.endTime || !booking.slotId) {
+    if (!booking.vehicleType || !booking.date || !booking.time || !booking.date2 || !booking.endTime || !booking.slotId || !booking.vehicleNumber) {
       setError('Please fill all the fields');
       return;
     }
@@ -79,7 +80,8 @@ useEffect(() => {
         amount: amount,
         bookedFrom: `${booking.date} ${booking.time}`,
         bookedTill: `${booking.date2} ${booking.endTime}`,
-        slotId: booking.slotId
+        slotId: booking.slotId,
+        vehicleNumber: booking.vehicleNumber,
       }),
     });
 
@@ -156,6 +158,10 @@ useEffect(() => {
                 </button>
               </div>
             </div>
+            <div className="mb-6">
+              <label htmlFor="date" className="block text-sm font-medium text-gray-700">Vehcile number</label>
+              <input type="number" id="vehicleNumber" name="vehicleNumber" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.vehicleNumber} />
+            </div>
             {/* Date and Time Input Fields */}
             <div className="mb-6">
               <label htmlFor="date" className="block text-sm font-medium text-gray-700">Start Date</label>
@@ -203,6 +209,7 @@ useEffect(() => {
             <p className="text-sm">Please confirm your booking details:</p>
             <ul className="text-sm list-disc pl-5 mt-2">
               <li>Vehicle Type: {booking.vehicleType}</li>
+              <li>Vehicle Number: {booking.vehicleNumber}</li>
               <li>Start Date: {booking.date}</li>
               <li>Start Time: {booking.time}</li>
               <li>End Date: {booking.date2}</li>

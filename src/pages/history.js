@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 const History = () => {
 const { user } = useAuth0();
 const [bookings, setBookings] = useState([]);
+const [otp,setOtp]=useState('');
 const [loading, setLoading] = useState(false);
 useEffect(() => {
     const fetchUserBookings = async (userEmail) => {
@@ -32,6 +33,24 @@ useEffect(() => {
         setLoading(true);
     }
 }, [user]); // Dependency array includes user.email to refetch when it changes
+const checkin = async (bookingId, vehicleNumber) => {
+    try {
+        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/check-in?bookingId=${bookingId}&vehicleNumber=${vehicleNumber}`;
+        const response = await fetch(url, { method: 'POST' });
+        
+
+        if (!response.ok) { // Check if response is ok (status in the range 200-299)
+            throw new Error('Network response was not ok');
+        }
+
+        const res = await response.json(); // Parse JSON response in async manner
+        setOtp(res.otp); // Assuming setOtp is a state setter from React hooks
+
+        console.log(res); // Logging the response
+    } catch (error) {
+        console.error('Error checking in:', error);
+    }
+}
 
 
 return (
@@ -42,7 +61,7 @@ return (
                 <thead>
                     <tr>
                         <th className="border border-gray-300 px-4 py-2">Booking ID</th>
-                        <th className="border border-gray-300 px-4 py-2">Vehicle</th>
+                        <th className="border border-gray-300 px-4 py-2">Vehicleno</th>
                         <th className="border border-gray-300 px-4 py-2">Amount</th>
                         <th className="border border-gray-300 px-4 py-2">Slot ID</th>
                         <th className="border border-gray-300 px-4 py-2">Booked From</th>
@@ -53,11 +72,13 @@ return (
                     {bookings.map((booking) => (
                         <tr key={booking.bookingId}>
                             <td className="border border-gray-300 px-4 py-2">{booking.bookingId}</td>
-                            <td className="border border-gray-300 px-4 py-2">{booking.vehicleType}</td>
+                            <td className="border border-gray-300 px-4 py-2">{booking.vehicleNumber}</td>
                             <td className="border border-gray-300 px-4 py-2">{booking.amount}</td>
                             <td className="border border-gray-300 px-4 py-2">{booking.slotId}</td>
                             <td className="border border-gray-300 px-4 py-2">{booking.bookedFrom}</td>
                             <td className="border border-gray-300 px-4 py-2">{booking.bookedTill}</td>
+                            <td className="border border-gray-300 px-4 py-2"><button onClick={()=>{checkin(booking.bookingId,booking.vehicleNumber)}} >Checkin</button>{otp}</td>
+                            <td className="border border-gray-300 px-4 py-2">Checkout</td>
                         </tr>
                     ))}
                 </tbody>
