@@ -33,20 +33,36 @@ useEffect(() => {
         setLoading(true);
     }
 }, [user]); // Dependency array includes user.email to refetch when it changes
-const checkin = async (bookingId, vehicleNumber) => {
+const checkin = async (booking) => {
     try {
-        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/check-in?bookingId=${bookingId}&vehicleNumber=${vehicleNumber}`;
-        const response = await fetch(url, { method: 'POST' });
+        const checkInTime = new Date(); 
+        //convert to date time string in ist+5:30
+        checkInTime.setHours(checkInTime.getHours() + 5);
+        checkInTime.setMinutes(checkInTime.getMinutes() + 30);
+        const trimdaytime = checkInTime.toISOString().slice(0, 19).replace('T', ' ');
+        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/check-in`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                bookingId: booking.bookingId,
+                checkInTime: trimdaytime
+            })
+        });
         
 
-        if (!response.ok) { // Check if response is ok (status in the range 200-299)
-            throw new Error('Network response was not ok');
-        }
+        // if (!response.ok) { // Check if response is ok (status in the range 200-299)
+        //  console.log(response); 
+        //     throw new Error('Network response was not ok');
+       
+        // }
 
-        const res = await response.json(); // Parse JSON response in async manner
-        setOtp(res.otp); // Assuming setOtp is a state setter from React hooks
+         const res = await response.json(); // Parse JSON response in async manner
+        // setOtp(res.otp); // Assuming setOtp is a state setter from React hooks
 
-        console.log(res); // Logging the response
+        console.log("succes/",res); // Logging the response
     } catch (error) {
         console.error('Error checking in:', error);
     }
@@ -77,7 +93,7 @@ return (
                             <td className="border border-gray-300 px-4 py-2">{booking.slotId}</td>
                             <td className="border border-gray-300 px-4 py-2">{booking.bookedFrom}</td>
                             <td className="border border-gray-300 px-4 py-2">{booking.bookedTill}</td>
-                            <td className="border border-gray-300 px-4 py-2"><button onClick={()=>{checkin(booking.bookingId,booking.vehicleNumber)}} >Checkin</button>{otp}</td>
+                            <td className="border border-gray-300 px-4 py-2"><button onClick={()=>{checkin(booking)}} >Checkin</button>{otp}</td>
                             <td className="border border-gray-300 px-4 py-2">Checkout</td>
                         </tr>
                     ))}
