@@ -6,6 +6,7 @@ const { user } = useAuth0();
 const [bookings, setBookings] = useState([]);
 const [otp,setOtp]=useState('');
 const [loading, setLoading] = useState(false);
+
 useEffect(() => {
     const fetchUserBookings = async (userEmail) => {
     try {
@@ -33,42 +34,11 @@ useEffect(() => {
         setLoading(true);
     }
 }, [user]); // Dependency array includes user.email to refetch when it changes
-const checkin = async (booking) => {
-    try {
-        const checkInTime = new Date(); 
-        //convert to date time string in ist+5:30
-        checkInTime.setHours(checkInTime.getHours() + 5);
-        checkInTime.setMinutes(checkInTime.getMinutes() + 30);
-        const trimdaytime = checkInTime.toISOString().slice(0, 19).replace('T', ' ');
-        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/check-in`;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                bookingId: booking.bookingId,
-                checkInTime: trimdaytime
-            })
-        });
-        
-
-        // if (!response.ok) { // Check if response is ok (status in the range 200-299)
-        //  console.log(response); 
-        //     throw new Error('Network response was not ok');
-       
-        // }
-
-         const res = await response.json(); // Parse JSON response in async manner
-        // setOtp(res.otp); // Assuming setOtp is a state setter from React hooks
-
-        console.log("succes/",res); // Logging the response
-    } catch (error) {
-        console.error('Error checking in:', error);
-    }
-}
-
-
+ const isBookingExpired = (bookedTill) => {
+        const now = new Date();
+        const tillDate = new Date(bookedTill);
+        return now > tillDate;
+    };
 return (
     <div>
         <h1 className="text-2xl font-bold mb-4">Booking History</h1>
@@ -86,18 +56,34 @@ return (
                 </thead>
                 <tbody>
                     {bookings.map((booking) => (
-                        <tr key={booking.bookingId}>
-                            <td className="border border-gray-300 px-4 py-2">{booking.bookingId}</td>
-                            <td className="border border-gray-300 px-4 py-2">{booking.vehicleNumber}</td>
-                            <td className="border border-gray-300 px-4 py-2">{booking.amount}</td>
-                            <td className="border border-gray-300 px-4 py-2">{booking.slotId}</td>
-                            <td className="border border-gray-300 px-4 py-2">{booking.bookedFrom}</td>
-                            <td className="border border-gray-300 px-4 py-2">{booking.bookedTill}</td>
-                            <td className="border border-gray-300 px-4 py-2"><button onClick={()=>{checkin(booking)}} >Checkin</button>{otp}</td>
-                            <td className="border border-gray-300 px-4 py-2">Checkout</td>
-                        </tr>
-                    ))}
-                </tbody>
+                       <tr key={booking.bookingId}>
+                        <td className="border px-4 py-2">{booking.bookingId}</td>
+                        <td className="border px-4 py-2">{booking.vehicleNumber}</td>
+                        <td className="border px-4 py-2">{booking.amount}</td>
+                        <td className="border px-4 py-2">{booking.slotId}</td>
+                        <td className="border px-4 py-2">{booking.bookedFrom}</td>
+                        <td className="border px-4 py-2">{booking.bookedTill}</td>
+                        <td className="border px-4 py-2">
+                           {!booking.isCheckedIn ? 
+                           
+                           
+                           (isBookingExpired(booking.bookedTill) ?
+                                    <span className="text-red-600">Booking Expired</span> :
+                                    
+                           
+                           booking.checkinotp ):(<p className='text-green-600'>Checked in</p>)}
+                        </td>
+                        <td className="border px-4 py-2">{!booking.isCheckedOut ? 
+                           
+                           
+                           
+                                    
+                           
+                           booking.checkoutotp :(<p className='text-green-600'>Checked Out</p>)}</td>
+                    </tr>
+                ))}
+            </tbody>
+        
             </table>
         ) : (
             <div className="flex items-center justify-center h-32">
