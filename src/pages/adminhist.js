@@ -200,7 +200,7 @@ return (
             </th>
                 <tr>
                     <th className="border border-gray-300 px-4 py-2">User</th>
-                    <th className="border border-gray-300 px-4 py-2">Vehicle</th>
+                    <th className="border border-gray-300 px-4 py-2">Vehicle no.</th>
                     <th className="border border-gray-300 px-4 py-2">Amount</th>
                     <th className="border border-gray-300 px-4 py-2">Slot ID</th>
                     <th className="border border-gray-300 px-4 py-2">Booked From</th>
@@ -226,7 +226,7 @@ return (
                     <tr key={booking.bookingId}>
                         {/* <td className="border border-gray-300 px-4 py-2">{booking.bookingId}</td> */}
                         <td className="border border-gray-300 px-4 py-2">{booking.userId}</td>
-                        <td className="border border-gray-300 px-4 py-2">{booking.vehicleType}</td>
+                        <td className="border border-gray-300 px-4 py-2">{booking.vehicleNumber}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.amount}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.slotId}</td>
                         <td className="border border-gray-300 px-4 py-2">{booking.bookedFrom}</td>
