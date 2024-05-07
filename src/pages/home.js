@@ -61,7 +61,7 @@ const HomePage = () => {
                                         <label htmlFor="location" className="sr-only">Location</label>
                                         
                                         <select>
-                                            <option value="location">GDC college</option>
+                                            <option value="location">Railway MlR CNTRL</option>
                                             <option value="location">none</option>
 
                                             

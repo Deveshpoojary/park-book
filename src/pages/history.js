@@ -1,10 +1,10 @@
 import React, { useEffect,useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-
+import Alert from '@mui/material/Alert';
 const History = () => {
 const { user } = useAuth0();
 const [bookings, setBookings] = useState([]);
-const [otp,setOtp]=useState('');
+const [count,setcount]=useState(0);
 const [loading, setLoading] = useState(false);
 
 useEffect(() => {
@@ -15,8 +15,12 @@ useEffect(() => {
         if (response.ok) {
             const bookings = await response.json();
             console.log('User bookings:', bookings);
+            //sort
+            bookings.sort((a, b) => {
+                return new Date(b.bookedFrom) - new Date(a.bookedFrom);
+            });
             setBookings(bookings);
-            // Do something with the bookings, like setting state
+            
         } else {
             throw new Error('Failed to fetch bookings');
            
@@ -33,7 +37,7 @@ useEffect(() => {
     else{
         setLoading(true);
     }
-}, [user]); // Dependency array includes user.email to refetch when it changes
+}, [user,count]); // Dependency array includes user.email to refetch when it changes
  const isBookingExpired = (bookedTill) => {
         const now = new Date();
         const tillDate = new Date(bookedTill);
@@ -41,7 +45,9 @@ useEffect(() => {
     };
 return (
     <div>
-        <h1 className="text-2xl font-bold mb-4">Booking History</h1>
+        <>
+        <span className="text-2xl font-bold mb-4">Booking History</span>
+        <button onClick={() => {setcount(count+1)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mx-4 my-4 px-1 rounded">Refresh</button></>
         {!loading ? (
             <table className="w-full border-collapse">
                 <thead>
@@ -52,6 +58,9 @@ return (
                         <th className="border border-gray-300 px-4 py-2">Slot ID</th>
                         <th className="border border-gray-300 px-4 py-2">Booked From</th>
                         <th className="border border-gray-300 px-4 py-2">Booked Till</th>
+                        <th className="border border-gray-300 px-4 py-2">Checkin OTP</th>
+                        <th className="border border-gray-300 px-4 py-2">Checkout OTP</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -74,12 +83,9 @@ return (
                            booking.checkinotp ):(<p className='text-green-600'>Checked in</p>)}
                         </td>
                         <td className="border px-4 py-2">{!booking.isCheckedOut ? 
-                           
-                           
-                           
-                                    
-                           
-                           booking.checkoutotp :(<p className='text-green-600'>Checked Out</p>)}</td>
+                            (booking.checkoutotp ? booking.checkoutotp : <p className='text-red-600'>Not Checked In</p>)
+                            : <p className='text-green-600'><b>Checked Out</b></p>}
+                        </td>
                     </tr>
                 ))}
             </tbody>

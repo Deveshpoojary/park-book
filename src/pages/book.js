@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Alert from '@mui/material/Alert';
+import { BsTicketPerforated } from 'react-icons/bs';
+import { set } from 'firebase/database';
 
 const Book = () => {
   const navigate = useNavigate();
@@ -15,13 +17,44 @@ const Book = () => {
     endTime: "",
     slotId: null,
     vehicleNumber: "",
+    amount: 0
   });
   const [slots, setSlots] = useState([]);
   const [bookedFrom, setBookedFrom] = useState("");
   const [bookedTill, setBookedTill] = useState("");
   const [load, setLoading] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [error, setError] = useState(null);
+  const [carprice, setCarprice] = useState(0);
+  const [bikeprice, setBikeprice] = useState(0);
+  
+  useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/prices');
+        const data = await response.json();
+        setCarprice(data[0].carprice);
+        setBikeprice(data[0].bikeprice);
+        
+        console.log(carprice);
+        console.log(bikeprice);
+       
+      } catch (error) {
+        console.error('Failed to fetch prices:', error);
+      }
+    };
+    fetchPrice();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookedFrom, bookedTill, booking.vehicleType, carprice, bikeprice]);
+
+    useEffect(() => {
+    if (bookedFrom && bookedTill && booking.vehicleType && carprice || bikeprice) {
+      const calculatedAmount = calculateAmount(bookedFrom, bookedTill, booking.vehicleType);
+      setAmount(calculatedAmount);
+    }
+  }, [bikeprice, bookedFrom, bookedTill, booking.vehicleType, carprice,bikeprice]);
+
+  
 useEffect(() => {
   if(error){
     setSlots([]);
@@ -37,21 +70,21 @@ useEffect(() => {
         return;
       }
       try {
+        setLoading(true)
         const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}&type=${booking.vehicleType}`;
         const response = await fetch(url);
         const data = await response.json();
-        setLoading(false);
+        
         if (Array.isArray(data)) {
           setSlots(data);
           console.log(data);
-          const calculatedAmount = calculateAmount(bookedFrom, bookedTill, booking.vehicleType);
-          setAmount(calculatedAmount);
-        } else {
-          console.error('Data received is not an array:', data);
-          setError("Error fetching slots");
-          setSlots([]);
-        }
-      } catch (error) {
+         
+          }
+          
+          }
+          
+        
+       catch (error) {
         console.error('Failed to fetch slots:', error);
         setSlots([]);
         setError("Error fetching slots");
@@ -59,11 +92,19 @@ useEffect(() => {
     };
 
     fetchSlots();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookedFrom, bookedTill, booking.vehicleType]);
 
-  const handleBooking = () => {
-    if (!booking.vehicleType || !booking.date || !booking.time || !booking.date2 || !booking.endTime || !booking.slotId || !booking.vehicleNumber) {
+  const handleBooking = (e) => {
+    e.preventDefault();
+
+    if (!booking.vehicleType || !booking.date || !booking.time || !booking.date2 || !booking.endTime || !booking.slotId || !booking.vehicleNumber || !amount) {
+      
+      
       setError('Please fill all the fields');
+
+
+
       return;
     }
     
@@ -82,6 +123,8 @@ useEffect(() => {
         bookedTill: `${booking.date2} ${booking.endTime}`,
         slotId: booking.slotId,
         vehicleNumber: booking.vehicleNumber,
+      
+
       }),
     });
 
@@ -94,12 +137,26 @@ useEffect(() => {
     }
   };
 
-  const calculateAmount = (bookedFrom, bookedTill, vehicleType) => {
-    const start = new Date(bookedFrom);
-    const end = new Date(bookedTill);
+   const calculateAmount = (from, till, type) => {
+    const start = new Date(from);
+    const end = new Date(till);
     const diff = (end - start) / 60000; // difference in minutes
-    const rate = vehicleType === "car" ? 1.5 : 1;
-    return diff * rate;
+    const rate = type === "car" ? carprice : bikeprice;
+    const calculatedAmount = diff * rate;
+    try{if (calculatedAmount <= 0) {
+       setError('Calculated amount is non-positive');
+      throw new Error('Calculated amount is non-positive');
+     
+    }
+    if (calculatedAmount < 10 && !(calculatedAmount> 10)) {
+      setError('Minimum amount is 10');
+      return 10;
+    }
+    return calculatedAmount;
+    }
+    catch(error){
+      console.error('Error calculating amount:', error);
+    }
   };
 
   const handleChange = (event) => {
@@ -159,8 +216,8 @@ useEffect(() => {
               </div>
             </div>
             <div className="mb-6">
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700">Vehcile number</label>
-              <input type="number" id="vehicleNumber" name="vehicleNumber" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.vehicleNumber} />
+              <label htmlFor="date" className="block border-stone-950 text-sm font-medium text-gray-700">Vehicle number</label>
+              <input type="number" id="vehicleNumber" name="vehicleNumber" placeholder='KA19XXXXXX' autoFocus required className="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " onChange={handleChange} value={booking.vehicleNumber} />
             </div>
             {/* Date and Time Input Fields */}
             <div className="mb-6">
@@ -180,10 +237,15 @@ useEffect(() => {
               <input type="time" id="endTime" name="endTime" required className="form-input mt-1 block w-full" onChange={handleChange} value={booking.endTime} />
             </div>
             {/* Total Charges Display */}
-            {amount > 0 && <p>Total Charges:<span className=' font-medium text-green-900'>INR: {amount.toFixed(2)}</span> </p>}
+            {amount > 0 ? <p>Total Charges:<span className=' font-medium text-green-900'>INR: {amount.toFixed(2)}</span> </p> : <span class="relative flex h-3 w-3">Fetching
+  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+  <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+</span>}
             {/* Slot Selection */}
-            <div className="mb-6">
+            
+            <div className="mb-6 mt-2"> 
               <label className="block text-sm font-medium text-gray-700">Select Slot</label>
+              
               <div className="grid grid-cols-4 gap-4 mt-2">
                 {slots.map(slot => (
                   <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
@@ -195,7 +257,7 @@ useEffect(() => {
               {error && <Alert variant="filled" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
             </div>
             {/* Booking Button */}
-            <button type="button" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleBooking}>
+            <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleBooking}>
               Book Now
             </button>
           </form>
