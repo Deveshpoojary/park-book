@@ -58,7 +58,12 @@ const Book = () => {
 useEffect(() => {
   if(error){
     setSlots([]);
+    
 
+}
+
+else{
+  setBooking(prev=>({...prev,vehicleType:!booking.vehicleType}));
 }},[error]);
   useEffect(() => {
     console.log('fetching slots');
