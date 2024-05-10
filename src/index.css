@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* body {
+  background-color: #070707;
+    color: #fff;
+}
+button {
+  background-color: cyan;
+  color: #070707;
+}
+input {
+  background-color: grey;
+  color: #fff;
+} */

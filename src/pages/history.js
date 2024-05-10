@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Alert from '@mui/material/Alert';
+import Steerings from './steering';
 const History = () => {
 const { user } = useAuth0();
 const [bookings, setBookings] = useState([]);
@@ -92,10 +93,7 @@ return (
         
             </table>
         ) : (
-            <div className="flex items-center justify-center h-32">
-                loading history
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-900"></div>
-            </div>
+           <Steerings/>
         )}
     </div>
 );
