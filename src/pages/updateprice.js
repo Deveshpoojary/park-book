@@ -58,9 +58,9 @@ useEffect(() => {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-neutral-800 shadow-md rounded-lg">
+        <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-neutral-800 rounded-lg shadow-xl shadow-cyan-900">
             <h1 className="text-2xl text-center text-white font-bold mb-4">Update Parking Prices</h1>
-            <button className='bg-cyan-500 text-black p-1 font-bold rounded-md hover:bg-cya-600 animate-pulse' onClick={() => {setcount(count+1)}}> Fetch latest prices
+            <button className='bg-cyan-500 text-black p-1 font-bold rounded-md hover:bg-cyan-600 animate-pulse' onClick={() => {setcount(count+1)}}> Fetch latest prices
            
 
             
@@ -70,10 +70,10 @@ useEffect(() => {
                     <label className="block text-white text-sm font-bold mb-2" htmlFor="carPrice">
                         Car Price (per minute)
                     </label>
-                    <span className='text-cyan-500 animate-pulse'>Current Price <span className='text-red-400 animate-pulse'>{carPrice}</span> </span> 
+                    <span className='text-cyan-500 animate-pulse'>Current Price: <span className='text-red-400 animate-pulse'>{carPrice}</span> </span> 
                     <br></br>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700"
                         id="carPrice"
                         type="number"
                         placeholder="Enter car price"
@@ -86,11 +86,11 @@ useEffect(() => {
                     <label className="block text-white text-sm font-bold mb-2" htmlFor="bikePrice">
                         Bike Price (per minute)
                     </label>
-                    <span className='text-cyan-400 animate-pulse'>Current Price  <span className='text-red-400 animate-pulse'>{bikePrice}</span> </span>
+                    <span className='text-cyan-400 animate-pulse'>Current Price:  <span className='text-red-400 animate-pulse'>{bikePrice}</span> </span>
                     <br></br>
 
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700"
                         id="bikePrice"
                         type="number"
                         placeholder="Enter bike price"

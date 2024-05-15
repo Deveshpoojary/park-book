@@ -180,7 +180,7 @@ const Adminhist = () => {
 
     return (
         <div className='bgcolor text-white min-h-screen'>
-            <span className="flex text-2xl font-bold mb-4 px-2 py-4 bg-neutral-800 shadow-lg"><h1 className='l-border'>All Bookings</h1><button onClick={() => setcount(count + 1)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 ml-2 rounded">Refresh</button>
+            <span className="flex text-2xl font-bold mb-4 px-2 py-4 bg-neutral-800 shadow-lg"><h1 className='l-border'>All Bookings</h1><button onClick={() => setcount(count + 1)} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-1 px-1 ml-2 rounded">Refresh</button>
                 {error && <Alert severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
                 {mess && <Alert severity="success" onClose={() => { setMess(null) }}>{mess}</Alert>}
             </span>

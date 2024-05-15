@@ -34,18 +34,18 @@ const HomePage = () => {
                     <img src="https://api.time.com/wp-content/uploads/2015/02/apple-logo.jpg" alt="Logo" className="h-8 w-auto" />
                 </div>
                 <div>
-                    <button onClick={() => { navigate('/book'); }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button onClick={() => { navigate('/book'); }} className="bg-sky-500 hover:bg-white text-black font-bold py-2 px-4 rounded">
                         Book
                     </button>
-                    <button onClick={() => { navigate('/admin'); }} className="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    <button onClick={() => { navigate('/admin'); }} className="ml-4 bg-sky-500 hover:bg-white text-black font-bold py-2 px-4 rounded">
                         Admin
                     </button>
-                    <button onClick={() => { navigate('/adminhist'); }} className="ml-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Admin history</button>
-                    <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Log Out </button>
+                    <button onClick={() => { navigate('/adminhist'); }} className="ml-4 bg-sky-500 hover:bg-white text-black font-bold py-2 px-4 rounded">Admin history</button>
+                    <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="ml-4 bg-sky-500 hover:bg-white text-black font-bold py-2 px-4 rounded">Log Out </button>
                 </div>
 
                 <div>
-                    <button onClick={() => { navigate('/history'); }} className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">History</button>
+                    <button onClick={() => { navigate('/history'); }} className="ml-4 bg-sky-500 hover:bg-white text-black font-bold py-2 px-4 rounded">History</button>
                 </div>
             </div>
             <div className="relative py-3 sm:max-w-xl sm:mx-auto"></div>

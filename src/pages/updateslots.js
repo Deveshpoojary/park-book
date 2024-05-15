@@ -51,7 +51,7 @@ const UpdateSlots = () => {
     };
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container bg-neutral-800 mx-auto px-4 shadow-xl shadow-cyan-900 rounded-lg py-4 mt-6">
             <h1 className="text-4xl py-2 mt-4 font-bold text-white l-border">Update Parking Slots</h1>
             <form onSubmit={handleSubmit} className="mt-4">
                 <div className="mb-4">
@@ -101,7 +101,7 @@ const UpdateSlots = () => {
                 </div>
                 <button
                     type="submit"
-                    className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2 px-4 rounded"
+                    className="bg-cyan-400 hover:bg-cyan-500 text-black font-bold py-2 px-4 rounded"
                 >
                     {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
                 </button>

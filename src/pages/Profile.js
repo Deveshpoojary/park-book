@@ -6,7 +6,7 @@ function Profile() {
 
   const username = user.name.substring(0,user.name.indexOf('@')).charAt(0).toUpperCase() + user.name.substring(1,user.name.indexOf('@'));
 
-  return <div className='text-xl text-rose-500 font-mono font-semibold mr-4'>Welcome, {username}</div>;
+  return <div className='text-xl text-rose-500 font-mono font-bold mr-4'>Welcome, {username}</div>;
 }
 
 export default Profile;

@@ -2,6 +2,7 @@ import React from 'react';
 import UpdatePrices from './updateprice';
 import UpdateSlots from './updateslots';
 import Adminhist from './adminhist';
+import Accessdenied from './accessdenied';
 import { useState, useEffect } from 'react';
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -16,7 +17,7 @@ const Admin = () => {
 
     useEffect(() => {
         if (user) {
-            setadmin(user.email === "deveshpoojary@gmail.com");
+            setadmin(user.email === "deveshpoojary@gmail.com" || user.email === "tharunrai14@gmail.com");
             setLoading(false);
         }
         else {
@@ -55,7 +56,8 @@ const Admin = () => {
                 :
 
                 <div>
-                    <h1>Access Denied</h1>
+                    {/* <h1 className='text-white font-bold'>Access Denied</h1> */}
+                    <Accessdenied/>
                 </div>}
 
         </div>
