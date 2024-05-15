@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Alert from '@mui/material/Alert';
-import Steerings from './steering';
+import LoadingAnimation from './steering';
 const History = () => {
 const { user } = useAuth0();
 const [bookings, setBookings] = useState([]);
@@ -45,12 +45,16 @@ useEffect(() => {
         return now > tillDate;
     };
 return (
-    <div>
+    <div className='bgcolor text-white min-h-screen'>
         <>
-        <span className="text-2xl font-bold mb-4">Booking History</span>
-        <button onClick={() => {setcount(count+1)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mx-4 my-4 px-1 rounded">Refresh</button></>
+        
+        <span className="flex text-2xl font-bold mb-4 px-2 py-4 bg-neutral-800"><h1 className='l-border'>Booking History</h1>
+        <button onClick={() => setcount(count + 1)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1  px-1 ml-2 rounded">Refresh</button></span>
+        </>
+
         {!loading ? (
-            <table className="w-full border-collapse">
+            <div className='px-4 py-4'>
+            <table className="w-full border rounded-lg ">
                 <thead>
                     <tr>
                         <th className="border border-gray-300 px-4 py-2">Booking ID</th>
@@ -73,27 +77,28 @@ return (
                         <td className="border px-4 py-2">{booking.slotId}</td>
                         <td className="border px-4 py-2">{booking.bookedFrom}</td>
                         <td className="border px-4 py-2">{booking.bookedTill}</td>
-                        <td className="border px-4 py-2">
+                        <td className="border px-4 py-2 font-bold">
                            {!booking.isCheckedIn ? 
                            
                            
                            (isBookingExpired(booking.bookedTill) ?
-                                    <span className="text-red-600">Booking Expired</span> :
+                                    <span className="text-red-600 font-bold">Booking Expired</span> :
                                     
                            
-                           booking.checkinotp ):(<p className='text-green-600'>Checked in</p>)}
+                           booking.checkinotp ):(<p className='text-green-600 font-bold'>Checked in</p>)}
                         </td>
                         <td className="border px-4 py-2">{!booking.isCheckedOut ? 
-                            (booking.checkoutotp ? booking.checkoutotp : <p className='text-red-600'>Not Checked In</p>)
-                            : <p className='text-green-600'><b>Checked Out</b></p>}
+                            (booking.checkoutotp ? booking.checkoutotp : <p className='text-red-600 font-bold'>Not Checked In</p>)
+                            : <p className='text-green-600 font-bold'>Checked Out</p>}
                         </td>
                     </tr>
                 ))}
             </tbody>
         
             </table>
+            </div>
         ) : (
-           <Steerings/>
+           <LoadingAnimation/>
         )}
     </div>
 );

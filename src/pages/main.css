@@ -1,0 +1,42 @@
+.my-component{
+    background: linear-gradient(90deg,#5D9FFF,rgb(152, 224, 224), #82E0AA);
+    width:100%;
+    
+}
+/* .name{
+    background-image: linear-gradient(to right, #f13e4a, #8d08fa);
+    padding-bottom:3px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+} */
+
+/* .box{
+    width:50%;
+    height:50%;
+    background-color:white;
+} */
+/* .label{
+    background-image: linear-gradient(to right, #FF5E69, #B16CEA);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;       
+} */
+
+.btn{
+    background: linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5);
+    background-size: 600%;
+    animation: anime 16s linear infinite;
+    border-radius:30px;
+}
+@keyframes anime{
+    0%{
+      background-position: 0% 50%;
+    }
+    50%{
+      background-position: 100% 50%;
+    }
+    100%{
+      background-position: 0% 50%;
+    }
+  }

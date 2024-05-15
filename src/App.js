@@ -11,8 +11,11 @@ import NotFoundPage from './pages/notfound';
 import History from './pages/history'; 
 import Adminhist from "./pages/adminhist";
 import Confirmerror from "./pages/confirmerror";
+
+// import ConfirmationPage from "./pages/confirm";
 // import { PageProvider } from "./pages/PageContext";
 function App() {
+
   return (
 
 
@@ -29,6 +32,7 @@ function App() {
           <Route path="/adminhist" element={<Adminhist/>}/>
           <Route path="/confirmerror" element={<Confirmerror/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
+          {/* <Route path="/confirm" element={<ConfirmationPage/>}/> */}
           
       </Routes>
     </BrowserRouter>

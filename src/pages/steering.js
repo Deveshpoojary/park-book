@@ -1,6 +1,6 @@
 import React from 'react';
-
 import Steering from "../images/steering-wheel.png";
+
 const LoadingAnimation = () => {
     return (
         <><div className="flex items-center justify-center h-screen">

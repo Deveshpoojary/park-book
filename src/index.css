@@ -14,3 +14,20 @@ input {
   background-color: grey;
   color: #fff;
 } */
+.bgcolor{
+  background: rgb(31, 31, 44);
+}
+/* .search{
+  position: absolute;
+  left:560px;
+  top:138px;
+} */
+.l-border{
+  margin-left: 3rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 3rem;
+  padding: 8px;
+  border-left: 5px solid transparent;
+  border-image: linear-gradient(to bottom, #FF5E69, #B16CEA);
+  border-image-slice: 1;
+}

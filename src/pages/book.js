@@ -1,8 +1,13 @@
-  import React, { useState, useEffect } from 'react';
-  import { useNavigate } from 'react-router-dom';
-  import { useAuth0 } from "@auth0/auth0-react";
-  import Alert from '@mui/material/Alert';
-  import { BsTicketPerforated } from 'react-icons/bs';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
+import Alert from '@mui/material/Alert';
+import { BsTicketPerforated } from 'react-icons/bs';
+import { IoCarSportSharp } from "react-icons/io5";
+import { PiMotorcycleFill } from "react-icons/pi";
+import {FaRegArrowAltCircleRight} from "react-icons/fa";
+import {MdCancel} from "react-icons/md";
+import {GiConfirmed} from "react-icons/gi"
 import { MdConfirmationNumber } from "react-icons/md";
 
 import ConfirmationPage from './confirm';
@@ -220,21 +225,21 @@ import ConfirmationPage from './confirm';
 
     return (<>{!confirm?
 
-    <div className="min-h-screen bg-neutral-900 text-white">
+    <div className="min-h-screen bg-neutral-900 text-white py-4 px-14 bgcolor">
             <div className="container mx-auto py-8">
-                <div className="bg-neutral-800 p-8 rounded-lg shadow-md">
+                <div className="bg-neutral-800 p-8 rounded-lg shadow-xl shadow-cyan-900">
                     <h1 className="text-3xl font-bold mb-6">Parking Booking</h1>
                     <form id='bookingform'>
                         <div className="mb-4">
                             <label htmlFor="vehicleType" className="font-medium">Vehicle Type:</label>
                             <div className="flex gap-4 mt-2">
                                 <button type="button" name="vehicleType" value="car" onClick={handleChange}
-                                    className={`py-2 px-4 rounded-md transition-colors ${booking.vehicleType === "car" ? 'bg-cyan-700' : 'bg-gray-700 hover:bg-gray-600'}`}>
-                                    Car
+                                    className={`py-2 px-4 rounded-md transition-colors ${booking.vehicleType === "car" ? 'bg-cyan-500' : 'bg-gray-700 hover:bg-gray-600'} font-bold`}>
+                                    <IoCarSportSharp size={30} className='text-black-500'/>Car
                                 </button>
                                 <button type="button" name="vehicleType" value="bike" onClick={handleChange}
-                                    className={`py-2 px-4 rounded-md transition-colors ${booking.vehicleType === "bike" ? 'bg-cyan-700' : 'bg-gray-700 hover:bg-gray-600'}`}>
-                                    Bike
+                                    className={`py-2 px-4 rounded-md transition-colors ${booking.vehicleType === "bike" ? 'bg-cyan-500' : 'bg-gray-700 hover:bg-gray-600'} font-bold`}>
+                                    <PiMotorcycleFill size={30} className='text-black-500'/>Bike
                                 </button>
                             </div>
                         </div>
@@ -286,8 +291,8 @@ import ConfirmationPage from './confirm';
                 {error && <Alert variant="filled" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
               </div>
               {/* Booking Button */}
-              <button type="submit" className="w-full  bg-slate-100 text-neutral-900 py-2 px-4 rounded-md hover:bg-sky-600" onClick={handleBooking}>
-               Book Now 
+              <button type="submit" className="w-full bg-slate-100 text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-sky-600 flex justify-center items-center" onClick={handleBooking}>
+               Book Now <FaRegArrowAltCircleRight size={25} className='ml-1'/>
               </button>
             </form>
           </div>
@@ -309,11 +314,11 @@ import ConfirmationPage from './confirm';
                 <li>Amount: INR: {amount.toFixed(2)}</li>
               </ul>
               <div className="flex justify-end gap-4 mt-4">
-                <button onClick={() => setIsConfirmModalVisible(false)} className="bg-red-300 hover:bg-gray-400 text-black py-2 px-4 rounded">
-                  No
+                <button onClick={() => setIsConfirmModalVisible(false)} className="bg-red-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
+                  Cancel<MdCancel className="ml-2"/>
                 </button>
-              {!loading? <button onClick={confirmBooking} className="bg-cyan-500 hover:bg-sky-600 text-black py-2 px-4 rounded">
-                  Pay and Confirm
+              {!loading? <button onClick={confirmBooking} className="bg-cyan-500 hover:bg-sky-600 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
+                  Pay and Confirm<GiConfirmed className="ml-2"/>
                 </button>: <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                   <BsTicketPerforated className="animate-spin" />
                   </button>}
