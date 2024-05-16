@@ -227,7 +227,7 @@ import ConfirmationPage from './confirm';
 
     <div className="min-h-screen bg-neutral-900 text-white py-4 px-14 bgcolor">
             <div className="container mx-auto py-8">
-                <div className="bg-neutral-800 p-8 rounded-lg shadow-xl shadow-cyan-900">
+                <div className="bg-neutral-800 p-8 rounded-xl shadow-xl shadow-cyan-900">
                     <h1 className="text-3xl font-bold mb-6">Parking Booking</h1>
                     <form id='bookingform'>
                         <div className="mb-4">
