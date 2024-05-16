@@ -225,9 +225,9 @@ import ConfirmationPage from './confirm';
 
     return (<>{!confirm?
 
-    <div className="min-h-screen bg-neutral-900 text-white py-4 px-14 bgcolor">
+    <div className="bg-primary min-h-screen bg-neutral-900 text-white py-4 px-14 bgcolor">
             <div className="container mx-auto py-8">
-                <div className="bg-neutral-800 p-8 rounded-xl shadow-xl shadow-cyan-900">
+                <div className="bg-neutral-800 p-8 rounded-2xl shadow-xl shadow-gray-500">
                     <h1 className="text-3xl font-bold mb-6">Parking Booking</h1>
                     <form id='bookingform'>
                         <div className="mb-4">
@@ -291,7 +291,7 @@ import ConfirmationPage from './confirm';
                 {error && <Alert variant="filled" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
               </div>
               {/* Booking Button */}
-              <button type="submit" className="w-full bg-slate-100 text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-sky-600 flex justify-center items-center" onClick={handleBooking}>
+              <button type="submit" className="w-full bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white border border-gray-400 flex justify-center items-center" onClick={handleBooking}>
                Book Now <FaRegArrowAltCircleRight size={25} className='ml-1'/>
               </button>
             </form>
