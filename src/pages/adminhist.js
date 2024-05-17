@@ -179,8 +179,8 @@ const Adminhist = () => {
 
 
     return (
-        <div className='bgcolor text-white min-h-screen'>
-            <span className="flex text-2xl font-bold mb-4 px-2 py-4 bg-neutral-800 shadow-lg"><h1 className='l-border'>All Bookings</h1><button onClick={() => setcount(count + 1)} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-1 px-1 ml-2 rounded">Refresh</button>
+        <div className='bg-primary text-white min-h-screen'>
+            <span className="flex text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary shadow-lg"><h1 className='l-border fam'>All Bookings</h1><button onClick={() => setcount(count + 1)} className="bg-white hover:bg-black hover:text-white text-black font-bold py-1 px-2 border border-white ml-2 rounded-md">Refresh</button>
                 {error && <Alert severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
                 {mess && <Alert severity="success" onClose={() => { setMess(null) }}>{mess}</Alert>}
             </span>
@@ -196,7 +196,7 @@ const Adminhist = () => {
                                 type="text"
                                 placeholder="Search"
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="border border-gray-300 px-4 py-2 rounded-lg bgcolor">
+                                className="border border-gray-300 px-4 py-2 rounded-lg bg-secondary">
                             </input>
                             
 
@@ -244,12 +244,12 @@ const Adminhist = () => {
 
                                                     <input
                                                         type="number"
-                                                        placeholder="Enter OTP"
+                                                        placeholder="  Enter OTP"
                                                         onChange={(e) => handleOtpChange(e.target.value)}
-                                                        className="mr-2 text-black rounded-md py-1"
+                                                        className="placeholder-gray-900 mr-2 text-black rounded-md py-1"
                                                     />
                                                     <button
-                                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mt-2"
+                                                        className="bg-cyan-500 hover:bg-black text-white font-bold py-1 px-2 rounded border border-white mt-2"
                                                         onClick={() => { checkin(booking) }}
                                                     >
                                                         Checkin
@@ -268,11 +268,11 @@ const Adminhist = () => {
                                     <td className="border border-gray-300 px-4 py-2 text-center">  
                                     {booking.isCheckedIn ? (booking.isCheckedOut ? <span className="text-green-600 font-bold ">Checked out</span> : <p className=" px-4 py-2"> <input
                                         type="number"
-                                        placeholder="Enter OTP"
+                                        placeholder="  Enter OTP"
                                         onChange={(e) => handleOtpChange2(e.target.value)}
-                                        className="mr-3 text-black rounded-md py-1"
+                                        className="placeholder-gray-900 mr-3 text-black rounded-md py-1"
                                     /><button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-1 px-2 rounded"
+                                        className="bg-cyan-500  border border-white hover:bg-black text-white font-bold mt-2 py-1 px-2 rounded"
                                         onClick={() => { checkout(booking) }}
                                     >
                                             checkout

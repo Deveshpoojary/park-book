@@ -51,7 +51,7 @@ const UpdateSlots = () => {
     };
 
     return (
-        <div className="container bg-neutral-800 mx-auto px-4 shadow-xl shadow-cyan-900 rounded-lg py-4 mt-6">
+        <div className="container bg-secondary mx-auto px-4 shadow-lg shadow-gray-500 rounded-lg py-4 mt-6">
             <h1 className="text-4xl py-2 mt-4 font-bold text-white l-border">Update Parking Slots</h1>
             <form onSubmit={handleSubmit} className="mt-4">
                 <div className="mb-4">
@@ -61,7 +61,7 @@ const UpdateSlots = () => {
                         id="slotId"
                         value={slotId}
                         onChange={e => setSlotId(e.target.value)}
-                        className="form-input hover:border-cyan-500 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-transparent text-white"
+                        className="bg-primary picker form-input hover:border-cyan-500 mt-1 block w-full px-3 py-2 border border-gray-500 rounded-md bg-transparent text-white"
                         required
                     />
                 </div>
@@ -71,10 +71,10 @@ const UpdateSlots = () => {
                         id="vehicleType"
                         value={vehicleType}
                         onChange={e => setVehicleType(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 hover:border-cyan-500 rounded-md bg-transparent text-white"
+                        className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
                     >
-                        <option value="car" className='text-black'>Car</option>
-                        <option value="bike" className='text-black'>Bike</option>
+                        <option value="car" className='text-white'>Car</option>
+                        <option value="bike" className='text-white'>Bike</option>
                     </select>
                 </div>
                 <div className="mb-4">
@@ -84,7 +84,7 @@ const UpdateSlots = () => {
                         id="numSlots"
                         value={numSlots}
                         onChange={e => setNumSlots(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 hover:border-cyan-500 rounded-md bg-transparent text-white"
+                        className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
                         required
                     />
                 </div>
@@ -93,15 +93,15 @@ const UpdateSlots = () => {
                     <select
                         value={operation}
                         onChange={e => setOperation(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 hover:border-cyan-500 rounded-md bg-transparent text-white"
+                        className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
                     >
-                        <option value="add" className='text-black'>Add Slots</option>
-                        <option value="remove" className='text-black'>Remove Slot</option>
+                        <option value="add" className='text-white'>Add Slots</option>
+                        <option value="remove" className='text-white'>Remove Slot</option>
                     </select>
                 </div>
                 <button
                     type="submit"
-                    className="bg-cyan-400 hover:bg-cyan-500 text-black font-bold py-2 px-4 rounded"
+                    className="bg-white hover:bg-black hover:text-white text-black border border-white font-bold py-2 px-4 rounded"
                 >
                     {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
                 </button>

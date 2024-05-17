@@ -34,18 +34,18 @@ const Admin = () => {
 
 
     return (
-        < > <div className='bgcolor min-h-screen'>
-            {admin ? <> <div className='bg-neutral-800 flex px-4 py-4 shadow-lg ' >
-                <button className='bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-cyan-500 mr-2' name='1' onClick={handle}>
+        < > <div className='bg-primary min-h-screen'>
+            {admin ? <> <div className='bg-secondary flex px-4 py-4 shadow-lg border-b border-gray-500' >
+                <button className='bg-white text-black border border-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white mr-2' name='1' onClick={handle}>
                     Update Prices
                 </button>
 
-                <button className='bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-cyan-500 mr-2' name="2" onClick={handle}>
+                <button className='bg-white text-black border border-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white mr-2' name="2" onClick={handle}>
                     Admin History
                 </button>
 
 
-                <button className='bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-cyan-500 mr-2' name="3" onClick={handle}>
+                <button className='bg-white text-black border border-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white mr-2' name="3" onClick={handle}>
                     Slots            </button>
 
             </div>

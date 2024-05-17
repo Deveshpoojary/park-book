@@ -34,7 +34,13 @@ input {
   border-image: linear-gradient(to bottom, #FF5E69, #B16CEA);
   border-image-slice: 1;
 }
-
+.picker{
+  color-scheme:dark;
+}
+/* .bg-img{
+  background-image: url("F:\Devesh\My Projects\park\src\images\abstract-digital-grid-vector-black-background_53876-111550.avif");
+  background-size: cover;
+} */
 
 .bg-primary{
   background-color: #0A0A0A;

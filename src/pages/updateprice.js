@@ -58,7 +58,7 @@ useEffect(() => {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-neutral-800 rounded-lg shadow-xl shadow-cyan-900">
+        <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-secondary rounded-lg shadow-xl shadow-gray-500">
             <h1 className="text-2xl text-center text-white font-bold mb-4">Update Parking Prices</h1>
             <button className='bg-cyan-500 text-black p-1 font-bold rounded-md hover:bg-cyan-600 animate-pulse' onClick={() => {setcount(count+1)}}> Fetch latest prices
            
@@ -73,7 +73,7 @@ useEffect(() => {
                     <span className='text-cyan-500 animate-pulse'>Current Price: <span className='text-red-400 animate-pulse'>{carPrice}</span> </span> 
                     <br></br>
                     <input
-                        className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700"
+                        className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-primary border border-gray-500"
                         id="carPrice"
                         type="number"
                         placeholder="Enter car price"
@@ -90,7 +90,7 @@ useEffect(() => {
                     <br></br>
 
                     <input
-                        className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700"
+                        className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-primary border border-gray-500"
                         id="bikePrice"
                         type="number"
                         placeholder="Enter bike price"
@@ -101,7 +101,7 @@ useEffect(() => {
                 </div>
                 <div className="flex items-center justify-between">
                     <button
-                        className="bg-cyan-500 hover:bg-cyan-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className="bg-white hover:bg-black text-black hover:text-white border border-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">
                         Update Prices
                     </button>

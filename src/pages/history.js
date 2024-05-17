@@ -45,16 +45,16 @@ useEffect(() => {
         return now > tillDate;
     };
 return (
-    <div className='bgcolor text-white min-h-screen'>
+    <div className='bg-primary text-white min-h-screen'>
         <>
         
-        <span className="flex text-2xl font-bold mb-4 px-2 py-4 bg-neutral-800"><h1 className='l-border'>Booking History</h1>
-        <button onClick={() => setcount(count + 1)} className="bg-sky-500 hover:bg-blue-700 text-white font-bold py-1  px-1 ml-2 rounded">Refresh</button></span>
+        <span className="flex text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary"><h1 className='l-border fam'>Booking History</h1>
+        <button onClick={() => setcount(count + 1)} className="bg-white hover:bg-black hover:text-white text-black font-bold py-1  px-2 border border-white ml-2 rounded-md">Refresh</button></span>
         </>
 
         {!loading ? (
             <div className='px-4 py-4'>
-            <table className="w-full border rounded-lg ">
+            <table className="w-full border rounded-lg fam">
                 <thead>
                     <tr>
                         <th className="border border-gray-300 px-4 py-2">Booking ID</th>

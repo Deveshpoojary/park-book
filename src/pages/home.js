@@ -27,7 +27,7 @@ const HomePage = () => {
 
 
 
-        <div className="min-h-screen bg-neutral-900 py-6 flex flex-col justify-center sm:py-12 bg-primary ">
+        <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 bg-primary  ">
             <Profile />
 
             <div className='bg-secondary flex items-center justify-between px-4 py-2 shadow-lg '>
