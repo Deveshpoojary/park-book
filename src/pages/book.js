@@ -225,20 +225,20 @@ import ConfirmationPage from './confirm';
 
     return (<>{!confirm?
 
-    <div className="min-h-screen bg-neutral-900 text-white py-4 px-14 bgcolor">
+    <div className="bg-primary min-h-screen bg-neutral-900 text-white py-4 px-14 ">
             <div className="container mx-auto py-8">
-                <div className="bg-neutral-800 p-8 rounded-xl shadow-xl shadow-cyan-900">
+                <div className="bg-neutral-800 p-8 rounded-2xl shadow-xl shadow-gray-500">
                     <h1 className="text-3xl font-bold mb-6">Parking Booking</h1>
                     <form id='bookingform'>
                         <div className="mb-4">
                             <label htmlFor="vehicleType" className="font-medium">Vehicle Type:</label>
                             <div className="flex gap-4 mt-2">
                                 <button type="button" name="vehicleType" value="car" onClick={handleChange}
-                                    className={`py-2 px-4 rounded-md transition-colors ${booking.vehicleType === "car" ? 'bg-cyan-500' : 'bg-gray-700 hover:bg-gray-600'} font-bold`}>
+                                    className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "car" ? 'bg-cyan-500' : 'bg-primary hover:bg-gray-600'} font-bold`}>
                                     <IoCarSportSharp size={30} className='text-black-500'/>Car
                                 </button>
                                 <button type="button" name="vehicleType" value="bike" onClick={handleChange}
-                                    className={`py-2 px-4 rounded-md transition-colors ${booking.vehicleType === "bike" ? 'bg-cyan-500' : 'bg-gray-700 hover:bg-gray-600'} font-bold`}>
+                                    className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "bike" ? 'bg-cyan-500' : 'bg-primary hover:bg-gray-600'} font-bold`}>
                                     <PiMotorcycleFill size={30} className='text-black-500'/>Bike
                                 </button>
                             </div>
@@ -246,24 +246,24 @@ import ConfirmationPage from './confirm';
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label htmlFor="date" className="font-medium">Start Date:</label>
-                                <input type="date" name="date" required className="form-input w-full mt-1 p-2 bg-gray-700 rounded" onChange={handleChange} value={booking.date} />
+                                <input type="date" name="date" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary picker" onChange={handleChange} value={booking.date} />
                             </div>
                             <div>
                                 <label htmlFor="time" className="font-medium">Start Time:</label>
-                                <input type="time" name="time" required className="form-input w-full mt-1 p-2 bg-gray-700 rounded" onChange={handleChange} value={booking.time} />
+                                <input type="time" name="time" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary picker" onChange={handleChange} value={booking.time} />
                             </div>
                             <div>
                                 <label htmlFor="date2" className="font-medium">End Date:</label>
-                                <input type="date" name="date2" required className="form-input w-full mt-1 p-2 bg-gray-700 rounded" onChange={handleChange} value={booking.date2} />
+                                <input type="date" name="date2" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary picker" onChange={handleChange} value={booking.date2} />
                             </div>
                             <div>
                                 <label htmlFor="endTime" className="font-medium">End Time:</label>
-                                <input type="time" name="endTime" required className="form-input w-full mt-1 p-2 bg-gray-700 rounded" onChange={handleChange} value={booking.endTime} />
+                                <input type="time" name="endTime" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary picker" onChange={handleChange} value={booking.endTime} />
                             </div>
                         </div>
                         <div className="mb-4">
                             <label htmlFor="vehicleNumber" className="font-medium">Vehicle Number:</label>
-                            <input type="text" name="vehicleNumber" placeholder="KA-01-AB-1234" required className="form-input w-full mt-1 p-2 bg-gray-700 rounded" onChange={handleChange} value={booking.vehicleNumber} />
+                            <input type="text" name="vehicleNumber" placeholder="KA-01-AB-1234" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary" onChange={handleChange} value={booking.vehicleNumber} />
                         </div>
                         {error && <div className="bg-red-700 text-center p-3 rounded mb-4">
                             {error}
@@ -291,7 +291,7 @@ import ConfirmationPage from './confirm';
                 {error && <Alert variant="filled" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
               </div>
               {/* Booking Button */}
-              <button type="submit" className="w-full bg-slate-100 text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-sky-600 flex justify-center items-center" onClick={handleBooking}>
+              <button type="submit" className="w-full bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white border border-gray-400 flex justify-center items-center" onClick={handleBooking}>
                Book Now <FaRegArrowAltCircleRight size={25} className='ml-1'/>
               </button>
             </form>

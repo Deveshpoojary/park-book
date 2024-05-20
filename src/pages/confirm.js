@@ -35,9 +35,9 @@ function ConfirmationPage() {
 
       </div> */}
 
-      <div className='min-h-screen bg-neutral-900 text-white bgcolor'>
+      <div className='min-h-screen bg-neutral-900 text-white bg-primary'>
       <div className="funds-success-message-container p-20">
-        <div className="funds-checkmark-text-container rounded-lg shadow-lg shadow-cyan-300 border-2 border-cyan-300 shadow-cyan-900">
+        <div className="funds-checkmark-text-container rounded-lg shadow-lg shadow-cyan-300 border-2 border-gray-400 shadow-gray-500">
           <div className="funds-checkmark-container">
             <svg className="funds-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle className="funds-checkmark-circle" cx="26" cy="26" r="25" fill="none" /><path className="funds-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
 
@@ -52,8 +52,8 @@ function ConfirmationPage() {
 
             <h1 className='text-white delayed-text h1'>Done!</h1>
             <h2 className='mb-4 text-white delayed-text'>Your Booking has been confirmed!</h2>
-            <button className='bg-slate-100 text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-sky-500 delayed-text' onClick={() => { navigate('/home'); }}>Go to Home</button>
-            <button className='bg-slate-100 text-neutral-900 py-2 font-bold px-4 rounded-md hover:bg-sky-500 ml-2 delayed-text' onClick={() => { navigate('/history'); }}>View History</button>
+            <button className='bg-white border border-white text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white delayed-text' onClick={() => { navigate('/home'); }}>Go to Home</button>
+            <button className='bg-white border border-white text-neutral-900 py-2 font-bold px-4 rounded-md hover:bg-black hover:text-white ml-2 delayed-text' onClick={() => { navigate('/history'); }}>View History</button>
             <p></p>
 
 
