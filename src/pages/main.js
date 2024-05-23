@@ -13,7 +13,7 @@ const Main = () => {
     <div className='h-screen'>
     <div className="flex flex-col h-screen bg-primary" >
       <nav className=" text-white py-4 px-8 flex justify-between items-center border-b border-black-100">
-        <h1 className="text-4xl font-bold text-white fam txt">ParkWay</h1>
+        <h1 className="text-4xl font-bold text-white fam">ParkWay</h1>
         {isAuthenticated ? (
           <div className="flex items-center">
             {/* <p className="mr-4">Hello, {user.name}</p> */}
@@ -27,7 +27,7 @@ const Main = () => {
           </div>
         ) : (
           <button
-            className="btn bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-gray-800 hover:bg-gray-700 border border-white hover:bg-white hover:text-black text-white font-bold py-2 px-4 rounded"
             onClick={() => loginWithRedirect()}
           >
             Get Started
@@ -41,16 +41,16 @@ const Main = () => {
 
           
         <div className=" absolute inset-0 flex flex-col justify-center items-center">
-          <p className="text-blue-500 text-7xl font-semibold text-center mb-4">
+          <p className="text-blue-500 text-7xl font-bold text-center mb-4">
             <span className="text-white ">Don't waste your time anymore</span>
-            <br /><span className='txt'>to find a parking space.</span>
+            <br /><span className='text-white'>to find a parking space.</span>
           </p>
           <p className='text-slate-300 text-center text-xl font-semibold '>Welcome to <span className='name font-bold'>ParkWay</span> - your ultimate solution for booking parking spots online. Book your spot with <br/>just one click! Our system offers a user-friendly interface for booking, accessing <br/>order history, and more.
 
           </p>
           {!isAuthenticated && ( 
             <button
-              className=" bg-white hover:bg-black text-white font-bold py-2 px-4 rounded-full btn "
+              className=" bg-white hover:bg-black hover:text-white border border-white text-black font-bold py-2 px-4 rounded-full  "
               onClick={() => loginWithRedirect()}
             >
               Get Started
