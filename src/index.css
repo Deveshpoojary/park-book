@@ -57,9 +57,9 @@ input {
 
 .txt{
   background-image: linear-gradient(180deg,#5D9FFF, #82E0AA);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .name{
   background-image: linear-gradient(135deg, #B16CEA, #FF8A56);
