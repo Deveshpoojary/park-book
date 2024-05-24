@@ -90,6 +90,7 @@ const Book = () => {
         if (Array.isArray(data)) {
           const uniqueSlots = data.filter((slot, index, self) => self.findIndex(s => s.slotId === slot.slotId) === index);
           setSlots(uniqueSlots);
+          
         }
       } catch (error) {
         console.error('Failed to fetch slots:', error);
@@ -159,6 +160,7 @@ const Book = () => {
   };
 
   const handleChange = (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
     setBooking(prev => ({ ...prev, [name]: value }));
 
@@ -197,11 +199,13 @@ const Book = () => {
     }
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = (event) => {
+    event.preventDefault();
     setCurrentPage(prevPage => prevPage + 1);
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (event) => {
+    event.preventDefault();
     setCurrentPage(prevPage => prevPage - 1);
   };
 
@@ -213,6 +217,7 @@ const Book = () => {
       ...prev,
       vehicleType,
     }));
+   
   };
 
 
