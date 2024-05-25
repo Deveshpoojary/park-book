@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import LoadingAnimation from './steering';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Alert from '@mui/material/Alert';
@@ -213,11 +214,13 @@ const Book = () => {
 
 //delay in selecting vehicleType
   const handleVehicleTypeChange = (vehicleType) => {
+    setLoading(true);
     setBooking((prev) => ({
       ...prev,
       vehicleType,
     }));
-   
+    setCurrentPage(1);
+    setLoading(false);
   };
 
 
@@ -285,14 +288,14 @@ const Book = () => {
                 {/* Slot Selection */}
                 <div className="mb-6 mt-2">
                   <label className="block text-sm font-medium text-gray-700">Select Slot</label>
-                  <div className="grid grid-cols-4 gap-4 mt-2">
+                  {!loading? ( <div className="grid grid-cols-4 gap-4 mt-2">
                     {currentSlots.map(slot => (
                       <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
                         className={`cursor-pointer p-3 ${slot.slotId === booking.slotId ? 'bg-cyan-400 text-black' : slot.isOccupied ? 'bg-red-300 text-white' : 'bg-slate-500 text-white'} rounded-lg`}>
                         Slot {slot.slotId}
                       </div>
                     ))}
-                  </div>
+                  </div> ) : (<LoadingAnimation/>)}
                   {slots.length > 0 && (
                     <div className="flex justify-between mt-4">
                       <button disabled={currentPage === 1} onClick={handlePreviousPage} className="bg-gray-400 text-black font-bold py-2 px-4 rounded disabled:opacity-50">
