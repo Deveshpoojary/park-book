@@ -9,7 +9,7 @@ import { PiMotorcycleFill } from "react-icons/pi";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
-import { MdConfirmationNumber } from "react-icons/md";
+
 import car from '../images/sport-car.png'
 import bike from '../images/bike.webp'
 
@@ -39,7 +39,8 @@ const Book = () => {
   const [bikeprice, setBikeprice] = useState(0);
   const [confirm, setConfirm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const slotsPerPage = 20;
+  const [verified, setVerified] = useState(false);
+  const slotsPerPage = 16;
 
   useEffect(() => {
     console.log("loading", loading);
@@ -66,7 +67,8 @@ const Book = () => {
       const calculatedAmount = calculateAmount(bookedFrom, bookedTill, booking.vehicleType);
       setAmount(calculatedAmount);
     }
-  }, [bikeprice, bookedFrom, bookedTill, booking.vehicleType, carprice, bikeprice]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bikeprice, bookedFrom, bookedTill, booking.vehicleType, carprice]);
 
   useEffect(() => {
     if (error) {
@@ -75,6 +77,32 @@ const Book = () => {
       setBooking(prev => ({ ...prev, vehicleType: !booking.vehicleType }));
     }
   }, [error]);
+     useEffect(() => {
+
+    async function checkverify(){
+            if(user.user.email){
+        const response =await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: user.user.email })
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data.isverified===true) {
+            alert('Your phone number is verified');
+            setVerified(true);
+        }
+        else {
+        
+            setVerified(false);
+            
+        }
+    }
+        };
+        checkverify();
+        
+    }
+        , [user.user.email]);
 
   useEffect(() => {
     console.log('fetching slots');
@@ -103,12 +131,16 @@ const Book = () => {
     };
 
     fetchSlots();
-  }, [bookedFrom, bookedTill, booking.vehicleType, booking.vehicleNumber]);
+  }, [bookedFrom, bookedTill, booking.vehicleType, booking.vehicleNumber,bikeprice,carprice]);
 
   const handleBooking = (e) => {
     e.preventDefault();
     if (!booking.vehicleType || !booking.date || !booking.time || !booking.date2 || !booking.endTime || !booking.slotId || !booking.vehicleNumber || !amount) {
       setError('Please fill all the fields');
+      return;
+    }
+    if(!verified){
+      setError('Please verify your phone number before booking');
       return;
     }
     setIsConfirmModalVisible(true);
@@ -290,7 +322,7 @@ const Book = () => {
               <label className="block text-sm font-medium text-gray-700">Select Slot</label>
               {!loading ? (
                 <div className="flex justify-center">
-                <div className="flex grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2 ">
+                <div className=" grid grid-cols-2 sm:grid-cols-2 md:grid-cols-8 gap-4 mt-2 ">
                   {currentSlots.map(slot => (
                     <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
                       className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${slot.slotId === booking.slotId ? 'bg-cyan-400 text-black' : slot.isOccupied ? 'bg-slate-500 text-white' : 'bg-slate-500 text-white'} rounded-lg`}>

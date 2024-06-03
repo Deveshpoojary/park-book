@@ -4,12 +4,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Book from './pages/book';
 
-import Admin from './pages/admin';
+import Admin from './pages/ADMIN/admin.js';
 import Main from './pages/main';
 import HomePage from './pages/home';
 import NotFoundPage from './pages/notfound';
 import History from './pages/history'; 
-import Adminhist from "./pages/adminhist";
+import Verify from './pages/ADMIN/verify.js';
 import Confirmerror from "./pages/confirmerror";
 
 // import ConfirmationPage from "./pages/confirm";
@@ -29,7 +29,8 @@ function App() {
          
           <Route path="/admin" element={<Admin/>}/>
           <Route path="/history" element={<History/>}/>
-          <Route path="/adminhist" element={<Adminhist/>}/>
+          <Route path="/verify" element={<Verify/>}/>
+          
           <Route path="/confirmerror" element={<Confirmerror/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
           {/* <Route path="/confirm" element={<ConfirmationPage/>}/> */}

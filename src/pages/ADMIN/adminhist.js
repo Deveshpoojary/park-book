@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Alert } from '@mui/material';
-import LoadingAnimation from './steering';
+import LoadingAnimation from '../steering';
 import Accessdenied from './accessdenied';
 
 const Adminhist = () => {

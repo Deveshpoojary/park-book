@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 const UpdatePrices = () => {
     const [carPrice, setCarPrice] = useState('');
     const [bikePrice, setBikePrice] = useState('');
+    const [fetchedcar, setFetchedcar] = useState('');
+    const [fetchedbike, setFetchedbike] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
    const [count,setcount]=useState(0);
@@ -19,8 +21,8 @@ useEffect(() => {
             const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/prices');
             const data = await response.json();
             if (response.ok) {
-                setCarPrice(data[0].carprice);
-                setBikePrice(data[0].bikeprice);
+                setFetchedcar(data[0].carprice);
+                setFetchedbike(data[0].bikeprice);
 
             }
         } catch (error) {
@@ -29,7 +31,7 @@ useEffect(() => {
     };
 
     fetchPrices();
-}, []);
+}, [count]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -57,6 +59,7 @@ useEffect(() => {
         }
     };
 
+
     return (
         <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-secondary rounded-lg shadow-xl shadow-gray-500">
             <h1 className="text-2xl text-center text-white font-bold mb-4">Update Parking Prices</h1>
@@ -70,7 +73,7 @@ useEffect(() => {
                     <label className="block text-white text-sm font-bold mb-2" htmlFor="carPrice">
                         Car Price (per minute)
                     </label>
-                    <span className='text-cyan-500 animate-pulse'>Current Price: <span className='text-red-400 animate-pulse'>{carPrice}</span> </span> 
+                    <span className='text-cyan-500 animate-pulse'>Current Price: <span className='text-red-400 animate-pulse'>{fetchedcar}</span> </span> 
                     <br></br>
                     <input
                         className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-primary border border-gray-500"
@@ -79,14 +82,14 @@ useEffect(() => {
                         placeholder="Enter car price"
                         value={carPrice}
                         onChange={(e) => setCarPrice(e.target.value)}
-                        required
+                        formNoValidate
                     />
                 </div>
                 <div className="mb-4">
                     <label className="block text-white text-sm font-bold mb-2" htmlFor="bikePrice">
                         Bike Price (per minute)
                     </label>
-                    <span className='text-cyan-400 animate-pulse'>Current Price:  <span className='text-red-400 animate-pulse'>{bikePrice}</span> </span>
+                    <span className='text-cyan-400 animate-pulse'>Current Price:  <span className='text-red-400 animate-pulse'>{fetchedbike}</span> </span>
                     <br></br>
 
                     <input
@@ -96,7 +99,7 @@ useEffect(() => {
                         placeholder="Enter bike price"
                         value={bikePrice}
                         onChange={(e) => setBikePrice(e.target.value)}
-                        required
+                        
                     />
                 </div>
                 <div className="flex items-center justify-between">
@@ -107,7 +110,7 @@ useEffect(() => {
                     </button>
                 </div>
                 {message && <p className="mt-4 text-green-600">{message}</p>}
-                {error && <p className="mt-4 text-red-600">{error}</p>}
+                {error && <p className="mt-4 text-red-600">{error}{<span className='text-900 p-1 rounded bg-white '   onClick={()=>{setError("")}}>X</span>}</p>}
             </form>
         </div>
     );

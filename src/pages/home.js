@@ -18,70 +18,72 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 bg-primary">
+    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 bg-gray-900 text-white">
       <Profile />
 
       {/* Navigation bar */}
-      <div className="bg-secondary flex items-center justify-between px-4 py-2 shadow-lg">
-        <div>
-          <img src="https://api.time.com/wp-content/uploads/2015/02/apple-logo.jpg" alt="Logo" className="h-8 w-auto" />
-            {/* <h1 className='text-white font-bold text-3xl'>ParkWay</h1> */}
-        </div>
-        {/* Navbar for medium and small screens */}
+      <div className="px-4 py-2 shadow-lg bg-gray-800 flex items-center justify-between">
+        <img src="https://api.time.com/wp-content/uploads/2015/02/apple-logo.jpg" alt="Logo" className="h-8 w-auto" />
+        
         <div className="md:hidden">
-          <button onClick={() => setIsNavOpen(!isNavOpen)} className="text-white">
+          <button onClick={() => setIsNavOpen(!isNavOpen)} className="text-gray-300">
             <FaBars size={24} />
           </button>
         </div>
-        {/* Navbar for large screens */}
+
         <div className="hidden md:flex space-x-4">
-          <button onClick={() => handleNavigation('/book')} className="bg-white hover:bg-black hover:text-white border border-white text-black font-bold py-2 px-4 rounded-2xl">Book</button>
-          <button onClick={() => handleNavigation('/admin')} className="bg-white hover:bg-black hover:text-white border border-white font-bold py-2 px-4 rounded-2xl">Admin</button>
-          <button onClick={() => handleNavigation('/adminhist')} className="bg-white hover:bg-black hover:text-white border border-white font-bold py-2 px-4 rounded-2xl">Admin history</button>
-          <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="bg-white hover:bg-black hover:text-white border border-white font-bold py-2 px-4 rounded-2xl">Log Out</button>
-          <button onClick={() => handleNavigation('/history')} className="bg-white hover:bg-black hover:text-white border border-white font-bold py-2 px-4 rounded-2xl">History</button>
+          {['book', 'admin', 'adminhist', 'history','verify'].map((item) => (
+            <button onClick={() => handleNavigation(`/${item}`)} className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded">
+              {item.charAt(0).toUpperCase() + item.slice(1)}
+            </button>
+          ))}
+          <button onClick={() => logout({ returnTo: window.location.origin })} className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Log Out
+          </button>
+
         </div>
       </div>
 
-      {/* Slide-in navbar for medium and small screens */}
-      <div className={`fixed inset-0 z-50 flex transition-transform transform ${isNavOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex-1" onClick={() => setIsNavOpen(false)} />
-        <div className="bg-secondary flex flex-col w-64 h-full p-4">
-          <div className="flex justify-end">
-            <button onClick={() => setIsNavOpen(false)} className="text-white">
+      {isNavOpen && (
+        <div className="fixed inset-0 z-50 flex bg-black bg-opacity-75">
+          <div className="flex-1" onClick={() => setIsNavOpen(false)} />
+          <div className="w-64 bg-gray-800 p-4">
+            <button onClick={() => setIsNavOpen(false)} className="text-gray-300">
               <FaTimes size={24} />
             </button>
+            {['book', 'admin', 'adminhist', 'history'].map((item) => (
+              <button onClick={() => handleNavigation(`/${item}`)} className="block mt-4 text-gray-200 font-bold py-2 px-4 hover:bg-gray-700 rounded">
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </button>
+            ))}
+            <button onClick={() => logout({ returnTo: window.location.origin })} className="mt-4 text-gray-200 font-bold py-2 px-4 hover:bg-red-600 rounded">
+              Log Out
+            </button>
           </div>
-          <button onClick={() => handleNavigation('/book')} className="mt-4 text-white font-bold py-2 px-4 hover:bg-white hover:text-black hover:rounded-md">Book</button>
-          <button onClick={() => handleNavigation('/admin')} className="mt-2 text-white font-bold py-2 px-4 hover:bg-white hover:text-black hover:rounded-md">Admin</button>
-          <button onClick={() => handleNavigation('/adminhist')} className="mt-2 text-white font-bold py-2 px-4 hover:bg-white hover:text-black hover:rounded-md">Admin history</button>
-          <button onClick={() => handleNavigation('/history')} className="mt-2 text-white font-bold py-2 px-4 hover:bg-white hover:text-black hover:rounded-md">History</button>
-          <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="mt-2 text-white font-bold py-2 px-4 hover:bg-white hover:text-black hover:rounded-md">Log Out</button>
         </div>
-      </div>
+      )}
 
       {/* Main content */}
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto px-4"></div>
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto sm:px-0 px-2">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 rounded-3xl"></div>
-        <div className="bg-secondary border border-gray-400 relative px-4 py-10 bg-neutral-800 text-white shadow-lg rounded-3xl sm:p-20 inset-0 ">
+      <div className="relative py-3 sm:max-w-xl sm:mx-auto px-4">
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-900 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 rounded-3xl"></div>
+        <div className="bg-gray-800 border border-gray-700 relative px-4 py-10 text-white shadow-lg rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             <div>
-              <IoCarSportSharp size={50} color='cyan' className='margin' />
+              <IoCarSportSharp size={50} color='cyan' className='mx-auto' />
             </div>
-            <div className="divide-y divide-gray-200">
-              <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                <p className='text-white text-lg font-bold flex'>An advanced online parking booking system <GiFallingStar size={30} color='cyan' className='ml-1' /></p>
+            <div className="divide-y divide-gray-700">
+              <div className="py-8 text-base leading-6 space-y-4 text-gray-300 sm:text-lg sm:leading-7">
+                <p className='font-bold flex items-center justify-center'>An advanced online parking booking system <GiFallingStar size={30} color='cyan' className='ml-2' /></p>
                 <form className="mt-6">
                   <div>
                     <label htmlFor="location" className="sr-only">Location</label>
-                    <select className='bg-gray-700 rounded text-white'>
+                    <select className='bg-gray-700 rounded text-gray-200'>
                       <option value="location">Railway MlR CNTRL</option>
                       <option value="location">none</option>
                     </select>
                   </div>
                   <div className="mt-6">
-                    <button onClick={() => handleNavigation('/book')} className="w-full mr-auto px-4 py-2 text-black font-bold bg-slate-100 hover:bg-neutral-900 hover:text-white rounded-md focus:outline-none flex justify-center items-center border border-white">  Book a parking space <FaRegArrowAltCircleRight size={25} className='ml-1' /></button>
+                    <button onClick={() => handleNavigation('/book')} className="w-full mr-auto px-4 py-2 font-bold bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none flex justify-center items-center">Book a parking space <FaRegArrowAltCircleRight size={25} className='ml-1' /></button>
                   </div>
                 </form>
               </div>
@@ -94,6 +96,5 @@ const HomePage = () => {
 };
 
 export default withAuthenticationRequired(HomePage, {
-  // Show a message while the user waits to be redirected to the login page.
-  onRedirecting: () => (<div>Redirecting you to the login page...</div>)
+  onRedirecting: () => (<div>Loading...</div>)
 });

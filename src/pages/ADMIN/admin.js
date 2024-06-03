@@ -3,6 +3,7 @@ import UpdatePrices from './updateprice';
 import UpdateSlots from './updateslots';
 import Adminhist from './adminhist';
 import Accessdenied from './accessdenied';
+import Current from './current';
 import { useState, useEffect } from 'react';
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -48,12 +49,15 @@ const Admin = () => {
                 <button className='bg-white text-black border border-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white mr-2' name="3" onClick={handle}>
                     Slots            </button>
 
+                <button className='bg-white text-black border border-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white mr-2' name="4" onClick={handle}>
+                    Current            </button>
+
             </div>
-                {page === "1" ? <UpdatePrices /> : (page === "2" ? <Adminhist /> : <UpdateSlots />)}
+                {page === "1" ? <UpdatePrices /> : page === "2" ? <Adminhist /> : page==="3"? <UpdateSlots />:<Current/>  }
             </>
 
 
-                :
+                : loading ? <div className='text-white font-bold'>Loading...</div> :
 
                 <div>
                     {/* <h1 className='text-white font-bold'>Access Denied</h1> */}

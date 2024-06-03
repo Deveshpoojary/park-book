@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 
 const UpdateSlots = () => {
-    const [slotId, setSlotId] = useState('');
+    const [slotId, setSlotId] = useState(0);
     const [vehicleType, setVehicleType] = useState('car');
     const [numSlots, setNumSlots] = useState(1);
     const [operation, setOperation] = useState('add'); // 'add' or 'remove'
+    const [error,setError]=useState("")
 
     const handleAddSlots = async () => {
-        for (let i = 0; i < numSlots; i++) {
-            const currentSlotId = parseInt(slotId) + i;
+        if(!(slotId<0) && !(numSlots<=0))
+        {
+            
+            const currentSlotId =slotId ;
             const slotData = {
-                slotId: currentSlotId.toString(),
-                type: vehicleType
+                slotId: parseInt(currentSlotId),
+                type: vehicleType,
+                numberofslots:parseInt(numSlots)
             };
             try {
                 const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/slots', {
@@ -25,20 +29,38 @@ const UpdateSlots = () => {
                 console.log('Slot added:', data);
             } catch (error) {
                 console.error('Failed to add slot:', error);
-            }
+            
+        }}
+        else{
+            setError("  Invalid data entered");
         }
     };
 
     const handleRemoveSlot = async () => {
+        if(!(slotId<=0) && !(numSlots<=0)){
+                const currentSlotId =slotId ;
+            const slotData = {
+                slotId: parseInt(currentSlotId),
+                numberofslots:parseInt(numSlots)
+            };
         try {
-            const response = await fetch(`https://park-book-9f9254d7f86a.herokuapp.com/api/slots/${slotId}`, {
-                method: 'DELETE'
+            const response = await fetch(`https://park-book-9f9254d7f86a.herokuapp.com/api/slotsdel`, {
+                method: 'POST',
+                headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(slotData)
             });
             const data = await response.json();
             console.log('Slot removed:', data);
         } catch (error) {
             console.error('Failed to remove slot:', error);
         }
+        }
+        else{
+            setError("  Invalid data entered");
+        }
+     
     };
 
     const handleSubmit = (e) => {
@@ -62,7 +84,7 @@ const UpdateSlots = () => {
                         value={slotId}
                         onChange={e => setSlotId(e.target.value)}
                         className="bg-primary picker form-input hover:border-cyan-500 mt-1 block w-full px-3 py-2 border border-gray-500 rounded-md bg-transparent text-white"
-                        required
+                        
                     />
                 </div>
                 <div className="mb-4">
@@ -82,6 +104,7 @@ const UpdateSlots = () => {
                     <input
                         type="number"
                         id="numSlots"
+                        min={1}
                         value={numSlots}
                         onChange={e => setNumSlots(e.target.value)}
                         className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
@@ -106,6 +129,7 @@ const UpdateSlots = () => {
                     {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
                 </button>
             </form>
+            {error}
         </div>
     );
 };
