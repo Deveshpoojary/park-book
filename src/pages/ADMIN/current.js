@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import car from "../../images/car.png"
 import bike from "../../images/bike.webp"
 import { set } from 'firebase/database';
@@ -6,10 +6,13 @@ const  Current = () => {
     const [slots, setSlots] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setloading] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const bookedFrom = new Date().toISOString();
+    
        
         const bookedTill = new Date(Date.now() + 5 * 60 * 1000).toISOString();
         const [booking ,setbooking]= useState({ vehicleType: "car" });
+        useEffect(() => {
     async function fetchslots(){
         try {
         setloading(true );
@@ -31,17 +34,26 @@ const  Current = () => {
         setSlots([]);
         setError("Error fetching slots");
       }}
+      fetchslots();
+    }
+    , [booking.vehicleType, refresh]);
     return (
       <div className='text-white'>
         <div className='grid grid-cols-8 gap-4'>
-          <button className='col-span-8 bg-slate-600'  onClick={()=>{booking.vehicleType="car"}}>CAR SLOTS</button>
-          <button className='col-span-8 bg-slate-800' onClick={()=>{booking.vehicleType="bike"}}>BIKE SLOTS</button>
-          {!loading?<button className='col-span-8 bg-red-400'  onClick={fetchslots}>
+          <span>from: {new Date(bookedFrom).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+           <span>bookedTill: {new Date(bookedTill).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+     </span>    
+      <button className='col-span-8 bg-slate-600' onClick={() => { setbooking({ vehicleType: "car" }) }}>CAR SLOTS</button>
+          <button className='col-span-8 bg-slate-800' onClick={() => { setbooking({ vehicleType: "bike" }) }}>BIKE SLOTS</button>
+          {/* {!loading?<bton className='col-span-8 bg-red-400'  onClick={fetchslots}>
             Fetch slots
           </button>:<button  disabled className='col-span-8 bg-red-400'>
             Fetching.....
-          </button>}
+          </button>} */}
+          <button className='col-span-8 bg-red-400' onClick={() => { setRefresh(!refresh) }}>
 
+            {loading ? "refreshing" : "refresh"}
+          </button>
           {slots.map((slot) => (
             <div
               key={slot.slotId}
@@ -49,8 +61,8 @@ const  Current = () => {
                 slot.slotId === booking.slotId
                   ? 'bg-cyan-400 text-black'
                   : slot.isOccupied
-                  ? 'bg-red-200 text-white'
-                  : 'bg-slate-500 text-white'
+                    ? 'bg-red-200 text-white'
+                    : 'bg-slate-500 text-white'
               } rounded-lg`}
             >
               {slot.isOccupied ? (
@@ -62,12 +74,12 @@ const  Current = () => {
               ) : null}
 
               {slot.isOccupied ? (
-                <p>Slot {slot.slotId} till {(slot.bookedTill)}
-                Veh. number {slot.vehicleNumber}
-                
-                
-                
-                 </p>
+                <p>Slot {slot.slotId} till {new Date(slot.bookingDetails.bookedTill).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                Veh. number {slot.bookingDetails.vehicleNumber}
+
+
+
+                </p>
               ) : (
                 <p>
                   Slot {slot.slotId} <br />

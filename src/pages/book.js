@@ -77,32 +77,30 @@ const Book = () => {
       setBooking(prev => ({ ...prev, vehicleType: !booking.vehicleType }));
     }
   }, [error]);
-     useEffect(() => {
-
-    async function checkverify(){
-            if(user.user.email){
-        const response =await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
+  useEffect(() => {
+    async function checkverify() {
+      try {
+        if (user.user.email) {
+          const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: user.user.email })
-        });
-        const data = await response.json();
-        console.log(data);
-        if (data.isverified===true) {
+          });
+          const data = await response.json();
+          console.log(data);
+          if (data.isverified === true) {
             alert('Your phone number is verified');
             setVerified(true);
-        }
-        else {
-        
+          } else {
             setVerified(false);
-            
+          }
         }
+      } catch (error) {
+        console.error(error);
+      }
     }
-        };
-        checkverify();
-        
-    }
-        , [user.user.email]);
+    checkverify();
+  }, []);
 
   useEffect(() => {
     console.log('fetching slots');

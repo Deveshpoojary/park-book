@@ -89,39 +89,86 @@ const UpdateSlots = () => {
                 </div>
                 <div className="mb-4">
                     <label htmlFor="vehicleType" className="block text-sm font-medium text-white">Vehicle Type</label>
-                    <select
-                        id="vehicleType"
-                        value={vehicleType}
-                        onChange={e => setVehicleType(e.target.value)}
-                        className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
-                    >
-                        <option value="car" className='text-white'>Car</option>
-                        <option value="bike" className='text-white'>Bike</option>
-                    </select>
+                    <div className="flex">
+                        <div className="mr-4">
+                            <input
+                                type="radio"
+                                id="car"
+                                value="car"
+                                checked={vehicleType === 'car'}
+                                onChange={e => setVehicleType(e.target.value)}
+                                className="mr-2"
+                            />
+                            <label htmlFor="car" className="text-white">Car</label>
+                        </div>
+                        <div>
+                            <input
+                                type="radio"
+                                id="bike"
+                                value="bike"
+                                checked={vehicleType === 'bike'}
+                                onChange={e => setVehicleType(e.target.value)}
+                                className="mr-2"
+                            />
+                            <label htmlFor="bike" className="text-white">Bike</label>
+                        </div>
+                    </div>
                 </div>
-                <div className="mb-4">
-                    <label htmlFor="numSlots" className="block text-sm font-medium text-white">Number of Slots</label>
-                    <input
-                        type="number"
-                        id="numSlots"
-                        min={1}
-                        value={numSlots}
-                        onChange={e => setNumSlots(e.target.value)}
-                        className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-white">Operation</label>
-                    <select
-                        value={operation}
-                        onChange={e => setOperation(e.target.value)}
-                        className="bg-primary picker mt-1 block w-full px-3 py-2 border border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
-                    >
-                        <option value="add" className='text-white'>Add Slots</option>
-                        <option value="remove" className='text-white'>Remove Slot</option>
-                    </select>
-                </div>
+                {operation==='add'?<div className="mb-4">
+    <label htmlFor="numSlots" className="block text-sm font-medium text-white">Number of Slots</label>
+    <div className="flex items-center mt-1">
+        <button
+            type="button"
+            onClick={() => setNumSlots(Math.max(1, numSlots - 1))}
+            className="bg-primary border border-gray-500 hover:border-cyan-500 rounded-l-md px-3 py-2 text-white"
+        >
+            -
+        </button>
+        <input
+            type="number"
+            id="numSlots"
+            min={1}
+            value={numSlots}
+            onChange={e => setNumSlots(Math.max(1, Number(e.target.value)))}
+            className="bg-primary picker block w-16 px-3 py-2 border-t border-b border-gray-500 text-center text-white bg-transparent"
+            required
+        />
+        <button
+            type="button"
+            onClick={() => setNumSlots(numSlots + 1)}
+            className="bg-primary border border-gray-500 hover:border-cyan-500 rounded-r-md px-3 py-2 text-white"
+        >
+            +
+        </button>
+    </div>
+</div>
+:""}
+               <div className="mb-4">
+    <label className="block text-sm font-medium text-white">Operation</label>
+    <div className="mt-1">
+        <label className="inline-flex items-center text-white">
+            <input
+                type="radio"
+                value="add"
+                checked={operation === 'add'}
+                onChange={e => setOperation(e.target.value)}
+                className="bg-primary picker border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
+            />
+            <span className="ml-2">Add Slots</span>
+        </label>
+        <label className="inline-flex items-center text-white ml-4">
+            <input
+                type="radio"
+                value="remove"
+                checked={operation === 'remove'}
+                onChange={e => setOperation(e.target.value)}
+                className="bg-primary picker border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
+            />
+            <span className="ml-2">Remove Slot</span>
+        </label>
+    </div>
+</div>
+
                 <button
                     type="submit"
                     className="bg-white hover:bg-black hover:text-white text-black border border-white font-bold py-2 px-4 rounded"

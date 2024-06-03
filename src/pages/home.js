@@ -14,11 +14,12 @@ const HomePage = () => {
   const user = useAuth0();
   const [message, setMessage] = useState('');
   const [verified, setVerified] = useState(false);
+  
 
    useEffect(() => {
 
     async function checkverify(){
-            if(user.user.email){
+          try{  if(user.user.email){
         const response =await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -36,11 +37,14 @@ const HomePage = () => {
             setVerified(false);
             
         }
-    }
-        };
-        checkverify();
+    
+        }}catch(error){
+            console.error('Failed to verify:', error);
+        }
+   
+      
         
-    }
+    }  checkverify();}
         , [user.user.email]);
   const handleNavigation = (path) => {
     navigate(path);
@@ -48,8 +52,10 @@ const HomePage = () => {
   };
 function handlebook(e){
   e.preventDefault();
-  if(verified)
-  navigate('/book');
+  if(verified){
+     navigate('/book');
+  }
+ 
   else
   setMessage('Please verify your phone number to book a slot');
 }
