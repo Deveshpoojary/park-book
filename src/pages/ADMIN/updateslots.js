@@ -6,6 +6,7 @@ const UpdateSlots = () => {
     const [numSlots, setNumSlots] = useState(1);
     const [operation, setOperation] = useState('add'); // 'add' or 'remove'
     const [error,setError]=useState("")
+    const [message, setMessage] = useState('');
 
     const handleAddSlots = async () => {
         if(!(slotId<0) && !(numSlots<=0))
@@ -27,6 +28,7 @@ const UpdateSlots = () => {
                 });
                 const data = await response.json();
                 console.log('Slot added:', data);
+                setMessage("Slot added successfully")
             } catch (error) {
                 console.error('Failed to add slot:', error);
             
@@ -41,7 +43,7 @@ const UpdateSlots = () => {
                 const currentSlotId =slotId ;
             const slotData = {
                 slotId: parseInt(currentSlotId),
-                numberofslots:parseInt(numSlots)
+                
             };
         try {
             const response = await fetch(`https://park-book-9f9254d7f86a.herokuapp.com/api/slotsdel`, {
@@ -53,6 +55,7 @@ const UpdateSlots = () => {
             });
             const data = await response.json();
             console.log('Slot removed:', data);
+            setMessage("Slot removed successfully")
         } catch (error) {
             console.error('Failed to remove slot:', error);
         }
@@ -176,7 +179,7 @@ const UpdateSlots = () => {
                     {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
                 </button>
             </form>
-            {error}
+            {error}{message && <p className="mt-4 text-green-600">{message}</p>}
         </div>
     );
 };

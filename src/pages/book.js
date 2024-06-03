@@ -231,7 +231,24 @@ const Book = () => {
       setBooking(prev => ({ ...prev, slotId }));
     }
   };
+const handleVehicleNumberChange = (event) => {
+  const { name, value } = event.target;
 
+  if (name === "vehicleNumber") {
+    // Validate vehicle number format
+    const regex = /^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$/;
+    if (!regex.test(value.toUpperCase())) {
+      setError("Invalid vehicle number format. Expected format: KA-19-HC-0123");
+      return; // Stop the execution if format is wrong
+    } else {
+      setError(null); // Clear any existing errors if format is correct
+    }
+  }
+
+  setBooking(prev => ({
+    ...prev,
+    [name]: value
+  }));}
   const handleNextPage = (event) => {
     event.preventDefault();
     setCurrentPage(prevPage => prevPage + 1);
@@ -303,10 +320,19 @@ const Book = () => {
                 <input type="time" name="endTime" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary picker" onChange={handleChange} value={booking.endTime} />
               </div>
             </div>
-            <div className="mb-4">
-              <label htmlFor="vehicleNumber" className="font-medium">Vehicle Number:</label>
-              <input type="text" name="vehicleNumber" placeholder="KA-01-AB-1234" required className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary" onChange={handleChange} value={booking.vehicleNumber} />
-            </div>
+             <div>
+    <label htmlFor="vehicleNumber" className="font-medium">Vehicle Number:</label>
+    <input
+      type="text"
+      name="vehicleNumber"
+      placeholder="KA-19-HC-0123"
+      required
+      className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary"
+      onChange={handleVehicleNumberChange}  // Use the specific change handler for vehicle number
+      value={booking.vehicleNumber}
+    />
+    {error && <div className="bg-red-700 text-center p-3 rounded mb-4">{error}</div>}
+  </div>
             {error && <div className="bg-red-700 text-center p-3 rounded mb-4">
               {error}
             </div>}
