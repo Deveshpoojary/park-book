@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
@@ -11,11 +11,49 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { logout } = useAuth0();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const user = useAuth0();
+  const [message, setMessage] = useState('');
+  const [verified, setVerified] = useState(false);
 
+   useEffect(() => {
+
+    async function checkverify(){
+            if(user.user.email){
+        const response =await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: user.user.email })
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data.isverified===true) {
+           
+            setVerified(true);
+
+        }
+        else {
+        
+            setVerified(false);
+            
+        }
+    }
+        };
+        checkverify();
+        
+    }
+        , [user.user.email]);
   const handleNavigation = (path) => {
     navigate(path);
     setIsNavOpen(false);
   };
+function handlebook(e){
+  e.preventDefault();
+  if(verified)
+  navigate('/book');
+  else
+  setMessage('Please verify your phone number to book a slot');
+}
+
 
   return (
     <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 bg-gray-900 text-white">
@@ -51,7 +89,7 @@ const HomePage = () => {
             <button onClick={() => setIsNavOpen(false)} className="text-gray-300">
               <FaTimes size={24} />
             </button>
-            {['book', 'admin', 'adminhist', 'history'].map((item) => (
+            {['book', 'admin', 'adminhist', 'history','verify'].map((item) => (
               <button onClick={() => handleNavigation(`/${item}`)} className="block mt-4 text-gray-200 font-bold py-2 px-4 hover:bg-gray-700 rounded">
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </button>
@@ -83,8 +121,9 @@ const HomePage = () => {
                     </select>
                   </div>
                   <div className="mt-6">
-                    <button onClick={() => handleNavigation('/book')} className="w-full mr-auto px-4 py-2 font-bold bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none flex justify-center items-center">Book a parking space <FaRegArrowAltCircleRight size={25} className='ml-1' /></button>
+                    <button  onClick={handlebook} className="w-full mr-auto px-4 py-2 font-bold  bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none flex justify-center items-center">Book a parking space <FaRegArrowAltCircleRight size={25} className='ml-1' /></button>
                   </div>
+                  {message && <p className="mt-4 text-red-600">{message}</p>}
                 </form>
               </div>
             </div>
