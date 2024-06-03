@@ -9,7 +9,7 @@ function About() {
   return (
     <div className='bg-primary text-white text-center'>
       <div className='flex justify-center items-center'>
-        <img src={location} alt='Parking' className='text-center border-8 border-slate-300 rounded-lg'></img>
+        <img src={location} alt='Parking' className='text-center border-8 border-gray-800 rounded-lg'></img>
       </div>
 
       <div className='mt-20 space-y-4'>

@@ -42,9 +42,9 @@ const History = () => {
     };
 
     return (
-        <div className="bg-primary text-white min-h-screen">
-            <div className="flex justify-between items-center text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary">
-                <h1 className="l-border fam">Booking History</h1>
+        <div className="bg-primary text-white min-h-screen ">
+            <div className="flex justify-between items-center text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary  ">
+                <h1 className="l-border fam ">Booking History</h1>
                 <button onClick={() => setCount(count + 1)} className="bg-white hover:bg-black hover:text-white text-black font-bold py-1 px-2 border border-white ml-2 rounded-md">
                     Refresh
                 </button>

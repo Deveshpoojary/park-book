@@ -26,14 +26,19 @@ input {
   top:138px;
 } */
 .l-border{
-  margin-left: 3rem;
+  margin-left: 2rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 3rem;
+  font-size: 2rem;
   padding: 8px;
   border-left: 5px solid transparent;
   border-image: linear-gradient(to bottom, #FF5E69, #B16CEA);
   border-image-slice: 1;
 }
+/* @media (min-width:640px){
+  .l-border{
+    font-size: 1rem;
+  }
+} */
 .picker{
   color-scheme:dark;
 }

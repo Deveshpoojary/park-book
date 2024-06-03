@@ -10,6 +10,8 @@ import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { MdConfirmationNumber } from "react-icons/md";
+import car from '../images/sport-car.png'
+import bike from '../images/bike.webp'
 
 import ConfirmationPage from './confirm';
 
@@ -287,14 +289,21 @@ const Book = () => {
             <div className="mb-6 mt-2">
               <label className="block text-sm font-medium text-gray-700">Select Slot</label>
               {!loading ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2">
+                <div className="flex justify-center">
+                <div className="flex grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2 ">
                   {currentSlots.map(slot => (
                     <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
-                      className={`cursor-pointer p-3 ${slot.slotId === booking.slotId ? 'bg-cyan-400 text-black' : slot.isOccupied ? 'bg-red-300 text-white' : 'bg-slate-500 text-white'} rounded-lg`}>
-                      Slot {slot.slotId}
+                      className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${slot.slotId === booking.slotId ? 'bg-cyan-400 text-black' : slot.isOccupied ? 'bg-slate-500 text-white' : 'bg-slate-500 text-white'} rounded-lg`}>
+
+
+                      {slot.isOccupied ? booking.vehicleType === "car" ? <img src={car} alt="Car" width="100" height="50"/> : <img src={bike} className='' alt="Bike" width="100" height="50"/> :null}
+                      
+                      {slot.isOccupied? <p>Slot {slot.slotId} </p> : <p>Slot {slot.slotId} <br/>Available</p>}
+
+                      
                     </div>
                   ))}
-                </div>
+                </div></div>
               ) : (
                 <LoadingAnimation />
               )}

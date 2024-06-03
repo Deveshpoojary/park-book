@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Alert } from '@mui/material';
 import LoadingAnimation from './steering';
+import Accessdenied from './accessdenied';
 
 const Adminhist = () => {
     const { user } = useAuth0();
@@ -14,6 +15,8 @@ const Adminhist = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [error, setError] = useState(null);
     const [mess, setMess] = useState('');
+    const [adminhist, setAdminhist] = useState('false');
+    
 
     useEffect(() => {
         fetchUserBookings();
@@ -165,7 +168,19 @@ const Adminhist = () => {
         }
     }, [searchTerm]);
 
-    return (
+    useEffect(() => {
+        if (user) {
+            setAdminhist(user.email === "deveshpoojary@gmail.com" || user.email === "tharunrai14@gmail.com");
+            setLoading(true);
+        }
+        else {
+            setLoading(false);
+        }
+        // Check if the user is an admin only when the component mounts or user changes
+
+    }, [user]); // Depend on user.email
+
+    return (<>{adminhist ? 
         <div className='bg-primary text-white min-h-screen'>
             <span className="flex text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary shadow-lg">
                 <h1 className='l-border fam'>All Bookings</h1>
@@ -274,7 +289,7 @@ const Adminhist = () => {
             ) : (
                 <LoadingAnimation />
             )}
-        </div>
+        </div> : <Accessdenied/>}</>
     ); 
 };
 
