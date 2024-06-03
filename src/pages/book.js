@@ -231,24 +231,24 @@ const Book = () => {
       setBooking(prev => ({ ...prev, slotId }));
     }
   };
-const handleVehicleNumberChange = (event) => {
-  const { name, value } = event.target;
+// const handleVehicleNumberChange = (event) => {
+//   const { name, value } = event.target;
 
-  if (name === "vehicleNumber") {
-    // Validate vehicle number format
-    const regex = /^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$/;
-    if (!regex.test(value.toUpperCase())) {
-      setError("Invalid vehicle number format. Expected format: KA-19-HC-0123");
-      return; // Stop the execution if format is wrong
-    } else {
-      setError(null); // Clear any existing errors if format is correct
-    }
-  }
+//   if (name === "vehicleNumber") {
+//     // Validate vehicle number format
+//     const regex = /^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$/;
+//     if (!regex.test(value.toUpperCase())) {
+//       setError("Invalid vehicle number format. Expected format: KA-19-HC-0123");
+//       return; // Stop the execution if format is wrong
+//     } else {
+//       setError(null); // Clear any existing errors if format is correct
+//     }
+//   }
 
-  setBooking(prev => ({
-    ...prev,
-    [name]: value
-  }));}
+//   setBooking(prev => ({
+//     ...prev,
+//     [name]: value
+//   }));}
   const handleNextPage = (event) => {
     event.preventDefault();
     setCurrentPage(prevPage => prevPage + 1);
@@ -328,7 +328,7 @@ const handleVehicleNumberChange = (event) => {
       placeholder="KA-19-HC-0123"
       required
       className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary"
-      onChange={handleVehicleNumberChange}  // Use the specific change handler for vehicle number
+        // Use the specific change handler for vehicle number
       value={booking.vehicleNumber}
     />
     {error && <div className="bg-red-700 text-center p-3 rounded mb-4">{error}</div>}
