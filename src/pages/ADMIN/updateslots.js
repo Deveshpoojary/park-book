@@ -88,7 +88,7 @@ const UpdateSlots = () => {
     };
 
     return (
-        <div className="container bg-secondary mx-auto px-4 shadow-lg shadow-gray-500 rounded-lg py-4 mt-6">
+        <div className="container bg-primary mx-auto px-4 shadow-lg shadow-gray-500 rounded-lg py-4 mt-6">
             <h1 className="text-4xl py-2 mt-4 font-bold text-white l-border">Update Parking Slots</h1>
             <form onSubmit={handleSubmit} className="mt-4">
                 <div className="mb-4">

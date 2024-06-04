@@ -7,10 +7,12 @@ const  Current = () => {
     const [error, setError] = useState(null);
     const [loading, setloading] = useState(false);
     const [refresh, setRefresh] = useState(false);
-    const bookedFrom = new Date().toISOString();
+    const bookedFrom = new Date();
     
        
-        const bookedTill = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+        const bookedTill = new Date(Date.now() + 5 * 60 * 1000);
+        // const bookedfromformatted = new Date(bookedFrom).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // const bookedtillformatted = new Date(bookedTill).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const [booking ,setbooking]= useState({ vehicleType: "car" });
         useEffect(() => {
     async function fetchslots(){
@@ -57,12 +59,12 @@ const  Current = () => {
           {slots.map((slot) => (
             <div
               key={slot.slotId}
-              className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${
+              className={`flex flex-col justify-center  items-center cursor-pointer p-2 py-4 w-32 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${
                 slot.slotId === booking.slotId
                   ? 'bg-cyan-400 text-black'
                   : slot.isOccupied
-                    ? 'bg-red-100 text-white'
-                    : 'bg-3 text-white'
+                    ? 'bg-red-100 text-black p-1'
+                    : 'bg-3 text-black'
               } rounded-lg`}
             >
               {slot.isOccupied ? (
@@ -74,8 +76,8 @@ const  Current = () => {
               ) : null}
 
               {slot.isOccupied ? (
-                <p>Slot {slot.slotId} till {new Date(slot.bookingDetails.bookedTill).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                Veh. number {slot.bookingDetails.vehicleNumber}
+                <p>Slot {slot.slotId}  <br />
+                Veh. number {slot.bookingDetails[0].vehicleNumber}
 
 
 

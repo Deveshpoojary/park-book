@@ -48,7 +48,7 @@ input {
 } */
 
 .bg-primary{
-  background-color: #121127;
+  background: linear-gradient(115deg, #000000, #030108, #000000)
 }
 .bg-secondary{
   background-color: #864AF9;

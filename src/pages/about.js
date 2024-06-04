@@ -51,7 +51,7 @@ function About() {
       </div>
 
       {/* Footer */}
-      <footer className='bg-secondary text-white py-6 border-t border-gray-400 mt-10'>
+      <footer className='bg-primary text-white py-6 border-t border-gray-400 mt-10'>
         <div className='text-center'>
           <p className='mt-2 fam'>&copy; {currentyear} All rights reserved</p>
         </div> 
