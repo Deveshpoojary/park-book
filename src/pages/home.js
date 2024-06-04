@@ -68,7 +68,7 @@ function handlebook(e){
 
       {/* Navigation bar */}
       <div className="px-4 py-2 shadow-lg bg-gray-800 flex items-center justify-between">
-        <img src="https://api.time.com/wp-content/uploads/2015/02/apple-logo.jpg" alt="Logo" className="h-8 w-auto" />
+        <img src="https://th.bing.com/th/id/OIP.yat3HsshdS-vQTir3a4xLAAAAA?rs=1&pid=ImgDetMain" alt="Logo" className="h-8 w-auto" />
         
         <div className="md:hidden">
           <button onClick={() => setIsNavOpen(!isNavOpen)} className="text-gray-300">
