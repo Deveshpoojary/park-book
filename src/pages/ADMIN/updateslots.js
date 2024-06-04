@@ -1,7 +1,8 @@
+import { set } from 'firebase/database';
 import React, { useState } from 'react';
 
 const UpdateSlots = () => {
-    const [slotId, setSlotId] = useState(0);
+    const [slotId, setSlotId] = useState();
     const [vehicleType, setVehicleType] = useState('car');
     const [numSlots, setNumSlots] = useState(1);
     const [operation, setOperation] = useState('add'); // 'add' or 'remove'
@@ -11,6 +12,9 @@ const UpdateSlots = () => {
     const handleAddSlots = async () => {
         if(!(slotId<0) && !(numSlots<=0))
         {
+
+            setError("")
+            setMessage("")
             
             const currentSlotId =slotId ;
             const slotData = {
@@ -27,8 +31,13 @@ const UpdateSlots = () => {
                     body: JSON.stringify(slotData)
                 });
                 const data = await response.json();
+                if(data.error){
+                    setError("  Failed to add slots/already exists");
+                }
+                else{
                 console.log('Slot added:', data);
                 setMessage("Slot added successfully")
+                }
             } catch (error) {
                 console.error('Failed to add slot:', error);
             
@@ -46,6 +55,9 @@ const UpdateSlots = () => {
                 
             };
         try {
+            setError("")
+            setMessage("")
+
             const response = await fetch(`https://park-book-9f9254d7f86a.herokuapp.com/api/slotsdel`, {
                 method: 'POST',
                 headers: {
@@ -57,7 +69,7 @@ const UpdateSlots = () => {
             console.log('Slot removed:', data);
             setMessage("Slot removed successfully")
         } catch (error) {
-            console.error('Failed to remove slot:', error);
+            console.log('Failed to remove slot:', error);
         }
         }
         else{
@@ -179,7 +191,7 @@ const UpdateSlots = () => {
                     {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
                 </button>
             </form>
-            {error}{message && <p className="mt-4 text-green-600">{message}</p>}
+            {error&&<p className="mt-4 text-red-600">{error}</p>}{message && <p className="mt-4 text-green-600">{message}</p>}
         </div>
     );
 };
