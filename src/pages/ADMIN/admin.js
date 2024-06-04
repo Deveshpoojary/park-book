@@ -36,7 +36,7 @@ const Admin = () => {
 
     return (
         < > <div className='bg-primary min-h-screen'>
-            {admin ? <> <div className='bg-secondary flex px-4 py-4 shadow-lg border-b border-gray-500' >
+            {admin ? <> <div className='bg-primary flex px-4 py-4 shadow-lg border-b border-gray-500' >
                 <button className='bg-white text-black border border-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white mr-2' name='1' onClick={handle}>
                     Update Prices
                 </button>

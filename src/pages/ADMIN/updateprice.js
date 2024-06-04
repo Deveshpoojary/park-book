@@ -61,7 +61,7 @@ useEffect(() => {
 
 
     return (
-        <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-secondary rounded-lg shadow-xl shadow-gray-500">
+        <div className="max-w-md mx-auto mt-10 px-4 py-8 bg-primary rounded-lg shadow-xl shadow-gray-500">
             <h1 className="text-2xl text-center text-white font-bold mb-4">Update Parking Prices</h1>
             <button className='bg-cyan-500 text-black p-1 font-bold rounded-md hover:bg-cyan-600 animate-pulse' onClick={() => {setcount(count+1)}}> Fetch latest prices
            

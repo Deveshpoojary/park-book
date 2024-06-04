@@ -48,10 +48,19 @@ input {
 } */
 
 .bg-primary{
-  background-color: #0A0A0A;
+  background-color: #121127;
 }
 .bg-secondary{
-  background-color: #292929;
+  background-color: #864AF9;
+}
+.bg-3{
+  background-color: #864AF9;
+}
+.bg-4{
+  background-color: #A6FF96;
+}
+.bg-5{
+  background-color: #6eb6e3;
 }
 .fam{
   font-family: sans-serif;

@@ -7,6 +7,7 @@ import { FaRegArrowAltCircleRight, FaBars, FaTimes } from "react-icons/fa";
 import { GiFallingStar } from "react-icons/gi";
 import { IoCarSportSharp } from "react-icons/io5";
 import Book from './book';
+import '../index.css';
 const HomePage = () => {
   const navigate = useNavigate();
   const { logout } = useAuth0();
@@ -62,7 +63,7 @@ function handlebook(e){
 
 
   return (
-    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 bg-gray-900 text-white">
+    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 bg-primary text-white">
       <Profile />
 
       {/* Navigation bar */}
@@ -77,7 +78,7 @@ function handlebook(e){
 
         <div className="hidden md:flex space-x-4">
           {[ 'admin',  'history','verify'].map((item) => (
-            <button onClick={() => handleNavigation(`/${item}`)} className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded">
+            <button onClick={() => handleNavigation(`/${item}`)} className="bg-gray-700  hover:bg-[#864AF9] border-white hover:text-black text-gray-200 font-semibold py-2 px-4 rounded">
               {item.charAt(0).toUpperCase() + item.slice(1)}
             </button>
           ))}
@@ -96,7 +97,7 @@ function handlebook(e){
               <FaTimes size={24} />
             </button>
             {[ 'admin', 'history','verify'].map((item) => (
-              <button onClick={() => handleNavigation(`/${item}`)} className="block mt-4 text-gray-200 font-bold py-2 px-4 hover:bg-gray-700 rounded">
+              <button onClick={() => handleNavigation(`/${item}`)} className="block mt-4 text-gray-200 font-bold py-2 px-4 hover:bg-white-700 hover:text-black rounded">
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </button>
             ))}

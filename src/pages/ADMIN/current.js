@@ -43,14 +43,14 @@ const  Current = () => {
           <span>from: {new Date(bookedFrom).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
            <span>bookedTill: {new Date(bookedTill).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
      </span>    
-      <button className='col-span-8 bg-slate-600' onClick={() => { setbooking({ vehicleType: "car" }) }}>CAR SLOTS</button>
-          <button className='col-span-8 bg-slate-800' onClick={() => { setbooking({ vehicleType: "bike" }) }}>BIKE SLOTS</button>
+      <button className=' col-span-8 bg-slate-600 w-32 hover:bg-[#864AF9]' onClick={() => { setbooking({ vehicleType: "car" }) }}>CAR SLOTS</button>
+          <button className=' col-span-8 bg-slate-600 w-32 m-0 hover:bg-[#864AF9]' onClick={() => { setbooking({ vehicleType: "bike" }) }}>BIKE SLOTS</button>
           {/* {!loading?<bton className='col-span-8 bg-red-400'  onClick={fetchslots}>
             Fetch slots
           </button>:<button  disabled className='col-span-8 bg-red-400'>
             Fetching.....
           </button>} */}
-          <button className='col-span-8 bg-red-400' onClick={() => { setRefresh(!refresh) }}>
+          <button className='col-span-8 bg-red-400 w-64' onClick={() => { setRefresh(!refresh) }}>
 
             {loading ? "refreshing" : "refresh"}
           </button>
@@ -61,8 +61,8 @@ const  Current = () => {
                 slot.slotId === booking.slotId
                   ? 'bg-cyan-400 text-black'
                   : slot.isOccupied
-                    ? 'bg-red-200 text-white'
-                    : 'bg-slate-500 text-white'
+                    ? 'bg-red-100 text-white'
+                    : 'bg-3 text-white'
               } rounded-lg`}
             >
               {slot.isOccupied ? (

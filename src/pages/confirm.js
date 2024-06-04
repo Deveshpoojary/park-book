@@ -19,13 +19,13 @@ function ConfirmationPage() {
             <p className="text-white text-lg delayed-text">Check your otp in history</p>
             <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
               <button
-                className="bg-white border border-white text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white delayed-text"
+                className="bg-white border border-white text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-[#864AF9] hover:text-black delayed-text"
                 onClick={() => navigate('/home')}
               >
                 Go to Home
               </button>
               <button
-                className="bg-white border border-white text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white delayed-text"
+                className="bg-white border border-white text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-[#864AF9] hover:text-white delayed-text"
                 onClick={() => navigate('/history')}
               >
                 View History
