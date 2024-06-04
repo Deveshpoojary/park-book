@@ -30,6 +30,7 @@ const Verify = () => {
     }, [user?.email,message]);
 
     const handleSendOtp = async () => {
+        
         const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/sendotp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -62,6 +63,7 @@ const Verify = () => {
                 <>
                     {!verified ? (
                         <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+                           <span className='text-red-300'>Verification required to book a slot</span> 
                             <h1 className="text-2xl font-bold mb-4">Phone Verification</h1>
                             <input
                                 value={phoneNumber}

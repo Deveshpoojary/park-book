@@ -16,6 +16,7 @@ function ConfirmationPage() {
           <div className="text-center">
             <h1 className="text-white text-3xl font-bold mb-2 delayed-text">Done!</h1>
             <h2 className="text-white text-xl mb-4 delayed-text">Your Booking has been confirmed!</h2>
+            <p className="text-white text-lg delayed-text">Check your otp in history</p>
             <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
               <button
                 className="bg-white border border-white text-neutral-900 font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white delayed-text"

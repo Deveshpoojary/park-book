@@ -6,7 +6,7 @@ import Profile from './Profile';
 import { FaRegArrowAltCircleRight, FaBars, FaTimes } from "react-icons/fa";
 import { GiFallingStar } from "react-icons/gi";
 import { IoCarSportSharp } from "react-icons/io5";
-
+import Book from './book';
 const HomePage = () => {
   const navigate = useNavigate();
   const { logout } = useAuth0();
@@ -76,7 +76,7 @@ function handlebook(e){
         </div>
 
         <div className="hidden md:flex space-x-4">
-          {['book', 'admin', 'adminhist', 'history','verify'].map((item) => (
+          {[ 'admin',  'history','verify'].map((item) => (
             <button onClick={() => handleNavigation(`/${item}`)} className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded">
               {item.charAt(0).toUpperCase() + item.slice(1)}
             </button>
@@ -95,7 +95,7 @@ function handlebook(e){
             <button onClick={() => setIsNavOpen(false)} className="text-gray-300">
               <FaTimes size={24} />
             </button>
-            {['book', 'admin', 'adminhist', 'history','verify'].map((item) => (
+            {[ 'admin', 'history','verify'].map((item) => (
               <button onClick={() => handleNavigation(`/${item}`)} className="block mt-4 text-gray-200 font-bold py-2 px-4 hover:bg-gray-700 rounded">
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </button>
@@ -128,6 +128,7 @@ function handlebook(e){
                   </div>
                   <div className="mt-6">
                     <button  onClick={handlebook} className="w-full mr-auto px-4 py-2 font-bold  bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none flex justify-center items-center">Book a parking space <FaRegArrowAltCircleRight size={25} className='ml-1' /></button>
+                  
                   </div>
                   {message && <p className="mt-4 text-red-600">{message}</p>}
                 </form>

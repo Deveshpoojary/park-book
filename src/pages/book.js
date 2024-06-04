@@ -39,8 +39,9 @@ const Book = () => {
   const [bikeprice, setBikeprice] = useState(0);
   const [confirm, setConfirm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [verified, setVerified] = useState(false);
+  const [verified, setVerified] = useState(true);
   const slotsPerPage = 16;
+  const [otp, setotp] = useState('');
 
   useEffect(() => {
     console.log("loading", loading);
@@ -77,7 +78,7 @@ const Book = () => {
       setBooking(prev => ({ ...prev, vehicleType: !booking.vehicleType }));
     }
   }, [error]);
-  useEffect(() => {
+  
     async function checkverify() {
       try {
         if (user.user.email) {
@@ -99,8 +100,8 @@ const Book = () => {
         console.error(error);
       }
     }
-    checkverify();
-  }, []);
+    
+  
 
   useEffect(() => {
     console.log('fetching slots');
@@ -111,6 +112,7 @@ const Book = () => {
       if (!bookedFrom || !bookedTill || !booking.vehicleType || !carprice || !bikeprice || !booking.vehicleNumber) {
         return;
       }
+      
       try {
         const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}&type=${booking.vehicleType}`;
         const response = await fetch(url);
@@ -137,13 +139,53 @@ const Book = () => {
       setError('Please fill all the fields');
       return;
     }
-    if(!verified){
-      setError('Please verify your phone number before booking');
-      return;
-    }
+   
+   
     setIsConfirmModalVisible(true);
   };
+   const mask = 'AA-11-AA-1111';
+  const regex = {
+    A: /[A-Z]/,
+    1: /\d/,
+    '-': /-/
+  };
+  const handleChangee = (event) => {
+    const { name, value } = event.target;
 
+    if (name === "vehicleNumber") {
+      let idx = 0, valid = true;
+      let newValue = '';
+      const splitValue = value.split('');
+      
+      for (const char of splitValue) {
+        if (idx >= mask.length || !regex[mask[idx]].test(char)) {
+          valid = false;
+          break;
+        } else {
+          newValue += char;
+          idx++;
+        }
+      }
+
+      if (!valid) {
+        setError("Invalid vehicle number format. Expected format: KA-19-HC-0123");
+        return; // Prevent further state update if format is incorrect
+      } else {
+        setError(null); // Clear error if format is correct
+      }
+
+      setBooking(prev => ({
+        ...prev,
+        [name]: newValue.toUpperCase() // Ensuring input is uppercase
+      }));
+    } else {
+      // Handle other inputs normally
+      setBooking(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
   const confirmBooking = async () => {
     setLoading(true);
     const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/bookings', {
@@ -163,6 +205,8 @@ const Book = () => {
     const data = await response.json();
     if (response.ok) {
       setLoading(false);
+      console.log('Booking successful:', data);
+      
       setConfirm(true);
     } else {
       setLoading(false);
@@ -194,6 +238,12 @@ const Book = () => {
 
   const handleChange = (event) => {
     event.preventDefault();
+     checkverify();
+    if (!verified) {
+      setError('Please  your phone number to book a slot');
+      navigate('/verify');
+      return;
+    }
     const { name, value } = event.target;
     setBooking(prev => ({ ...prev, [name]: value }));
 
@@ -231,24 +281,7 @@ const Book = () => {
       setBooking(prev => ({ ...prev, slotId }));
     }
   };
-// const handleVehicleNumberChange = (event) => {
-//   const { name, value } = event.target;
 
-//   if (name === "vehicleNumber") {
-//     // Validate vehicle number format
-//     const regex = /^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$/;
-//     if (!regex.test(value.toUpperCase())) {
-//       setError("Invalid vehicle number format. Expected format: KA-19-HC-0123");
-//       return; // Stop the execution if format is wrong
-//     } else {
-//       setError(null); // Clear any existing errors if format is correct
-//     }
-//   }
-
-//   setBooking(prev => ({
-//     ...prev,
-//     [name]: value
-//   }));}
   const handleNextPage = (event) => {
     event.preventDefault();
     setCurrentPage(prevPage => prevPage + 1);
@@ -326,6 +359,7 @@ const Book = () => {
       type="text"
       name="vehicleNumber"
       placeholder="KA-19-HC-0123"
+      onChange={handleChangee}
       required
       className="form-input w-full mt-1 p-2 bg-gray-700 border border-gray-400 rounded bg-primary"
         // Use the specific change handler for vehicle number
@@ -417,7 +451,7 @@ const Book = () => {
       )}
     </div>
         :
-        <ConfirmationPage />}
+        <ConfirmationPage code={otp} />}
     </>
   );
 };

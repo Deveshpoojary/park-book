@@ -134,8 +134,17 @@ const Adminhist = () => {
                 })
             });
             const result = await response.json();
-            console.log("success", result);
-            setCount(count + 1);
+            if (response.status === 200) {
+                console.log("success", result);
+                setMess("Checked out successfully");
+                setCount(count + 1); 
+            }
+            else {
+                console.log("error", result);
+                setError(result.error);
+            }
+           
+          
         } catch (error) {
             console.error('Error checking out:', error);
             setError(error.message);
@@ -244,7 +253,11 @@ const Adminhist = () => {
                                                                 />
                                                                 <button
                                                                     className="bg-cyan-500 hover:bg-black text-white font-bold py-1 px-2 rounded border border-white mt-2"
-                                                                    onClick={() => checkin(booking)}
+                                                                    onClick={(e) =>{
+                                                                    e.preventDefault();
+                                                                        
+                                                                        
+                                                                         checkin(booking)}}
                                                                 >
                                                                     Checkin
                                                                 </button>
@@ -270,7 +283,9 @@ const Adminhist = () => {
                                                         />
                                                         <button
                                                             className="bg-cyan-500 border border-white hover:bg-black text-white font-bold mt-2 py-1 px-2 rounded"
-                                                            onClick={() => checkout(booking)}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                checkout(booking)}}
                                                         >
                                                             Checkout
                                                         </button>
