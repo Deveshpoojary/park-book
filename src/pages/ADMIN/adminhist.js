@@ -170,8 +170,9 @@ const Adminhist = () => {
             setBookings(searchResults);
         } else {
             const results = bookings.filter(booking =>
-                (booking.vehicleNumber && booking.vehicleNumber.includes(searchTerm)) ||
-                (booking.userId && booking.userId.toLowerCase().includes(searchTerm.toLowerCase()))
+                (booking.vehicleNumber && booking.vehicleNumber.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (booking.userId && booking.userId.toLowerCase().includes(searchTerm.toLowerCase()))||
+                (booking.bookingId && booking.bookingId.toString().includes(searchTerm.toLowerCase()))
             );
             setBookings(results);
         }
@@ -217,6 +218,7 @@ const Adminhist = () => {
                                 </tr>
                                 <tr>
                                     <th className="border border-gray-300 px-4 py-2">User</th>
+                                    <th className="border border-gray-300 px-4 py-2"> Id</th>
                                     <th className="border border-gray-300 px-4 py-2">Vehicle no.</th>
                                     <th className="border border-gray-300 px-4 py-2">v.type</th>
                                     <th className="border border-gray-300 px-4 py-2">Amount</th>
@@ -231,6 +233,7 @@ const Adminhist = () => {
                                 {bookings.map(booking => (
                                     <tr key={booking.bookingId}>
                                         <td className="border border-gray-300 px-4 py-2">{booking.userId}</td>
+                                        <td className="border border-gray-300 px-4 py-2">{booking.bookingId}</td>
                                         <td className="border border-gray-300 px-4 py-2">{booking.vehicleNumber}</td>
                                         <td className="border border-gray-300 px-4 py-2">{booking.vehicleType}</td>
                                         <td className="border border-gray-300 px-4 py-2">{booking.amount}</td>
