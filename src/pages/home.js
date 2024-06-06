@@ -6,7 +6,7 @@ import Profile from './Profile';
 import { FaRegArrowAltCircleRight, FaBars, FaTimes } from "react-icons/fa";
 import { GiFallingStar } from "react-icons/gi";
 import { IoCarSportSharp } from "react-icons/io5";
-import Book from './book';
+
 import '../index.css';
 const HomePage = () => {
   const navigate = useNavigate();

@@ -211,6 +211,9 @@ const Book = () => {
     } else {
       setLoading(false);
       setError(data.message);
+      if(data.error){
+      setError(data.error);
+      }
       console.error('Failed to book:', data);
     }
   };
@@ -320,7 +323,7 @@ const Book = () => {
                 <button
                   type="button"
                   onClick={() => handleVehicleTypeChange("car")}
-                  className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "car" ? "bg-3" : "bg-black hover:bg-[#864AF9]"} font-bold`}
+                  className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "car" ? "bg-[#864AF9]" : "bg-3 hover:bg-[#864AF9]"} font-bold`}
                 >
                   <IoCarSportSharp size={30} className="text-black-500" />
                   Car
@@ -328,7 +331,7 @@ const Book = () => {
                 <button
                   type="button"
                   onClick={() => handleVehicleTypeChange("bike")}
-                  className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "bike" ? "bg-3" : "bg-black hover:bg-[#864AF9]"} font-bold`}
+                  className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "bike" ? "bg-[#864AF9]" : "bg-black hover:bg-[#864AF9]"} font-bold`}
                 >
                   <PiMotorcycleFill size={30} className="text-black-500" />
                   Bike
@@ -365,11 +368,9 @@ const Book = () => {
         // Use the specific change handler for vehicle number
       value={booking.vehicleNumber}
     />
-    {error && <div className="bg-red-700 text-center p-3 rounded mb-4">{error}</div>}
+    
   </div>
-            {error && <div className="bg-red-700 text-center p-3 rounded mb-4">
-              {error}
-            </div>}
+           
             {/* Total Charges Display */}
             {amount > 0 ? <p>Total Charges:<span className='font-medium text-bg-4'>INR: {amount.toFixed(2)}</span> </p> : <span className="relative flex h-3 w-3">Fetching
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-3 opacity-75"></span>
@@ -383,7 +384,7 @@ const Book = () => {
                 <div className=" grid grid-cols-2 sm:grid-cols-2 md:grid-cols-8 gap-4 mt-2 ">
                   {currentSlots.map(slot => (
                     <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
-                      className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${slot.slotId === booking.slotId ? 'bg-[#1A1A40] text-white border-2' : slot.isOccupied ? 'bg-red-100 text-white' : 'bg-3 text-white'} rounded-lg`}>
+                      className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${slot.slotId === booking.slotId ? 'bg-[#3848b1] text-white border-2' : slot.isOccupied ? 'bg-red-100 text-white' : 'bg-3 text-white'} rounded-lg`}>
 
 
                       {slot.isOccupied ? booking.vehicleType === "car" ? <img src={car} alt="Car" width="100" height="50"/> : <img src={bike} className='' alt="Bike" width="100" height="50"/> :null}
@@ -407,10 +408,10 @@ const Book = () => {
                   </button>
                 </div>
               )}
-              {error && <Alert variant="filled" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
+              {error && <Alert variant="outlined" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
             </div>
             {/* Booking Button */}
-            <button type="submit" className="w-full bg-[#864AF9] border-black text-white font-bold py-2 px-4 rounded-md hover:bg-black hover:text-white border  flex justify-center items-center" onClick={handleBooking}>
+            <button type="submit" className="w-full bg-[#864AF9] border-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#3848b1] hover:text-white border  flex justify-center items-center" onClick={handleBooking}>
               Book Now <FaRegArrowAltCircleRight size={25} className='ml-1' />
             </button>
           </form>
@@ -418,8 +419,8 @@ const Book = () => {
       </div>
       {/* Confirmation Modal */}
       {isConfirmModalVisible && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-700 rounded-lg p-6 max-w-sm mx-auto">
+        <div className="fixed inset-0 bg-grey-100  bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-700 border-2 border-green-200 rounded-lg p-6 max-w-sm mx-auto">
             <h2 className="text-lg font-semibold">Confirm Booking</h2>
             <p className="text-sm">Please confirm your booking details:</p>
             <ul className="text-sm list-disc pl-5 mt-2">
@@ -433,15 +434,15 @@ const Book = () => {
               <li>Amount: INR: {amount.toFixed(2)}</li>
             </ul>
             <div className="flex justify-end gap-4 mt-4">
-              <button onClick={() => setIsConfirmModalVisible(false)} className="bg-red-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
+              <button onClick={() => setIsConfirmModalVisible(false)} className="bg-5 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
                 Cancel<MdCancel className="ml-2" />
               </button>
               {!loading ? (
-                <button onClick={confirmBooking} className="bg-cyan-500 hover:bg-3 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
+                <button onClick={confirmBooking} className="bg-[#864AF9] hover:bg-3 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
                   Pay and Confirm<GiConfirmed className="ml-2" />
                 </button>
               ) : (
-                <button className="bg-blue-500 hover:bg-3 text-white py-2 px-4 rounded">
+                <button className="bg-[#864AF9] hover:bg-3 text-white py-2 px-4 rounded">
                   <BsTicketPerforated className="animate-spin" />
                 </button>
               )}
