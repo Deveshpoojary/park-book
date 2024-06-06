@@ -264,8 +264,9 @@ const Adminhist = () => {
                                                     <span className="text-red-600 font-bold">Booking Expired</span>
                                                 ) : (
                                                     <>
-                                                        {new Date(booking.bookedFrom.replace(' ', 'T')) > new Date()  ? (
-                                                            <p className="text-yellow-400 font-bold">Not Today</p>
+                                                        {new Date(booking.bookedFrom.split(' ')[0]) > new Date(new Date().toISOString().split('T')[0]) ? (
+    <p className="text-yellow-400 font-bold">Not Today</p>
+
                                                         ) : (
                                                             <>
                                                                 <input
