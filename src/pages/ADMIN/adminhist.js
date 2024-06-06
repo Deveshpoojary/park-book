@@ -135,7 +135,7 @@ const Adminhist = () => {
                 })
             });
             const result = await response.json();
-         switch(result.status){
+         switch(response.status){
             case 200:
                 console.log("success");
                 setMess("Checked out successfully");
@@ -157,7 +157,7 @@ const Adminhist = () => {
                     setCount(count + 1);
                     break;
                     default:
-                        console.log("error");
+                        console.log(result);
                         setError(result.message);
                         setCount(count + 1);
          }
