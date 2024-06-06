@@ -158,7 +158,7 @@ const Adminhist = () => {
                     break;
                     default:
                         console.log(result);
-                        setError(result.message,":",result.charges);
+                        setError(result.message,result.charges);
                         setCount(count + 1);
          }
            
