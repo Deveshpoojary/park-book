@@ -67,6 +67,7 @@ const Adminhist = () => {
                     setMess("Checked in successfully");
                     setCount(count + 1);
                     break;
+                
                 case 209:
                     console.log("New Slot Assigned", result.newSlotId);
                     setMess(`New Slot Assigned: ${result.newSlotId}`);
@@ -134,15 +135,30 @@ const Adminhist = () => {
                 })
             });
             const result = await response.json();
-            if (response.status === 200) {
-                console.log("success", result);
+         switch(result.status){
+            case 200:
+                console.log("success");
                 setMess("Checked out successfully");
-                setCount(count + 1); 
-            }
-            else {
-                console.log("error", result);
-                setError(result.error);
-            }
+                setCount(count + 1);
+                break;
+                case 202:
+                    console.log("was late to checkout", result.charges);
+                    setMess("Late to checkout,  Additonal charges: " + result.charges);
+                    setCount(count + 1);
+                    break;
+                case 404:
+                    console.log("Booking not found");
+                    setError("Booking not found");
+                    setCount(count + 1);
+                    break;
+                case 400: 
+                    console.log("Wrong OTP");
+                    setError("Wrong OTP");
+                    setCount(count + 1);
+                    break;
+                    default:
+                        console.log("error");
+         }
            
           
         } catch (error) {
