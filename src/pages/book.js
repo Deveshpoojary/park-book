@@ -389,7 +389,7 @@ const Book = () => {
 
                       {slot.isOccupied ? booking.vehicleType === "car" ? <img src={car} alt="Car" width="100" height="50"/> : <img src={bike} className='' alt="Bike" width="100" height="50"/> :null}
                       
-                      {slot.isOccupied? <p>Slot {slot.slotId} </p> : <p>Slot {slot.slotId} <br/>Available</p>}
+                      {slot.isOccupied? <p className='text-black'>Slot Full </p> : <p>Slot {slot.slotId} <br/>Available</p>}
 
                       
                     </div>
