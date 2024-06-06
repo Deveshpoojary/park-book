@@ -158,6 +158,8 @@ const Adminhist = () => {
                     break;
                     default:
                         console.log("error");
+                        setError(result.message);
+                        setCount(count + 1);
          }
            
           
@@ -177,7 +179,7 @@ const Adminhist = () => {
 
     const isBookingExpired = (bookedTill) => {
         const now = new Date();
-        const tillDate = new Date(bookedTill);
+        const tillDate =  new Date(bookedTill.replace(' ', 'T'));;
         return now > tillDate;
     };
 
@@ -262,7 +264,7 @@ const Adminhist = () => {
                                                     <span className="text-red-600 font-bold">Booking Expired</span>
                                                 ) : (
                                                     <>
-                                                        {booking.bookedFrom > new Date().toISOString().slice(0, 19).replace('T', ' ') ? (
+                                                        {new Date(booking.bookedFrom.replace(' ', 'T')) > new Date()  ? (
                                                             <p className="text-yellow-400 font-bold">Not Today</p>
                                                         ) : (
                                                             <>
