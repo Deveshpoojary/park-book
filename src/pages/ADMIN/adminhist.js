@@ -262,7 +262,7 @@ const Adminhist = () => {
                                                     <span className="text-red-600 font-bold">Booking Expired</span>
                                                 ) : (
                                                     <>
-                                                        {booking.bookedFrom < new Date().toISOString().slice(0, 19).replace('T', ' ') ? (
+                                                        {booking.bookedFrom > new Date().toISOString().slice(0, 19).replace('T', ' ') ? (
                                                             <p className="text-yellow-400 font-bold">Not Today</p>
                                                         ) : (
                                                             <>
