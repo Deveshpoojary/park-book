@@ -19,7 +19,7 @@ const Admin = () => {
 
     useEffect(() => {
         if (user) {
-            setadmin(user.email === "deveshpoojary@gmail.com" || user.email === "tharunrai14@gmail.com" ||"karkerabhuvan@gmail.com");
+            setadmin(user.email === "deveshpoojary@gmail.com" || user.email === "tharunrai69@gmail.com" ||"karkerabhuvan@gmail.com");
             setLoading(false);
         }
         else {
