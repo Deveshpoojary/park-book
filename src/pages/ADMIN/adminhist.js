@@ -38,6 +38,7 @@ const Adminhist = () => {
         } catch (error) {
             console.error('Error fetching user bookings:', error);
             setLoading(false);
+            setError(error.message);
         }
     };
 
