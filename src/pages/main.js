@@ -13,7 +13,7 @@ const Main = () => {
     <div className="h-screen">
       <div className="flex flex-col h-screen bg-primary">
         <nav className="text-white py-4 px-8 flex justify-between items-center border-b border-gray-200">
-          <h1 className="text-4xl font-bold text-white fam">Parkbook</h1>
+          <h1 className="text-4xl font-bold text-white fam">ParkBook</h1>
           {isAuthenticated ? (
             <div className="flex items-center">
               <Profile />

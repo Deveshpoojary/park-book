@@ -15,7 +15,7 @@ const Current = () => {
         async function fetchSlots() {
             try {
                 setLoading(true);
-                const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}&type=${booking.vehicleType}`;
+                const url = `http://localhost:3001/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}&type=${booking.vehicleType}`;
                 const response = await fetch(url);
                 const data = await response.json();
 

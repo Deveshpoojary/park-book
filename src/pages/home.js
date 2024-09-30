@@ -21,7 +21,7 @@ const HomePage = () => {
 
     async function checkverify(){
           try{  if(user.user.email){
-        const response =await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
+        const response =await fetch('http://localhost:3001/api/isverified', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: user.user.email })

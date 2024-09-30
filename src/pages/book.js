@@ -50,7 +50,7 @@ const Book = () => {
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/prices');
+        const response = await fetch('http://localhost:3001/api/prices');
         const data = await response.json();
         setCarprice(data[0].carprice);
         setBikeprice(data[0].bikeprice);
@@ -82,7 +82,7 @@ const Book = () => {
     async function checkverify() {
       try {
         if (user.user.email) {
-          const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/isverified', {
+          const response = await fetch('http://localhost:3001/api/isverified', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: user.user.email })
@@ -114,14 +114,14 @@ const Book = () => {
       }
       
       try {
-        const url = `https://park-book-9f9254d7f86a.herokuapp.com/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}&type=${booking.vehicleType}`;
+        const url = `http://localhost:3001/api/parkingSlots?bookedFrom=${bookedFrom}&bookedTill=${bookedTill}&type=${booking.vehicleType}`;
         const response = await fetch(url);
         const data = await response.json();
 
         if (Array.isArray(data)) {
           const uniqueSlots = data.filter((slot, index, self) => self.findIndex(s => s.slotId === slot.slotId) === index);
           setSlots(uniqueSlots);
-          
+            
         }
       } catch (error) {
         console.error('Failed to fetch slots:', error);
@@ -188,7 +188,7 @@ const Book = () => {
   };
   const confirmBooking = async () => {
     setLoading(true);
-    const response = await fetch('https://park-book-9f9254d7f86a.herokuapp.com/api/bookings', {
+    const response = await fetch('http://localhost:3001/api/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
