@@ -45,7 +45,7 @@ const Main = () => {
               <span className="block sm:inline text-white "> to find a parking space.</span>
             </p>
             <p className="text-slate-300 text-center text-lg sm:text-xl font-semibold">
-              Welcome to <span className="name font-bold">Parkbook</span> - your ultimate solution for booking parking spots online. Book your spot with
+              Welcome to <span className="name font-bold">ParkBook</span> - your ultimate solution for booking parking spots online. Book your spot with
               <br className="hidden sm:block" />
               just one click! Our system offers a user-friendly interface for booking, accessing
               <br className="hidden sm:block" />
