@@ -18,7 +18,7 @@ useEffect(() => {
 
     const fetchPrices = async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/prices');
+            const response = await fetch('https://park-server.onrender.com/api/prices');
             const data = await response.json();
             if (response.ok) {
                 setFetchedcar(data[0].carprice);
@@ -41,7 +41,7 @@ useEffect(() => {
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/updatePrices', {
+            const response = await fetch('https://park-server.onrender.com/api/updatePrices', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ carPrice: parseFloat(carPrice), bikePrice: parseFloat(bikePrice) })

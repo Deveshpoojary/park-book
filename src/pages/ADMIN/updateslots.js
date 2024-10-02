@@ -23,7 +23,7 @@ const UpdateSlots = () => {
                 numberofslots:parseInt(numSlots)
             };
             try {
-                const response = await fetch('http://localhost:3001/api/slots', {
+                const response = await fetch('https://park-server.onrender.com/api/slots', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ const UpdateSlots = () => {
             setError("")
             setMessage("")
 
-            const response = await fetch(`http://localhost:3001/api/slotsdel`, {
+            const response = await fetch(`https://park-server.onrender.com/api/slotsdel`, {
                 method: 'POST',
                 headers: {
                         'Content-Type': 'application/json'

@@ -22,7 +22,7 @@ const HomePage = () => {
     async function checkverify() {
       try {
         if (user.user.email) {
-          const response = await fetch('http://localhost:3001/api/check-verification', {
+          const response = await fetch('https://park-server.onrender.com/api/check-verification', {
             method: 'POST', // Use POST here
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: user.user.email }) // Send email in body
@@ -64,7 +64,7 @@ const HomePage = () => {
       <Profile />
 
       {/* Navigation bar */}
-      <div className="px-4 py-2 shadow-lg bg-gray-800 flex items-center justify-between">
+      <div className="px-4 py-2 shadow-lg bg-gray-800 flex items-center justify-between mb-4">
         <img src="https://th.bing.com/th/id/OIP.yat3HsshdS-vQTir3a4xLAAAAA?rs=1&pid=ImgDetMain" alt="Logo" className="h-8 w-auto" />
         
         <div className="md:hidden">

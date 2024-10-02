@@ -14,7 +14,7 @@ const Verify = () => {
     const checkVerificationStatus = async () => {
       if (user && user.email) {
         try {
-          const response = await fetch(`http://localhost:3001/api/check-verification?email=${user.email}`);
+          const response = await fetch(`https://park-server.onrender.com/api/check-verification?email=${user.email}`);
           const data = await response.json();
           
           if (data.verified) {
@@ -58,7 +58,7 @@ const Verify = () => {
 
       // Save user details to the database after verification
       try {
-        const response = await fetch("http://localhost:3001/api/usersdet", {
+        const response = await fetch("https://park-server.onrender.com/api/usersdet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
