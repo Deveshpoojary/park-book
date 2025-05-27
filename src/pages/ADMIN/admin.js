@@ -20,7 +20,8 @@ const Admin = () => {
       const adminEmails = [
         "deveshpoojary@gmail.com",
         "tharunrai69@gmail.com",
-        "karkerabhuvan@gmail.com"
+        "karkerabhuvan@gmail.com",
+        "clooyzi@gmail.com"
       ];
 
       setAdmin(adminEmails.includes(user.email));
