@@ -310,151 +310,193 @@ const Book = () => {
 
 
   return (
-    <>
-      {!confirm ?
-      <div className=" min-h-screen bg-[#121127] text-white py-4 px-4 sm:px-2 md:px-6 lg:px-10">
-      <div className="container  mx-auto py-8">
-        <div className="bg-primary p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl shadow-primary">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-6">Parking Booking</h1>
-          <form id="bookingform">
-            <div className="mb-4">
-              <label htmlFor="vehicleType" className="font-medium">Vehicle Type:</label>
-              <div className="flex gap-4 mt-2">
-                <button
-                  type="button"
-                  onClick={() => handleVehicleTypeChange("car")}
-                  className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "car" ? "bg-[#864AF9]" : "bg-3 hover:bg-[#864AF9]"} font-bold`}
-                >
-                  <IoCarSportSharp size={30} className="text-black-500" />
-                  Car
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleVehicleTypeChange("bike")}
-                  className={`py-2 px-4 rounded-md border border-gray-400 transition-colors ${booking.vehicleType === "bike" ? "bg-[#864AF9]" : "bg-black hover:bg-[#864AF9]"} font-bold`}
-                >
-                  <PiMotorcycleFill size={30} className="text-black-500" />
-                  Bike
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label htmlFor="date" className="font-medium">Start Date:</label>
-                <input type="date" name="date" required className="form-input w-full mt-1 p-2  border border-black rounded bg-gray-900 picker" onChange={handleChange} value={booking.date} />
-              </div>
-              <div>
-                <label htmlFor="time" className="font-medium">Start Time:</label>
-                <input type="time" name="time" required className="form-input w-full mt-1 p-2  border border-black rounded bg-gray-900 picker" onChange={handleChange} value={booking.time} />
-              </div>
-              <div>
-                <label htmlFor="date2" className="font-medium">End Date:</label>
-                <input type="date" name="date2" required className="form-input w-full mt-1 p-2  border border-black rounded bg-gray-900 picker" onChange={handleChange} value={booking.date2} />
-              </div>
-              <div>
-                <label htmlFor="endTime" className="font-medium">End Time:</label>
-                <input type="time" name="endTime" required className="form-input w-full mt-1 p-2  border border-black rounded bg-gray-900 picker" onChange={handleChange} value={booking.endTime} />
-              </div>
-            </div>
-             <div>
-    <label htmlFor="vehicleNumber" className="font-medium">Vehicle Number:</label>
-    <input
-      type="text"
-      name="vehicleNumber"
-      placeholder="KA-19-HC-0123"
-      onChange={handleChangee}
-      required
-      className="form-input w-full mt-1 p-2  border border-black rounded bg-gray-900"
-        // Use the specific change handler for vehicle number
-      value={booking.vehicleNumber}
-    />
-    
-  </div>
-           
-            {/* Total Charges Display */}
-            {amount > 0 ? <p>Total Charges:<span className='font-medium text-bg-4'>INR: {amount.toFixed(2)}</span> </p> : <span className="relative flex h-3 w-3">Fetching
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-3 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-2"></span>
-            </span>}
-            {/* Slot Selection */}
-            <div className="mb-6 mt-2">
-              <label className="block text-sm font-medium text-gray-700">Select Slot</label>
-              {!loading ? (
-                <div className="flex justify-center">
-                <div className=" grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-2 ">
-                  {currentSlots.map(slot => (
-                    <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
-                      className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 ${slot.slotId === booking.slotId ? 'bg-[#3848b1] text-white border-2' : slot.isOccupied ? 'bg-red-100 text-white' : 'bg-3 text-white'} rounded-lg`}>
-
-
-                      {slot.isOccupied ? booking.vehicleType === "car" ? <img src={car} alt="Car" width="100" height="50"/> : <img src={bike} className='' alt="Bike" width="100" height="50"/> :null}
-                      
-                      {slot.isOccupied? <p className='text-black'>Slot Full </p> : <p>Slot {slot.slotId} <br/>Available</p>}
-
-                      
-                    </div>
-                  ))}
-                </div></div>
-              ) : (
-                <LoadingAnimation />
-              )}
-              {slots.length > 0 && (
-                <div className="flex justify-between mt-4">
-                  <button disabled={currentPage === 1} onClick={handlePreviousPage} className="bg-gray-400 text-black font-bold py-2 px-4 rounded disabled:opacity-50">
-                    Previous
+  <>
+    {!confirm ? (
+      <div className="min-h-screen bg-gradient-to-br from-orange-100 via-white to-orange-200 text-black py-4 px-4 sm:px-2 md:px-6 lg:px-10">
+        <div className="container mx-auto py-8">
+          <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl border border-orange-200">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-orange-600">🚗 Parking Booking</h1>
+            <form id="bookingform">
+              <div className="mb-4">
+                <label htmlFor="vehicleType" className="font-medium">Vehicle Type:</label>
+                <div className="flex gap-4 mt-2">
+                  <button
+                    type="button"
+                    onClick={() => handleVehicleTypeChange("car")}
+                    className={`py-2 px-4 rounded-md border transition-colors ${
+                      booking.vehicleType === "car"
+                        ? "bg-orange-500 text-white"
+                        : "bg-white text-orange-600 border-orange-300 hover:bg-orange-100"
+                    } font-bold`}
+                  >
+                    <IoCarSportSharp size={24} className="mx-auto mb-1" />
+                    Car
                   </button>
-                  <button disabled={currentSlots.length < slotsPerPage} onClick={handleNextPage} className="bg-gray-400 text-black font-bold py-2 px-4 rounded disabled:opacity-50">
-                    Next
+                  <button
+                    type="button"
+                    onClick={() => handleVehicleTypeChange("bike")}
+                    className={`py-2 px-4 rounded-md border transition-colors ${
+                      booking.vehicleType === "bike"
+                        ? "bg-orange-500 text-white"
+                        : "bg-white text-orange-600 border-orange-300 hover:bg-orange-100"
+                    } font-bold`}
+                  >
+                    <PiMotorcycleFill size={24} className="mx-auto mb-1" />
+                    Bike
                   </button>
                 </div>
-              )}
-              {error && <Alert variant="outlined" severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
-            </div>
-            {/* Booking Button */}
-            <button type="submit" className="w-full bg-[#864AF9] border-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#3848b1] hover:text-white border  flex justify-center items-center" onClick={handleBooking}>
-              Book Now <FaRegArrowAltCircleRight size={25} className='ml-1' />
-            </button>
-          </form>
-        </div>
-      </div>
-      {/* Confirmation Modal */}
-      {isConfirmModalVisible && (
-        <div className="fixed inset-0 bg-grey-100  bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-700 border-2 border-green-200 rounded-lg p-6 max-w-sm mx-auto">
-            <h2 className="text-lg font-semibold">Confirm Booking</h2>
-            <p className="text-sm">Please confirm your booking details:</p>
-            <ul className="text-sm list-disc pl-5 mt-2">
-              <li>Vehicle Type: {booking.vehicleType}</li>
-              <li>Vehicle Number: {booking.vehicleNumber}</li>
-              <li>Start Date: {booking.date}</li>
-              <li>Start Time: {booking.time}</li>
-              <li>End Date: {booking.date2}</li>
-              <li>End Time: {booking.endTime}</li>
-              <li>Slot: {booking.slotId}</li>
-              <li>Amount: INR: {amount.toFixed(2)}</li>
-            </ul>
-            <div className="flex justify-end gap-4 mt-4">
-              <button onClick={() => setIsConfirmModalVisible(false)} className="bg-5 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
-                Cancel<MdCancel className="ml-2" />
-              </button>
-              {!loading ? (
-                <button onClick={confirmBooking} className="bg-[#864AF9] hover:bg-3 text-black font-bold py-2 px-4 rounded flex justify-center items-center">
-                  Pay and Confirm<GiConfirmed className="ml-2" />
-                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                {["date", "time", "date2", "endTime"].map((field, i) => (
+                  <div key={field}>
+                    <label htmlFor={field} className="font-medium">
+                      {i < 2 ? "Start" : "End"} {field.includes("date") ? "Date" : "Time"}:
+                    </label>
+                    <input
+                      type={field.includes("date") ? "date" : "time"}
+                      name={field}
+                      required
+                      className="form-input w-full mt-1 p-2 border border-orange-300 rounded bg-white"
+                      onChange={handleChange}
+                      value={booking[field]}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="vehicleNumber" className="font-medium">Vehicle Number:</label>
+                <input
+                  type="text"
+                  name="vehicleNumber"
+                  placeholder="KA-19-HC-0123"
+                  required
+                  className="form-input w-full mt-1 p-2 border border-orange-300 rounded bg-white"
+                  onChange={handleChangee}
+                  value={booking.vehicleNumber}
+                />
+              </div>
+
+              {amount > 0 ? (
+                <p>Total Charges: <span className='font-semibold text-orange-600'>INR: {amount.toFixed(2)}</span></p>
               ) : (
-                <button className="bg-[#864AF9] hover:bg-3 text-white py-2 px-4 rounded">
-                  <BsTicketPerforated className="animate-spin" />
-                </button>
+                <span className="flex items-center gap-2">Fetching
+                  <span className="animate-ping h-3 w-3 rounded-full bg-orange-400 opacity-75"></span>
+                </span>
               )}
-            </div>
+
+              <div className="mb-6 mt-4">
+                <label className="block text-sm font-medium text-gray-800">Select Slot</label>
+                {!loading ? (
+                  <div className="flex justify-center">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                      {currentSlots.map(slot => (
+                        <div key={slot.slotId} onClick={() => handleSlotSelect(slot.slotId)}
+                          className={`flex flex-col justify-center text-center items-center cursor-pointer p-4 w-24 h-22 sm:w-32 sm:h-32 md:w-32 md:h-32 border ${
+                            slot.slotId === booking.slotId ? 'bg-orange-600 text-white border-2' :
+                            slot.isOccupied ? 'bg-red-200 text-white border-red-300' : 'bg-orange-100 text-orange-700'
+                          } rounded-lg`}
+                        >
+                          {slot.isOccupied ? (
+                            booking.vehicleType === "car"
+                              ? <img src={car} alt="Car" width="100" height="50" />
+                              : <img src={bike} alt="Bike" width="100" height="50" />
+                          ) : null}
+                          {slot.isOccupied ? (
+                            <p className='text-sm mt-1'>Slot Full</p>
+                          ) : (
+                            <p>Slot {slot.slotId}<br />Available</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <LoadingAnimation />
+                )}
+
+                {slots.length > 0 && (
+                  <div className="flex justify-between mt-4">
+                    <button
+                      disabled={currentPage === 1}
+                      onClick={handlePreviousPage}
+                      className="bg-orange-300 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      disabled={currentSlots.length < slotsPerPage}
+                      onClick={handleNextPage}
+                      className="bg-orange-300 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+                {error && (
+                  <Alert variant="outlined" severity="error" onClose={() => setError(null)}>
+                    {error}
+                  </Alert>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-md hover:bg-orange-600 flex justify-center items-center"
+                onClick={handleBooking}
+              >
+                Book Now <FaRegArrowAltCircleRight size={20} className="ml-2" />
+              </button>
+            </form>
           </div>
         </div>
-      )}
-    </div>
-        :
-        <ConfirmationPage code={otp} />}
-    </>
-  );
+
+        {/* Confirmation Modal */}
+        {isConfirmModalVisible && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white border border-orange-400 rounded-lg p-6 max-w-sm mx-auto shadow-lg">
+              <h2 className="text-lg font-bold text-orange-600">Confirm Booking</h2>
+              <ul className="text-sm list-disc pl-5 mt-2 text-gray-800">
+                <li>Vehicle Type: {booking.vehicleType}</li>
+                <li>Vehicle Number: {booking.vehicleNumber}</li>
+                <li>Start Date: {booking.date}</li>
+                <li>Start Time: {booking.time}</li>
+                <li>End Date: {booking.date2}</li>
+                <li>End Time: {booking.endTime}</li>
+                <li>Slot: {booking.slotId}</li>
+                <li>Amount: INR {amount.toFixed(2)}</li>
+              </ul>
+              <div className="flex justify-end gap-4 mt-4">
+                <button
+                  onClick={() => setIsConfirmModalVisible(false)}
+                  className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded flex items-center"
+                >
+                  Cancel <MdCancel className="ml-2" />
+                </button>
+                {!loading ? (
+                  <button
+                    onClick={confirmBooking}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded flex items-center"
+                  >
+                    Pay & Confirm <GiConfirmed className="ml-2" />
+                  </button>
+                ) : (
+                  <button className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">
+                    <BsTicketPerforated className="animate-spin" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    ) : (
+      <ConfirmationPage code={otp} />
+    )}
+  </>
+);
+
 };
 
 export default Book;

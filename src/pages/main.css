@@ -1,8 +1,8 @@
-.my-component{
+/* .my-component{
     background: linear-gradient(90deg,#5D9FFF,rgb(152, 224, 224), #82E0AA);
     width:100%;
     
-}
+} */
 /* .name{
     background-image: linear-gradient(to right, #f13e4a, #8d08fa);
     padding-bottom:3px;
@@ -23,7 +23,7 @@
   color: transparent;       
 } */
 
-.btn{
+/* .btn{
     background: linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5);
     background-size: 600%;
     animation: anime 16s linear infinite;
@@ -63,4 +63,23 @@
 
 .animate-bounce {
   animation: bounce 1s infinite;
+} */
+
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientBG 10s ease infinite;
+}
+

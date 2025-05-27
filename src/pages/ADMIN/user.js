@@ -45,48 +45,72 @@ const UserList = () => {
     }, [searchTerm, users]);
 
     return (
-        <div className='bg-primary text-white min-h-screen'>
-            <span className="flex text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary shadow-lg">
-                <h1 className='l-border fam'>User List</h1>
-                <button onClick={fetchUsers} className="bg-white hover:bg-black hover:text-white text-black font-bold py-1 px-2 border border-white ml-2 rounded-md">
+        <div className="min-h-screen bg-gradient-to-br from-orange-400 via-orange-300 to-white text-gray-900 p-6">
+            <header className="flex flex-col sm:flex-row items-center justify-between mb-6 bg-white bg-opacity-90 rounded-xl shadow-md p-4">
+                <h1 className="text-3xl font-extrabold tracking-tight text-orange-600 mb-3 sm:mb-0">
+                    User List
+                </h1>
+                <button
+                    onClick={fetchUsers}
+                    className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition duration-300"
+                >
                     Refresh
                 </button>
-                {error && <Alert severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
-            </span>
+            </header>
+
+            {error && (
+                <Alert
+                    severity="error"
+                    onClose={() => setError(null)}
+                    className="mb-4"
+                >
+                    {error}
+                </Alert>
+            )}
 
             {!loading ? (
-                <div className='px-4 py-4'>
-                    <div className='overflow-x-auto'>
-                        <table className="min-w-full border-collapse mt-2 rounded-lg">
-                            <thead>
-                                <tr>
-                                    <th colSpan={2} className="border border-gray-300 px-4 py-2">
-                                        <input
-                                            type="text"
-                                            placeholder="Search"
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="border border-gray-300 px-4 py-2 rounded-lg bg-secondary"
-                                        />
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th className="border border-gray-300 px-4 py-2">Email</th>
-                                    <th className="border border-gray-300 px-4 py-2">Phone Number</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {searchResults.map(user => (
-                                    <tr key={user._id}>
-                                        <td className="border border-gray-300 px-4 py-2">{user.email}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{user.phoneNumber}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                <div className="overflow-x-auto rounded-lg shadow-lg bg-white bg-opacity-90 p-4">
+                    <div className="flex items-center justify-center mb-4">
+                        <input
+                            type="text"
+                            placeholder="Search by email or phone number"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full max-w-md border border-orange-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 transition"
+                        />
                     </div>
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-orange-100 text-orange-700 uppercase text-sm font-semibold">
+                                <th className="border border-orange-300 px-6 py-3 rounded-tl-lg">Email</th>
+                                <th className="border border-orange-300 px-6 py-3 rounded-tr-lg">Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {searchResults.length > 0 ? (
+                                searchResults.map((user) => (
+                                    <tr
+                                        key={user._id}
+                                        className="even:bg-orange-50 hover:bg-orange-200 transition"
+                                    >
+                                        <td className="border border-orange-300 px-6 py-3">{user.email}</td>
+                                        <td className="border border-orange-300 px-6 py-3">{user.phoneNumber}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={2} className="text-center py-4 text-orange-600">
+                                        No users found
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             ) : (
-                <LoadingAnimation />
+                <div className="flex justify-center mt-20">
+                    <LoadingAnimation />
+                </div>
             )}
         </div>
     );

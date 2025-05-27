@@ -16,8 +16,6 @@ const History = () => {
                 const response = await fetch(url);
                 if (response.ok) {
                     const bookings = await response.json();
-                    console.log('User bookings:', bookings);
-                    // Sort bookings by date
                     bookings.sort((a, b) => new Date(b.bookedFrom) - new Date(a.bookedFrom));
                     setBookings(bookings);
                 } else {
@@ -42,58 +40,63 @@ const History = () => {
     };
 
     return (
-        <div className="bg-primary text-white min-h-screen ">
-            <div className="flex justify-between items-center text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary  ">
-                <h1 className="l-border fam ">Booking History</h1>
-                <button onClick={() => setCount(count + 1)} className="bg-white hover:bg-black hover:text-white text-black font-bold py-1 px-2 border border-white ml-2 rounded-md">
+        <div className="bg-white min-h-screen">
+            {/* Header */}
+            <div className="flex justify-between items-center text-2xl font-bold px-4 py-4 border-b border-orange-500 bg-orange-500 text-white">
+                <h1 className="fam">Booking History</h1>
+                <button 
+                    onClick={() => setCount(count + 1)} 
+                    className="bg-white hover:bg-orange-600 hover:text-white text-orange-600 font-bold py-1 px-4 border border-white rounded-md transition"
+                >
                     Refresh
                 </button>
             </div>
-            
+
+            {/* Table */}
             {!loading ? (
-                <div className="px-4 py-4">
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full border rounded-lg fam">
-                            <thead>
+                <div className="px-4 py-6">
+                    <div className="overflow-x-auto shadow-md rounded-lg">
+                        <table className="min-w-full bg-white text-sm text-black font-medium rounded-lg overflow-hidden fam">
+                            <thead className="bg-orange-400 text-white text-base">
                                 <tr>
-                                    <th className="border border-gray-300 px-4 py-2">Booking ID</th>
-                                    <th className="border border-gray-300 px-4 py-2">Vehicleno</th>
-                                    <th className="border border-gray-300 px-4 py-2">Amount</th>
-                                    <th className="border border-gray-300 px-4 py-2">Slot ID</th>
-                                    <th className="border border-gray-300 px-4 py-2">Booked From</th>
-                                    <th className="border border-gray-300 px-4 py-2">Booked Till</th>
-                                    <th className="border border-gray-300 px-4 py-2">Checkin OTP</th>
-                                    <th className="border border-gray-300 px-4 py-2">Checkout OTP</th>
+                                    <th className="px-4 py-3 border">Booking ID</th>
+                                    <th className="px-4 py-3 border">Vehicleno</th>
+                                    <th className="px-4 py-3 border">Amount</th>
+                                    <th className="px-4 py-3 border">Slot ID</th>
+                                    <th className="px-4 py-3 border">Booked From</th>
+                                    <th className="px-4 py-3 border">Booked Till</th>
+                                    <th className="px-4 py-3 border">Checkin OTP</th>
+                                    <th className="px-4 py-3 border">Checkout OTP</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {bookings.map((booking) => (
-                                    <tr key={booking.bookingId}>
-                                        <td className="border px-4 py-2">{booking.bookingId}</td>
-                                        <td className="border px-4 py-2">{booking.vehicleNumber}</td>
-                                        <td className="border px-4 py-2">{booking.amount}</td>
-                                        <td className="border px-4 py-2">{booking.slotId}</td>
-                                        <td className="border px-4 py-2">{booking.bookedFrom}</td>
-                                        <td className="border px-4 py-2">{booking.bookedTill}</td>
-                                        <td className="border px-4 py-2 font-bold">
+                                {bookings.map((booking, index) => (
+                                    <tr key={booking.bookingId} className={index % 2 === 0 ? 'bg-orange-50' : 'bg-white'}>
+                                        <td className="px-4 py-2 border">{booking.bookingId}</td>
+                                        <td className="px-4 py-2 border">{booking.vehicleNumber}</td>
+                                        <td className="px-4 py-2 border">₹{booking.amount}</td>
+                                        <td className="px-4 py-2 border">{booking.slotId}</td>
+                                        <td className="px-4 py-2 border">{booking.bookedFrom}</td>
+                                        <td className="px-4 py-2 border">{booking.bookedTill}</td>
+                                        <td className="px-4 py-2 border font-bold">
                                             {!booking.isCheckedIn ? 
                                                 (isBookingExpired(booking.bookedTill) ? (
-                                                    <span className="text-red-600 font-bold">Booking Expired</span>
+                                                    <span className="text-red-600 font-semibold">Booking Expired</span>
                                                 ) : (
                                                     booking.checkinotp
                                                 )) : (
-                                                <p className="text-green-600 font-bold">Checked in</p>
+                                                <p className="text-green-600 font-semibold">Checked in</p>
                                             )}
                                         </td>
-                                        <td className="border px-4 py-2">
+                                        <td className="px-4 py-2 border font-bold">
                                             {!booking.isCheckedOut ? (
                                                 booking.checkoutotp ? (
                                                     booking.checkoutotp
                                                 ) : (
-                                                    <p className="text-red-600 font-bold">Not Checked In</p>
+                                                    <p className="text-red-600">Not Checked In</p>
                                                 )
                                             ) : (
-                                                <p className="text-green-600 font-bold">Checked Out</p>
+                                                <p className="text-green-600">Checked Out</p>
                                             )}
                                         </td>
                                     </tr>

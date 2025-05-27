@@ -9,14 +9,12 @@ const Verify = () => {
   const [message, setMessage] = useState("");
   const [verified, setVerified] = useState(false);
 
-  // Check verification status directly from the backend
   useEffect(() => {
     const checkVerificationStatus = async () => {
       if (user && user.email) {
         try {
           const response = await fetch(`https://park-server.onrender.com/api/check-verification?email=${user.email}`);
           const data = await response.json();
-          
           if (data.verified) {
             setVerified(true);
             setMessage("Your phone number is already verified.");
@@ -26,7 +24,6 @@ const Verify = () => {
         }
       }
     };
-
     checkVerificationStatus();
   }, [user]);
 
@@ -35,8 +32,6 @@ const Verify = () => {
       setMessage("Please enter a valid phone number.");
       return;
     }
-
-    // Generate a 4-digit OTP
     const randomOtp = Math.floor(1000 + Math.random() * 9000).toString();
     setGeneratedOtp(randomOtp);
     setMessage(`OTP sent! Your OTP is: ${randomOtp}`);
@@ -56,7 +51,6 @@ const Verify = () => {
       setMessage("Phone number verified successfully!");
       setVerified(true);
 
-      // Save user details to the database after verification
       try {
         const response = await fetch("https://park-server.onrender.com/api/usersdet", {
           method: "POST",
@@ -83,51 +77,56 @@ const Verify = () => {
     }
   };
 
-  if (isLoading) {
-    return <div className="text-white font-bold">Loading...</div>;
-  }
+  if (isLoading) return <div className="text-orange-600 font-bold text-lg">Loading...</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-white via-orange-100 to-white px-4">
       {!user?.email ? (
-        <div className="text-white font-bold">Loading...</div>
+        <div className="text-orange-600 font-bold text-lg">Loading...</div>
       ) : (
         <>
           {!verified ? (
-            <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
-              <span className="text-red-300">
+            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-orange-200">
+              <p className="text-orange-600 font-semibold mb-2 text-sm">
                 Verification required to book a slot
-              </span>
-              <h1 className="text-2xl font-bold mb-4">Phone Verification</h1>
+              </p>
+              <h1 className="text-2xl font-bold text-orange-700 mb-6">Phone Verification</h1>
+
               <input
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="Enter phone number"
-                className="bg-gray-700 text-white p-2 rounded-md w-full mb-4"
+                className="bg-orange-50 border border-orange-200 text-orange-900 p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-orange-400"
               />
               <button
                 onClick={handleSendOtp}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 w-full"
+                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg w-full mb-4 transition duration-300"
               >
                 Send OTP
               </button>
+
               <input
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="Enter OTP"
-                className="bg-gray-700 text-white p-2 rounded-md w-full mb-4"
+                className="bg-orange-50 border border-orange-200 text-orange-900 p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-orange-400"
               />
               <button
                 onClick={handleVerifyOtp}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg w-full transition duration-300"
               >
                 Verify OTP
               </button>
-              <p className="mt-4">{message}</p>
+
+              {message && (
+                <p className="mt-4 text-sm text-gray-700 font-medium bg-orange-100 p-2 rounded-lg">
+                  {message}
+                </p>
+              )}
             </div>
           ) : (
-            <div className="text-center">
-              <h1 className="text-2xl font-bold">
+            <div className="text-center p-6 bg-white rounded-xl shadow-lg border border-orange-200">
+              <h1 className="text-2xl font-bold text-orange-600">
                 Your phone number is already verified.
               </h1>
             </div>

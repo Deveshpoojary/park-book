@@ -10,15 +10,19 @@ const Main = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
-    <div className="h-screen">
-      <div className="flex flex-col h-screen bg-primary">
-        <nav className="text-white py-4 px-8 flex justify-between items-center border-b border-gray-200">
-          <h1 className="text-4xl font-bold text-white fam">ParkBook</h1>
+    <div className="h-screen bg-white">
+      <div className="flex flex-col h-screen relative overflow-hidden">
+        {/* Gradient animated background */}
+        <div className="absolute inset-0 z-0 animate-gradient bg-gradient-to-br from-orange-100 via-white to-orange-200" />
+
+        {/* Modern Glass Navbar */}
+        <nav className="z-10 backdrop-blur-md bg-white/80 text-gray-800 py-4 px-8 flex justify-between items-center shadow-md border-b border-orange-100">
+          <h1 className="text-4xl font-extrabold text-orange-600 tracking-wide">ParkWay</h1>
           {isAuthenticated ? (
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <Profile />
               <button
-                className="bg-white hover:bg-black hover:text-white border-2 border-white text-black font-bold py-2 px-4 rounded"
+                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition duration-300"
                 onClick={() => logout({ returnTo: window.location.origin })}
               >
                 Log Out
@@ -26,7 +30,7 @@ const Main = () => {
             </div>
           ) : (
             <button
-              className="bg-gray-800 hover:bg-gray-700 border border-white hover:bg-white hover:text-black text-white font-bold py-2 px-4 rounded"
+              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition duration-300"
               onClick={() => loginWithRedirect()}
             >
               Get Started
@@ -34,26 +38,21 @@ const Main = () => {
           )}
         </nav>
 
-        <div className="flex-grow relative">
-          <div className="absolute inset-0" />
-          <div className="absolute inset-0 opacity-50" />
-
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
-            <p className="text-blue-500 text-4xl sm:text-5xl md:text-7xl font-bold text-center mb-2 ">
-              <span className="block sm:inline text-white">Don't waste your time anymore</span>
+        {/* Main Hero Content */}
+        <div className="flex-grow relative z-10">
+          <div className="absolute inset-0 flex flex-col justify-center items-center px-4 text-center">
+            <p className="text-gray-900 text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-4">
+              Don’t waste your time anymore
               <br className="sm:hidden" />
-              <span className="block sm:inline text-white "> to find a parking space.</span>
+              <span className="block text-orange-600"> to find a parking space.</span>
             </p>
-            <p className="text-slate-300 text-center text-lg sm:text-xl font-semibold">
-              Welcome to <span className="name font-bold">ParkBook</span> - your ultimate solution for booking parking spots online. Book your spot with
-              <br className="hidden sm:block" />
-              just one click! Our system offers a user-friendly interface for booking, accessing
-              <br className="hidden sm:block" />
-              order history, and more.
+            <p className="text-gray-700 text-base sm:text-lg max-w-3xl">
+              Welcome to <span className="font-bold text-orange-600">ParkWay</span> — your ultimate solution for booking parking spots online.
+              Book your spot with just one click! Access bookings, order history, and more.
             </p>
             {!isAuthenticated && (
               <button
-                className="bg-white hover:bg-black hover:text-white border border-white text-black font-bold py-2 px-4 rounded-full mt-4"
+                className="mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300"
                 onClick={() => loginWithRedirect()}
               >
                 Get Started
@@ -61,7 +60,7 @@ const Main = () => {
             )}
             {isAuthenticated && (
               <button
-                className="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded mt-4"
+                className="mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300"
                 onClick={() => navigate('/home')}
               >
                 Book
@@ -70,6 +69,7 @@ const Main = () => {
           </div>
         </div>
       </div>
+
       <About />
     </div>
   );

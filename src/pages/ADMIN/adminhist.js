@@ -209,128 +209,180 @@ const Adminhist = () => {
 
     }, [user]); // Depend on user.email
 
-    return (<>{adminhist ? 
-        <div className='bg-primary text-white min-h-screen'>
-            <span className="flex text-2xl font-bold mb-4 px-2 py-4 border-b border-gray-500 bg-secondary shadow-lg">
-                <h1 className='l-border fam'>All Bookings</h1>
-                <button onClick={() => setCount(count + 1)} className="bg-white hover:bg-black hover:text-white text-black font-bold py-1 px-2 border border-white ml-2 rounded-md">
-                    Refresh
-                </button>
-                {error && <Alert severity="error" onClose={() => { setError(null) }}>{error}</Alert>}
-                {mess && <Alert severity="success" onClose={() => { setMess(null) }}>{mess}</Alert>}
-            </span>
+    return (
+  <>
+    {adminhist ? (
+      <div
+        className="min-h-screen p-4"
+        style={{
+          background: 'linear-gradient(135deg, #fffefa 0%, #fff1e0 100%)', // very light warm gradient
+        }}
+      >
+        <span
+          className="bg-orange-300 flex items-center justify-between text-2xl font-bold mb-4 px-4 py-4 rounded-t-lg"
+          style={{
+            // background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)', // orange gradient header
+            boxShadow: '0 4px 6px rgba(255, 165, 0, 0.3)',
+            color: 'white',
+          }}
+        >
+          <h1 className="fam l-border">All Bookings</h1>
+          <button
+            onClick={() => setCount(count + 1)}
+            className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 
+                       hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 
+                       text-white font-bold py-1 px-3 rounded-md transition"
+          >
+            Refresh
+          </button>
+          {error && (
+            <Alert
+              severity="error"
+              onClose={() => {
+                setError(null);
+              }}
+              className="ml-4"
+            >
+              {error}
+            </Alert>
+          )}
+          {mess && (
+            <Alert
+              severity="success"
+              onClose={() => {
+                setMess(null);
+              }}
+              className="ml-4"
+            >
+              {mess}
+            </Alert>
+          )}
+        </span>
 
-            {!loading ? (
-                <div className='px-4 py-4'>
-                    <div className='overflow-x-auto'>
-                        <table className="min-w-full border-collapse mt-2 rounded-lg">
-                            <thead>
-                                <tr>
-                                    <th colSpan={10} className="border border-gray-300 px-4 py-2">
-                                        <input
-                                            type="text"
-                                            placeholder="Search"
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="border border-gray-300 px-4 py-2 rounded-lg bg-secondary"
-                                        />
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th className="border border-gray-300 px-4 py-2">User</th>
-                                    <th className="border border-gray-300 px-4 py-2"> Id</th>
-                                    <th className="border border-gray-300 px-4 py-2">Vehicle no.</th>
-                                    <th className="border border-gray-300 px-4 py-2">v.type</th>
-                                    <th className="border border-gray-300 px-4 py-2">Amount</th>
-                                    <th className="border border-gray-300 px-4 py-2">Slot ID</th>
-                                    <th className="border border-gray-300 px-4 py-2">Booked From</th>
-                                    <th className="border border-gray-300 px-4 py-2">Booked Till</th>
-                                    <th className="border border-gray-300 px-4 py-2">Checkin</th>
-                                    <th className="border border-gray-300 px-4 py-2">Checkout</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {bookings.map(booking => (
-                                    <tr key={booking.bookingId}>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.userId}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.bookingId}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.vehicleNumber}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.vehicleType}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.amount}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.slotId}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.bookedFrom}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{booking.bookedTill}</td>
-                                        <td className="border border-gray-300 px-4 py-2 text-center">
-                                            {!booking.isCheckedIn ? (
-                                                isBookingExpired(booking.bookedTill) ? (
-                                                    <span className="text-red-600 font-bold">Booking Expired</span>
-                                                ) : (
-                                                    <>
-                                                        {new Date(booking.bookedFrom.split(' ')[0]) > new Date(new Date().toISOString().split('T')[0]) ? (
-    <p className="text-yellow-400 font-bold">Not Today</p>
+        {!loading ? (
+          <div
+            className="px-4 py-4 rounded-b-lg shadow-md overflow-x-auto"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #ffecd1 100%)', // subtle white to pale orange container
+            }}
+          >
+            <table className="min-w-full border-collapse rounded-lg overflow-hidden">
+              <thead>
+                <tr>
+                  <th colSpan={10} className="px-4 py-3 bg-orange-100 rounded-t-lg">
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-1/2 px-4 py-2 rounded-md border border-orange-300
+                                 bg-white text-orange-900 placeholder-orange-400
+                                 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    />
+                  </th>
+                </tr>
+                <tr className="bg-orange-200 text-orange-900 font-semibold uppercase text-sm">
+                  <th className="border border-orange-300 px-4 py-2">User</th>
+                  <th className="border border-orange-300 px-4 py-2">Id</th>
+                  <th className="border border-orange-300 px-4 py-2">Vehicle no.</th>
+                  <th className="border border-orange-300 px-4 py-2">v.type</th>
+                  <th className="border border-orange-300 px-4 py-2">Amount</th>
+                  <th className="border border-orange-300 px-4 py-2">Slot ID</th>
+                  <th className="border border-orange-300 px-4 py-2">Booked From</th>
+                  <th className="border border-orange-300 px-4 py-2">Booked Till</th>
+                  <th className="border border-orange-300 px-4 py-2">Checkin</th>
+                  <th className="border border-orange-300 px-4 py-2">Checkout</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map((booking) => (
+                  <tr key={booking.bookingId} className="even:bg-orange-50 odd:bg-white">
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.userId}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.bookingId}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.vehicleNumber}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.vehicleType}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.amount}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.slotId}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.bookedFrom}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-orange-800">{booking.bookedTill}</td>
+                    <td className="border border-orange-300 px-4 py-2 text-center text-orange-800">
+                      {!booking.isCheckedIn ? (
+                        isBookingExpired(booking.bookedTill) ? (
+                          <span className="text-red-600 font-bold">Booking Expired</span>
+                        ) : (
+                          <>
+                            {new Date(booking.bookedFrom.split(' ')[0]) > new Date(new Date().toISOString().split('T')[0]) ? (
+                              <p className="text-yellow-600 font-bold">Not Today</p>
+                            ) : (
+                              <>
+                                <input
+                                  type="number"
+                                  placeholder="Enter OTP"
+                                  onChange={(e) => handleOtpChange(e.target.value)}
+                                  className="placeholder-orange-900 mr-2 text-orange-900 rounded-md py-1 border border-orange-300"
+                                />
+                                <button
+                                  className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 
+                                             hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 
+                                             text-white font-bold py-1 px-2 rounded transition"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    checkin(booking);
+                                  }}
+                                >
+                                  Checkin
+                                </button>
+                              </>
+                            )}
+                          </>
+                        )
+                      ) : (
+                        <span className="text-green-600 font-bold">Checked in</span>
+                      )}
+                    </td>
+                    <td className="border border-orange-300 px-4 py-2 text-center text-orange-800">
+                      {booking.isCheckedIn ? (
+                        booking.isCheckedOut ? (
+                          <span className="text-green-600 font-bold">Checked out</span>
+                        ) : (
+                          <p className="px-4 py-2">
+                            <input
+                              type="number"
+                              placeholder="Enter OTP"
+                              onChange={(e) => handleOtpChange2(e.target.value)}
+                              className="placeholder-orange-900 mr-3 text-orange-900 rounded-md py-1 border border-orange-300"
+                            />
+                            <button
+                              className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 
+                                         border border-orange-400 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 
+                                         text-white font-bold mt-2 py-1 px-2 rounded transition"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                checkout(booking);
+                              }}
+                            >
+                              Checkout
+                            </button>
+                          </p>
+                        )
+                      ) : (
+                        <p className="text-red-600 px-4 py-2 font-bold">Not checked in</p>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <LoadingAnimation />
+        )}
+      </div>
+    ) : (
+      <Accessdenied />
+    )}
+  </>
+);
 
-                                                        ) : (
-                                                            <>
-                                                                <input
-                                                                    type="number"
-                                                                    placeholder="Enter OTP"
-                                                                    onChange={(e) => handleOtpChange(e.target.value)}
-                                                                    className="placeholder-gray-900 mr-2 text-black rounded-md py-1"
-                                                                />
-                                                                <button
-                                                                    className="bg-cyan-500 hover:bg-black text-white font-bold py-1 px-2 rounded border border-white mt-2"
-                                                                    onClick={(e) =>{
-                                                                    e.preventDefault();
-                                                                        
-                                                                        
-                                                                         checkin(booking)}}
-                                                                >
-                                                                    Checkin
-                                                                </button>
-                                                            </>
-                                                        )}
-                                                    </>
-                                                )
-                                            ) : (
-                                                <span className="text-green-600 font-bold">Checked in</span>
-                                            )}
-                                        </td>
-                                        <td className="border border-gray-300 px-4 py-2 text-center">
-                                            {booking.isCheckedIn ? (
-                                                booking.isCheckedOut ? (
-                                                    <span className="text-green-600 font-bold">Checked out</span>
-                                                ) : (
-                                                    <p className="px-4 py-2">
-                                                        <input
-                                                            type="number"
-                                                            placeholder="Enter OTP"
-                                                            onChange={(e) => handleOtpChange2(e.target.value)}
-                                                            className="placeholder-gray-900 mr-3 text-black rounded-md py-1"
-                                                        />
-                                                        <button
-                                                            className="bg-cyan-500 border border-white hover:bg-black text-white font-bold mt-2 py-1 px-2 rounded"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                checkout(booking)}}
-                                                        >
-                                                            Checkout
-                                                        </button>
-                                                    </p>
-                                                )
-                                            ) : (
-                                                <p className="text-red-600 px-4 py-2 font-bold">Not checked in</p>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            ) : (
-                <LoadingAnimation />
-            )}
-        </div> : <Accessdenied/>}</>
-    ); 
 };
 
 export default Adminhist;

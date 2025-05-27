@@ -1,199 +1,240 @@
-import { set } from 'firebase/database';
 import React, { useState } from 'react';
 
 const UpdateSlots = () => {
-    const [slotId, setSlotId] = useState();
-    const [vehicleType, setVehicleType] = useState('car');
-    const [numSlots, setNumSlots] = useState(1);
-    const [operation, setOperation] = useState('add'); // 'add' or 'remove'
-    const [error,setError]=useState("")
-    const [message, setMessage] = useState('');
+  const [slotId, setSlotId] = useState('');
+  const [vehicleType, setVehicleType] = useState('car');
+  const [numSlots, setNumSlots] = useState(1);
+  const [operation, setOperation] = useState('add'); // 'add' or 'remove'
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
-    const handleAddSlots = async () => {
-        if(!(slotId<0) && !(numSlots<=0))
-        {
-
-            setError("")
-            setMessage("")
-            
-            const currentSlotId =slotId ;
-            const slotData = {
-                slotId: parseInt(currentSlotId),
-                type: vehicleType,
-                numberofslots:parseInt(numSlots)
-            };
-            try {
-                const response = await fetch('https://park-server.onrender.com/api/slots', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(slotData)
-                });
-                const data = await response.json();
-                if(data.error){
-                    setError("  Failed to add slots/already exists");
-                }
-                else{
-                console.log('Slot added:', data);
-                setMessage("Slot added successfully")
-                }
-            } catch (error) {
-                console.error('Failed to add slot:', error);
-            
-        }}
-        else{
-            setError("  Invalid data entered");
-        }
-    };
-
-    const handleRemoveSlot = async () => {
-        if(!(slotId<=0) && !(numSlots<=0)){
-                const currentSlotId =slotId ;
-            const slotData = {
-                slotId: parseInt(currentSlotId),
-                
-            };
-        try {
-            setError("")
-            setMessage("")
-
-            const response = await fetch(`https://park-server.onrender.com/api/slotsdel`, {
-                method: 'POST',
-                headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(slotData)
-            });
-            const data = await response.json();
-            console.log('Slot removed:', data);
-            setMessage("Slot removed successfully")
-        } catch (error) {
-            console.log('Failed to remove slot:', error);
-        }
-        }
-        else{
-            setError("  Invalid data entered");
-        }
-     
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (operation === 'add') {
-            handleAddSlots();
+  const handleAddSlots = async () => {
+    if (!(slotId < 0) && !(numSlots <= 0)) {
+      setError('');
+      setMessage('');
+      const slotData = {
+        slotId: parseInt(slotId),
+        type: vehicleType,
+        numberofslots: parseInt(numSlots),
+      };
+      try {
+        const response = await fetch('https://park-server.onrender.com/api/slots', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(slotData),
+        });
+        const data = await response.json();
+        if (data.error) {
+          setError('Failed to add slots/already exists');
         } else {
-            handleRemoveSlot();
+          setMessage('Slot added successfully');
+          setSlotId('');
+          setNumSlots(1);
         }
-    };
+      } catch (error) {
+        setError('Error occurred while adding slot.');
+      }
+    } else {
+      setError('Invalid data entered');
+    }
+  };
 
-    return (
-        <div className="container bg-primary mx-auto px-4 shadow-lg shadow-gray-500 rounded-lg py-4 mt-6">
-            <h1 className="text-4xl py-2 mt-4 font-bold text-white l-border">Update Parking Slots</h1>
-            <form onSubmit={handleSubmit} className="mt-4">
-                <div className="mb-4">
-                    <label htmlFor="slotId" className="block text-sm font-medium text-white">Starting Slot ID</label>
-                    <input
-                        type="number"
-                        id="slotId"
-                        value={slotId}
-                        onChange={e => setSlotId(e.target.value)}
-                        className="bg-primary picker form-input hover:border-cyan-500 mt-1 block w-full px-3 py-2 border border-gray-500 rounded-md bg-transparent text-white"
-                        
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="vehicleType" className="block text-sm font-medium text-white">Vehicle Type</label>
-                    <div className="flex">
-                        <div className="mr-4">
-                            <input
-                                type="radio"
-                                id="car"
-                                value="car"
-                                checked={vehicleType === 'car'}
-                                onChange={e => setVehicleType(e.target.value)}
-                                className="mr-2"
-                            />
-                            <label htmlFor="car" className="text-white">Car</label>
-                        </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="bike"
-                                value="bike"
-                                checked={vehicleType === 'bike'}
-                                onChange={e => setVehicleType(e.target.value)}
-                                className="mr-2"
-                            />
-                            <label htmlFor="bike" className="text-white">Bike</label>
-                        </div>
-                    </div>
-                </div>
-                {operation==='add'?<div className="mb-4">
-    <label htmlFor="numSlots" className="block text-sm font-medium text-white">Number of Slots</label>
-    <div className="flex items-center mt-1">
-        <button
-            type="button"
-            onClick={() => setNumSlots(Math.max(1, numSlots - 1))}
-            className="bg-primary border border-gray-500 hover:border-cyan-500 rounded-l-md px-3 py-2 text-white"
-        >
-            -
-        </button>
-        <input
-            type="number"
-            id="numSlots"
-            min={1}
-            value={numSlots}
-            onChange={e => setNumSlots(Math.max(1, Number(e.target.value)))}
-            className="bg-primary picker block w-16 px-3 py-2 border-t border-b border-gray-500 text-center text-white bg-transparent"
-            required
-        />
-        <button
-            type="button"
-            onClick={() => setNumSlots(numSlots + 1)}
-            className="bg-primary border border-gray-500 hover:border-cyan-500 rounded-r-md px-3 py-2 text-white"
-        >
-            +
-        </button>
-    </div>
-</div>
-:""}
-               <div className="mb-4">
-    <label className="block text-sm font-medium text-white">Operation</label>
-    <div className="mt-1">
-        <label className="inline-flex items-center text-white">
-            <input
-                type="radio"
-                value="add"
-                checked={operation === 'add'}
-                onChange={e => setOperation(e.target.value)}
-                className="bg-primary picker border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
-            />
-            <span className="ml-2">Add Slots</span>
-        </label>
-        <label className="inline-flex items-center text-white ml-4">
-            <input
-                type="radio"
-                value="remove"
-                checked={operation === 'remove'}
-                onChange={e => setOperation(e.target.value)}
-                className="bg-primary picker border-gray-500 hover:border-cyan-500 rounded-md bg-transparent text-white"
-            />
-            <span className="ml-2">Remove Slot</span>
-        </label>
-    </div>
-</div>
+  const handleRemoveSlot = async () => {
+    if (!(slotId <= 0)) {
+      setError('');
+      setMessage('');
+      const slotData = {
+        slotId: parseInt(slotId),
+      };
+      try {
+        const response = await fetch(`https://park-server.onrender.com/api/slotsdel`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(slotData),
+        });
+        const data = await response.json();
+        setMessage('Slot removed successfully');
+        setSlotId('');
+      } catch (error) {
+        setError('Error occurred while removing slot.');
+      }
+    } else {
+      setError('Invalid data entered');
+    }
+  };
 
-                <button
-                    type="submit"
-                    className="bg-white hover:bg-black hover:text-white text-black border border-white font-bold py-2 px-4 rounded"
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (operation === 'add') {
+      handleAddSlots();
+    } else {
+      handleRemoveSlot();
+    }
+  };
+
+  return (
+    <div
+      className="bg-gradient-to-br from-orange-100 via-white to-orange-50 min-h-screen flex items-center justify-center px-6 py-8"
+      style={{
+        // background: 'linear-gradient(135deg, #ffffff 0%, #ffcc80 100%)',
+      }}
+    >
+      <div
+        className="max-w-md w-full border border-orange-200 p-8 rounded-xl"
+        style={{
+          background: 'linear-gradient(135deg, #ffffff 0%, #ffcc80 100%)',
+          boxShadow: 'none',
+        }}
+      >
+        <h1 className="text-3xl font-extrabold mb-8 text-orange-800 text-center drop-shadow-sm">
+          Update Parking Slots
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6 text-orange-900">
+          {/* Starting Slot ID */}
+          <div>
+            <label htmlFor="slotId" className="block font-semibold mb-2 text-orange-900">
+              Starting Slot ID
+            </label>
+            <input
+              type="number"
+              id="slotId"
+              value={slotId}
+              onChange={(e) => setSlotId(e.target.value)}
+              placeholder="Enter slot ID"
+              required
+              className="w-full rounded-lg px-4 py-3 border border-orange-300 bg-orange-50 bg-opacity-60 placeholder-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-orange-900 shadow-sm transition"
+            />
+          </div>
+
+          {/* Vehicle Type */}
+          <div>
+            <label className="block font-semibold mb-2 text-orange-900">Vehicle Type</label>
+            <div className="flex space-x-8">
+              {['car', 'bike'].map((type) => (
+                <label
+                  key={type}
+                  className={`flex items-center space-x-2 cursor-pointer text-orange-900 ${
+                    operation === 'remove' ? 'opacity-50' : ''
+                  }`}
                 >
-                    {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
+                  <input
+                    type="radio"
+                    value={type}
+                    checked={vehicleType === type}
+                    onChange={(e) => setVehicleType(e.target.value)}
+                    className="accent-orange-500"
+                    disabled={operation === 'remove'}
+                  />
+                  <span>{type.charAt(0).toUpperCase() + type.slice(1)}</span>
+                </label>
+              ))}
+            </div>
+            {operation === 'remove' && (
+              <p className="text-sm mt-1 text-orange-900/70 italic">
+                Vehicle type is ignored when removing slot.
+              </p>
+            )}
+          </div>
+
+          {/* Number of Slots */}
+          {operation === 'add' && (
+            <div>
+              <label htmlFor="numSlots" className="block font-semibold mb-2 text-orange-900">
+                Number of Slots
+              </label>
+              <div className="flex items-center max-w-xs rounded-lg overflow-hidden border border-orange-300">
+                <button
+                  type="button"
+                  onClick={() => setNumSlots(Math.max(1, numSlots - 1))}
+                  className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-4 py-2 transition"
+                >
+                  -
                 </button>
-            </form>
-            {error&&<p className="mt-4 text-red-600">{error}</p>}{message && <p className="mt-4 text-green-600">{message}</p>}
-        </div>
-    );
+                <input
+                  type="number"
+                  id="numSlots"
+                  min={1}
+                  value={numSlots}
+                  onChange={(e) => setNumSlots(Math.max(1, Number(e.target.value)))}
+                  className="w-20 text-center bg-orange-50 bg-opacity-60 border-none text-orange-900 focus:outline-none"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setNumSlots(numSlots + 1)}
+                  className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-4 py-2 transition"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Operation */}
+          <div>
+            <label className="block font-semibold mb-2 text-orange-900">Operation</label>
+            <div className="flex space-x-10 text-orange-900">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  value="add"
+                  checked={operation === 'add'}
+                  onChange={(e) => setOperation(e.target.value)}
+                  className="accent-orange-500"
+                />
+                <span>Add Slots</span>
+              </label>
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  value="remove"
+                  checked={operation === 'remove'}
+                  onChange={(e) => setOperation(e.target.value)}
+                  className="accent-orange-500"
+                />
+                <span>Remove Slot</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg font-semibold
+                       bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600
+                       text-white
+                       hover:from-orange-500 hover:via-orange-600 hover:to-orange-700
+                       transition-colors duration-300
+                       focus:outline-none focus:ring-4 focus:ring-orange-300"
+          >
+            {operation === 'add' ? 'Add Slots' : 'Remove Slot'}
+          </button>
+        </form>
+
+        {/* Messages */}
+        {error && (
+          <p className="mt-6 text-center text-red-700 font-semibold relative">
+            {error}{' '}
+            <span
+              className="absolute right-0 top-0 cursor-pointer text-orange-900 bg-white rounded px-2"
+              onClick={() => setError('')}
+              title="Dismiss error"
+            >
+              X
+            </span>
+          </p>
+        )}
+        {message && (
+          <p className="mt-6 text-center text-green-700 font-semibold">{message}</p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default UpdateSlots;
