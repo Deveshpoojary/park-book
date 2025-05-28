@@ -199,7 +199,7 @@ const Adminhist = () => {
 
     useEffect(() => {
         if (user) {
-            setAdminhist(user.email === "deveshpoojary@gmail.com" || user.email === "tharunrai69@gmail.com" || user.email === "karkerabhuvan@gmail.com");
+            setAdminhist(user.email === "deveshpoojary@gmail.com" || user.email === "tharunrai69@gmail.com" || user.email === "karkerabhuvan@gmail.com" || user.email === "clooyzi@gmail.com");
             setLoading(true);
         }
         else {
